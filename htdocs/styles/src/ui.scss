@@ -1,0 +1,11 @@
+@font-face {
+	font-family: "digital";
+	src: url("/fonts/digital-7/digital-7 (mono).ttf");
+}
+
+@import 'ui/Gauge.scss';
+@import 'ui/GaugeLed.scss';
+@import 'ui/Slider.scss';
+
+@import 'components/instruments/CompensatingTank.scss';
+@import 'components/instruments/Ballast.scss';

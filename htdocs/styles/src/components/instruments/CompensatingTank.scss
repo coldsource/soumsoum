@@ -1,0 +1,32 @@
+div.CompensatingTank {
+	display: inline-block;
+	padding: 0.2rem;
+	border: 1px solid black;
+	border-radius: 0.2rem;
+	margin: 0.2rem;
+	
+	h2 {
+		text-align: center;
+		margin: 0.2rem;
+		font-size: 0.8rem;
+	}
+	
+	div.fill {
+		text-align: center;
+		
+		button {
+			border-radius: 1rem;
+			background-color: white;
+			font-size: 1.5rem;
+			font-weight: bold;
+			padding: 0px;
+			border: 0px;
+			margin: 0rem 0.4rem 0rem 0.4rem;
+		}
+		
+		span.fill {
+			font-family: "digital";
+			font-size: 2rem;
+		}
+	}
+}
