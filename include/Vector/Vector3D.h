@@ -26,6 +26,7 @@ public:
 	void RotateX(double a);
 	void RotateY(double a);
 	void RotateZ(double a);
+	void Rotate(const Vector3D &angles);
 	
 	void Printf(const std::string &name) const;
 	void PrintfSpherical(const std::string &name) const;

@@ -4,6 +4,7 @@
 #include <Force/ArchimedesPrinciple.h>
 #include <Force/Gravity.h>
 #include <Force/Drag.h>
+#include <Force/Lift.h>
 
 #include <math.h>
 
@@ -39,6 +40,7 @@ void MovingBody::StepTime(double dt)
 		forces[part->name+"_ap"] = { rel_position, ArchimedesPrinciple(*part, water, -abs_position.z)};
 		forces[part->name+"_gravity"] = { rel_position, Gravity(part->GetMass())};
 		forces[part->name+"_drag"] = { rel_position, Drag(*part, water, attitude, abs_speed)};
+		forces[part->name+"_lift"] = { rel_position, Lift(*part, water, attitude, abs_speed)};
 	}
 	
 	for(auto it = forces.begin();it!=forces.end(); ++it)
@@ -71,7 +73,6 @@ json MovingBody::ToJson() const
 	json j;
 	
 	j["acceleration"] = acceleration.ToJson();
-	
 	j["speed"] = speed.ToJson();
 	j["position"] = position.ToJson();
 	j["attitude"] = attitude.ToJson();

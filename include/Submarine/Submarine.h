@@ -6,6 +6,7 @@
 #include <Dynamic/MovingBody.h>
 #include <Dynamic/MovingBodyPart.h>
 #include <Simulation/SimulationObject.h>
+#include <Submarine/DivingPlane.h>
 #include <Submarine/Tank.h>
 #include <Submarine/Pump.h>
 #include <Submarine/Component.h>
@@ -79,6 +80,7 @@ class Submarine: public MovingBody, public SimulationObject
 	SubmarineStern stern;
 	SubmarinePart back;
 	SubmarinePart center;
+	DivingPlane diving_plane;
 	SubmarinePart front;
 	SubmarineBow bow;
 	

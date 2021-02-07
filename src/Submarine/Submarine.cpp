@@ -1,7 +1,4 @@
 #include <Submarine/Submarine.h>
-#include <Force/ArchimedesPrinciple.h>
-#include <Force/Gravity.h>
-#include <Force/Drag.h>
 
 #include <math.h>
 
@@ -9,12 +6,13 @@ using namespace std;
 using json = nlohmann::json;
 
 Submarine::Submarine():
-	air_tank(Tank::en_opening_type::CLOSED, 10),
 	stern("stern", -49),
 	back("back", -30),
 	center("center", 0),
+	diving_plane("diving_plane", 0),
 	front("front", 30),
 	bow("bow", 49),
+	air_tank(Tank::en_opening_type::CLOSED, 10),
 	ballast(&air_tank),
 	compensating_tank_center(16, 5),
 	compensating_tank_front(10, 5),
@@ -23,6 +21,7 @@ Submarine::Submarine():
 	AddPart(&stern);
 	AddPart(&back);
 	AddPart(&center);
+	AddPart(&diving_plane);
 	AddPart(&front);
 	AddPart(&bow);
 	
@@ -39,6 +38,7 @@ Submarine::Submarine():
 	components.insert(pair<string, Component *>("compensating_tank_front", &compensating_tank_front));
 	components.insert(pair<string, Component *>("compensating_tank_back", &compensating_tank_back));
 	components.insert(pair<string, Component *>("thrust", &thrust));
+	components.insert(pair<string, Component *>("diving_plane", &diving_plane));
 }
 
 double Submarine::GetMomentOfInertia() const
@@ -49,9 +49,8 @@ double Submarine::GetMomentOfInertia() const
 void Submarine::StepTime(double dt)
 {
 	double L = 49.75;
-	Vector3D center_vector(0, 0, 0);
-	Vector3D back_vector = Vector3D::FromSpherical(L, attitude.x - M_PI, attitude.z);
 	
+	Vector3D back_vector = Vector3D::FromSpherical(L, attitude.x - M_PI, attitude.z);
 	forces["thrust"] = { back_vector, Vector3D::FromSpherical(thrust.GetForce(), attitude.x + thrust.GetAngleX(), attitude.z + thrust.GetAngleZ())};
 	
 	MovingBody::StepTime(dt);

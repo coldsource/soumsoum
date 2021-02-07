@@ -73,6 +73,13 @@ void Vector3D::RotateZ(double a)
 	y = -sin(a) * x + cos(a) * y;
 }
 
+void Vector3D::Rotate(const Vector3D &angles)
+{
+	RotateX(angles.x);
+	RotateY(angles.y);
+	RotateZ(angles.z);
+}
+
 void Vector3D::Printf(const std::string &name) const
 {
 	printf("%s = (%f, %f, %f)\n",name.c_str(), x, y, z);

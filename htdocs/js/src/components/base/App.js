@@ -23,6 +23,7 @@ import {SoumsoumAPI} from '../../websockets/soumsoum_api.js';
 import {Ballast} from '../instruments/Ballast.js';
 import {CompensatingTank} from '../instruments/CompensatingTank.js';
 import {Thrust} from '../instruments/Thrust.js';
+import {DivingPlane} from '../instruments/DivingPlane.js';
 
 export class App extends React.Component {
 	constructor(props) {
@@ -118,6 +119,7 @@ export class App extends React.Component {
 				<CompensatingTank name="compensating_tank_center" data={components.compensating_tank_center} />
 				<CompensatingTank name="compensating_tank_front" data={components.compensating_tank_front} />
 				<Thrust name="thrust" data={components.thrust} />
+				<DivingPlane name="diving_plane" data={components.diving_plane} />
 				<div>
 					<b>Acceleration</b> : {data.acceleration.x.toFixed(2)} {data.acceleration.y.toFixed(2)} {data.acceleration.z.toFixed(2)}
 				</div>

@@ -10,6 +10,7 @@ public:
 	virtual double GetImmersedVolume(double depth) const = 0;
 	virtual void GetContactSurfaces(Vector3D *positive, Vector3D *negative) const = 0;
 	virtual void GetCx(Vector3D *positive, Vector3D *negative) const = 0;
+	virtual double GetCz() const { return 0; }
 };
 
 #endif
