@@ -6,12 +6,12 @@ using namespace std;
 using json = nlohmann::json;
 
 Submarine::Submarine():
-	stern("stern", -49),
-	back("back", -30),
-	center("center", 0),
-	diving_plane("diving_plane", 0),
-	front("front", 30),
-	bow("bow", 49),
+	stern("stern", Vector3D(0, -49, 0)),
+	back("back", Vector3D(0, -30, 0)),
+	center("center", Vector3D(0, -0, 0)),
+	diving_plane("diving_plane", Vector3D(0, 0, 3)),
+	front("front", Vector3D(0, 30, 0)),
+	bow("bow", Vector3D(0, 49, 0)),
 	air_tank(Tank::en_opening_type::CLOSED, 10),
 	ballast(&air_tank),
 	compensating_tank_center(16, 5),

@@ -16,13 +16,13 @@ class MovingBodyPart: virtual public Volume
 
 protected:
 	std::string name;
-	double distance;
+	Vector3D position;
 	double mass;
 	
 	std::vector<MovingBodyComponent *> components;
 	
 public:
-	MovingBodyPart(const std::string &name, double distance, double mass);
+	MovingBodyPart(const std::string &name, const Vector3D &position, double mass);
 	
 	void AddComponent(MovingBodyComponent *component);
 	

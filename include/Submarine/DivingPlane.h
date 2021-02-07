@@ -12,7 +12,7 @@ class DivingPlane:public MovingBodyPart, public Component
 	double tilt = 0;
 
 public:
-	DivingPlane(const std::string name, double distance):MovingBodyPart(name, distance, 0) {};
+	DivingPlane(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 0) {};
 	
 	double GetVolume() const { return 0; }
 	double GetImmersedVolume(double depth) const { return 0; };

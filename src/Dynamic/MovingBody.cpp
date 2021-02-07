@@ -26,11 +26,8 @@ void MovingBody::StepTime(double dt)
 	{
 		MovingBodyPart *part = *it;
 		
-		Vector3D rel_position;
-		if(part->distance>=0)
-			rel_position = Vector3D::FromSpherical(part->distance, attitude.x, attitude.z);
-		else
-			rel_position = Vector3D::FromSpherical(-part->distance, attitude.x + M_PI, attitude.z);
+		Vector3D rel_position = part->position;
+		rel_position.Rotate(attitude);
 		
 		Vector3D abs_position = position + rel_position;
 		

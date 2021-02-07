@@ -24,7 +24,7 @@
 class SubmarineBow:public MovingBodyPart, public Sphere
 {
 public:
-	SubmarineBow(const std::string name, double distance):MovingBodyPart(name, distance, 137392.318717), Sphere(4) {};
+	SubmarineBow(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 137392.318717), Sphere(4) {};
 	
 	double GetVolume() const { return Sphere::GetVolume() / 2.0; }
 	double GetImmersedVolume(double depth) const { return Sphere::GetImmersedVolume(depth) / 2.0; }
@@ -44,7 +44,7 @@ public:
 class SubmarineStern:public MovingBodyPart, public Sphere
 {
 public:
-	SubmarineStern(const std::string name, double distance):MovingBodyPart(name, distance, 137392.318717), Sphere(4) {};
+	SubmarineStern(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 137392.318717), Sphere(4) {};
 	
 	double GetVolume() const { return Sphere::GetVolume() / 2.0; }
 	double GetImmersedVolume(double depth) const { return Sphere::GetImmersedVolume(depth) / 2.0; }
@@ -64,7 +64,7 @@ public:
 class SubmarinePart:public MovingBodyPart, public Cylinder
 {
 public:
-	SubmarinePart(const std::string name, double distance):MovingBodyPart(name, distance, 1323580.25224 ), Cylinder(4, 30) {};
+	SubmarinePart(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 1323580.25224 ), Cylinder(4, 30) {};
 	void GetCx(Vector3D *positive, Vector3D *negative) const
 	{
 		Cylinder::GetCx(positive, negative);

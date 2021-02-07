@@ -3,10 +3,10 @@
 
 using namespace std;
 
-MovingBodyPart::MovingBodyPart(const string &name, double distance, double mass)
+MovingBodyPart::MovingBodyPart(const string &name, const Vector3D &position, double mass)
 {
 	this->name = name;
-	this->distance = distance;
+	this->position = position;
 	this->mass = mass;
 }
 
