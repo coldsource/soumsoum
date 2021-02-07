@@ -20,6 +20,7 @@
 'use strict';
 
 import {App} from '../base/App.js';
+import {GaugeHalf} from '../../ui/GaugeHalf.js';
 
 export class DivingPlane extends React.Component {
 	constructor(props) {
@@ -62,7 +63,7 @@ export class DivingPlane extends React.Component {
 		return (
 			<div className="DivingPlane">
 				<h2>{this.props.name}</h2>
-				<div>{this.props.data.tilt}</div>
+				<GaugeHalf current={[this.props.data.targeted_tilt, this.props.data.tilt]} min="-3" max="3" />
 			</div>
 		);
 	}

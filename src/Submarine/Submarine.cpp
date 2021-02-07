@@ -9,7 +9,7 @@ Submarine::Submarine():
 	stern("stern", Vector3D(0, -49, 0)),
 	back("back", Vector3D(0, -30, 0)),
 	center("center", Vector3D(0, -0, 0)),
-	diving_plane("diving_plane", Vector3D(0, 0, 6)),
+	diving_plane("diving_plane", Vector3D(0, 0, 0)),
 	front("front", Vector3D(0, 30, 0)),
 	bow("bow", Vector3D(0, 49, 0)),
 	air_tank(Tank::en_opening_type::CLOSED, 10),

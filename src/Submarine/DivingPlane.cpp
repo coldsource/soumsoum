@@ -32,18 +32,38 @@ void DivingPlane::HandleCommand(const nlohmann::json &j)
 {
 	if(j["action"]=="dive")
 	{
-		tilt += 0.1;
-		if(tilt>1)
-			tilt = 1;
+		targeted_tilt += 0.1;
+		if(targeted_tilt>1)
+			targeted_tilt = 1;
 	}
 	else if(j["action"]=="surface")
 	{
-		tilt -= 0.1;
-		if(tilt<-0.5)
-			tilt = -0.5;
+		targeted_tilt -= 0.1;
+		if(targeted_tilt<-0.5)
+			targeted_tilt = -0.5;
 	}
 	else if(j["action"]=="neutral")
-		tilt = 0;
+		targeted_tilt = 0;
+}
+
+void DivingPlane::StepTime(double dt)
+{
+	if(targeted_tilt==tilt)
+		return;
+	
+	if(tilt<targeted_tilt)
+	{
+		tilt += tilt_second * dt;
+		if(tilt>targeted_tilt)
+			tilt = targeted_tilt;
+	}
+	
+	if(tilt>targeted_tilt)
+	{
+		tilt -= tilt_second * dt;
+		if(tilt<targeted_tilt)
+			tilt = targeted_tilt;
+	}
 }
 
 json DivingPlane::ToJson() const
@@ -51,6 +71,7 @@ json DivingPlane::ToJson() const
 	json j;
 	
 	j["tilt"] = tilt;
+	j["targeted_tilt"] = targeted_tilt;
 	
 	return j;
 }

@@ -1,0 +1,23 @@
+div.GaugeHalf {
+	display: inline-block;
+	vertical-align: top;
+	width: 3.2rem;
+	height: 5rem;
+	border-radius: 2.5rem 0rem 0rem 2.5rem;
+	border: 2px solid black;
+	margin: 0.2rem;
+	box-sizing: border-box;
+	position: relative;
+	
+	div.needle {
+		position: relative;
+		top: 2.5rem;
+		left: 2.5rem;
+		width: 2rem;
+		height: 0;
+		border: 2px solid red;
+		border-radius: 0.5rem;
+		transform-origin: 0 0;
+		position: absolute;
+	}
+} 
