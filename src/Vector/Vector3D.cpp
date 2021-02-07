@@ -6,7 +6,13 @@ using json = nlohmann::json;
 
 Vector3D::Vector3D()
 {
-	;
+}
+
+Vector3D::Vector3D(const Vector3D &v)
+{
+	x = v.x;
+	y = v.y;
+	z = v.z;
 }
 
 Vector3D::Vector3D(double x, double y, double z)
@@ -16,14 +22,67 @@ Vector3D::Vector3D(double x, double y, double z)
 	this->z = z;
 }
 
-Vector3D Vector3D::FromNormAngle(double L, double x, double z)
+Vector3D Vector3D::FromSpherical(double L, double x, double z)
 {
-	return Vector3D(L*cos(x)*sin(z), L*cos(x)*cos(z), -L*cos(x)*tan(x));
+	return Vector3D(L*cos(x)*sin(z), L*cos(x)*cos(z), L*sin(x));
+}
+
+void Vector3D::ToSpherical(double *L, double *ax, double *az) const
+{
+	*L = GetNorm();
+	
+	if(x==0 && y==0)
+	{
+		*ax = z>=0?M_PI/2:-M_PI/2;
+		*az = 0;
+	}
+	else
+	{
+		*ax = M_PI / 2.0 - acos(z / *L);
+		*az = M_PI / 2.0 - atan2(y,x);
+	}
+}
+
+bool Vector3D::IsNull() const
+{
+	return x==0 && y==0 && z==0;
 }
 
 double Vector3D::GetNorm() const
 {
 	return sqrt(x*x + y*y + z*z);
+}
+
+void Vector3D::RotateX(double a)
+{
+	a *= -1;
+	y = cos(a) * y + sin(a) * z;
+	z = -sin(a) * y + cos(a) * z;
+}
+
+void Vector3D::RotateY(double a)
+{
+	x = cos(a) * x -sin(a) * z;
+	z = sin(a) * x + cos(a) * z;
+}
+
+void Vector3D::RotateZ(double a)
+{
+	a *= -1;
+	x = cos(a) * x + sin(a) * y;
+	y = -sin(a) * x + cos(a) * y;
+}
+
+void Vector3D::Printf(const std::string &name) const
+{
+	printf("%s = (%f, %f, %f)\n",name.c_str(), x, y, z);
+}
+
+void Vector3D::PrintfSpherical(const std::string &name) const
+{
+	double L, ax, az;
+	ToSpherical(&L, &ax, &az);
+	printf("%s = {%f, %f, %f}\n",name.c_str(), L, ax, az);
 }
 
 Vector3D Vector3D::operator+(const Vector3D &v) const

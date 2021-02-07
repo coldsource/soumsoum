@@ -22,6 +22,7 @@
 import {SoumsoumAPI} from '../../websockets/soumsoum_api.js';
 import {Ballast} from '../instruments/Ballast.js';
 import {CompensatingTank} from '../instruments/CompensatingTank.js';
+import {Thrust} from '../instruments/Thrust.js';
 
 export class App extends React.Component {
 	constructor(props) {
@@ -49,10 +50,10 @@ export class App extends React.Component {
 	
 	renderSVG() {
 		return (
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="-80 -10 160 320" style={{width:480, height:1280}}>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -20 120 40" style={{width:800, height:600}}>
 				<defs>
-					<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-						<polygon points="0 0, 10 3.5, 0 7" />
+					<marker id="arrowhead" markerWidth="5" markerHeight="3.5" refX="0" refY="1.75" orient="auto">
+						<polygon points="0 0, 5 1.75, 0 3.5" />
 					</marker>
 				</defs>
 				{ this.renderSVGForces() }
@@ -69,19 +70,39 @@ export class App extends React.Component {
 			
 			f.z0 = -f.z0;
 			
-			let scale = f.norm<10000000?f.norm/10:1000000;
+			let scale = 500000;
 			if(scale==0)
 				scale = 1;
 			
 			f.y = f.y/scale;
 			f.z = -f.z/scale;
+			
+			let text_x = f.y0 + f.y - 10;
+			let text_y = f.z>0?f.z0 + f.z + 7:f.z0 + f.z - 6;
+			
 			return (
 				<React.Fragment key={force_name}>
 					<line x1={f.y0} y1={f.z0} x2={f.y0 + f.y} y2={f.z0 + f.z} stroke="#ff0000" strokeWidth="1" markerEnd="url(#arrowhead)" />
-					<text fontSize="5" x={f.y0 + f.y + 5} y={f.z0 + f.z + 10}>{force_name} {Math.round(f.norm/1000)} kN</text>
+					<text fontSize="2" x={text_x} y={text_y}>{force_name} {Math.round(f.norm/1000)} kN</text>
 				</React.Fragment>
 			);
 		});
+	}
+	
+	renderYAxis(y) {
+		let yi = Math.floor(y / 10);
+		let r = Math.round((yi - y / 10) * 100);
+		let graduations = [];
+		for(let i=0;i<8;i++)
+		{
+			let margin = i==0?r:0;
+			graduations.push(<div key={i} style={{display: 'inline-block', width: '100px', borderLeft: '1px solid red', boxSizing: 'border-box', marginLeft: margin+'px'}}>{yi *10 + i*10}</div>);
+		}
+		return graduations;
+	}
+	
+	radToDeg(a) {
+		return a / Math.PI * 180;
 	}
 	
 	render() {
@@ -96,17 +117,18 @@ export class App extends React.Component {
 				<CompensatingTank name="compensating_tank_back" data={components.compensating_tank_back} />
 				<CompensatingTank name="compensating_tank_center" data={components.compensating_tank_center} />
 				<CompensatingTank name="compensating_tank_front" data={components.compensating_tank_front} />
+				<Thrust name="thrust" data={components.thrust} />
 				<div>
-					<b>Acceleration</b> : {data.acceleration.x} {data.acceleration.y} {data.acceleration.z}
+					<b>Acceleration</b> : {data.acceleration.x.toFixed(2)} {data.acceleration.y.toFixed(2)} {data.acceleration.z.toFixed(2)}
 				</div>
 				<div>
-					<b>Speed</b> : {data.speed.x} {data.speed.y} {data.speed.z}
+					<b>Speed</b> : {data.speed.x.toFixed(2)} {data.speed.y.toFixed(2)} {data.speed.z.toFixed(2)}
 				</div>
 				<div>
-					<b>Position</b> : {data.position.x} {data.position.y} {data.position.z}
+					<b>Position</b> : {data.position.x.toFixed(2)} {data.position.y.toFixed(2)} {data.position.z.toFixed(2)}
 				</div>
 				<div>
-					<b>Attitude</b> : {data.attitude.x} {data.attitude.y} {data.attitude.z}
+					<b>Attitude</b> : {this.radToDeg(data.attitude.x).toFixed(2)} {this.radToDeg(data.attitude.y).toFixed(2)} {this.radToDeg(data.attitude.z).toFixed(2)}
 				</div>
 				<div>
 					<b>Air Tank</b> : { this.renderTank(data.air_tank) }
@@ -115,9 +137,10 @@ export class App extends React.Component {
 					{ this.renderSVG() }
 				</div>
 				<div style={{position: 'absolute', top: '0px', right: '0px', width: '800px', height: '1000px'}}>
+					<div style={{position: 'relative', top: '0px', overflow: 'hidden'}}>{this.renderYAxis(data.position.y)}</div>
 					<div style={{position: 'absolute', top: '240px', right: '0px', width: '800px', height: '900px', backgroundColor: '#bff2ff'}}></div>
-					<div style={{position: 'absolute', top: (-data.position.z * 10)+'px', left: (data.position.y * 10)+'px'}}>
-						<img style={{height: '240px', rotate:data.attitude.x+'rad'}} src="images/submarine.png" />
+					<div style={{position: 'absolute', top: (-data.position.z * 10)+'px'}}>
+						<img style={{height: '240px', rotate:(-data.attitude.x)+'rad'}} src="images/submarine.png" />
 					</div>
 				</div>
 			</div>

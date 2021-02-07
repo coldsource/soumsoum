@@ -68,7 +68,7 @@ export class CompensatingTank extends React.Component {
 		return (
 			<div className="CompensatingTank">
 				<h2>{this.props.name}</h2>
-				<Gauge fill={this.props.data.volume} capacity={this.props.data.capacity} />
+				<Gauge current={this.props.data.volume} max={this.props.data.capacity} />
 				<Slider name="pump_rate" value={this.state.pump_rate} onChange={this.pumpRateChange}/>
 				<div className="fill">
 					<button onMouseDown={this.emptyPumpOn} onMouseUp={this.emptyPumpOff}>-</button>

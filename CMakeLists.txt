@@ -5,6 +5,7 @@ set(CMAKE_BUILD_TYPE Debug)
 project(soumsoum)
 
 aux_source_directory(src/Fluid srcFluid)
+aux_source_directory(src/Volume srcVolume)
 aux_source_directory(src/Vector srcVector)
 aux_source_directory(src/Force srcForce)
 aux_source_directory(src/Dynamic srcDynamic)
@@ -13,6 +14,7 @@ aux_source_directory(src/Simulation srcSimulation)
 
 add_executable(soumsoum
 	${srcFluid}
+	${srcVolume}
 	${srcVector}
 	${srcForce}
 	${srcDynamic}

@@ -138,6 +138,8 @@ const struct lws_protocols protocols[] =
 	{0,0,0,0,0}
 };
 
+#include <Volume/Cylinder.h>
+
 int main(void)
 {
 	lws_set_log_level(LLL_ERR | LLL_WARN, 0);

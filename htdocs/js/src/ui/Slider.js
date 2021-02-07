@@ -39,7 +39,8 @@ export class Slider extends React.Component {
 		document.addEventListener('mousemove',this.move);
 		document.addEventListener('mouseup',this.endMove);
 		
-		this.delta = e.clientY - (this.ref_position.current.offsetTop - this.ref_position.current.offsetHeight);
+		let height = this.ref_rail.current.offsetHeight;
+		this.delta = e.clientY - (1 - this.props.value) * height;
 	}
 	
 	endMove(e) {

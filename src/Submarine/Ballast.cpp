@@ -4,8 +4,8 @@ using json = nlohmann::json;
 
 Ballast::Ballast(Tank *air_source):
 	tank(Tank::en_opening_type::BOTTOM, 650),
-	fill_pump(water, 15, 0, &tank),
-	empty_pump(air, 20, air_source, &tank)
+	fill_pump(water, 150, 0, &tank),
+	empty_pump(air, 200, air_source, &tank)
 {
 	tank.Fill(air, 650);
 }

@@ -3,6 +3,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include <string>
+
 class Vector3D
 {
 public:
@@ -12,11 +14,21 @@ public:
 	
 public:
 	Vector3D();
+	Vector3D(const Vector3D &v);
 	Vector3D(double x, double y, double z);
 	
-	static Vector3D FromNormAngle(double L, double x, double z);
+	static Vector3D FromSpherical(double L, double x, double z);
+	void ToSpherical(double *L, double *ax, double *az) const;
 	
+	bool IsNull() const;
 	double GetNorm() const;
+	
+	void RotateX(double a);
+	void RotateY(double a);
+	void RotateZ(double a);
+	
+	void Printf(const std::string &name) const;
+	void PrintfSpherical(const std::string &name) const;
 	
 	Vector3D operator+(const Vector3D &v) const;
 	Vector3D operator*(double d) const;

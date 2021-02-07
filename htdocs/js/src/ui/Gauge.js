@@ -30,7 +30,7 @@ export class Gauge extends React.Component {
 	render() {
 		let min_a = 0.5 * 3.14 + 0.3;
 		let max_a = 2.5 * 3.14 - 0.3;
-		let a = min_a + (max_a - min_a) * this.props.fill / this.props.capacity;
+		let a = min_a + (max_a - min_a) * this.props.current / this.props.max;
 		
 		return (
 			<div className="Gauge">

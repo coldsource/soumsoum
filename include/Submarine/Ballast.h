@@ -6,8 +6,9 @@
 #include <Submarine/Pump.h>
 #include <Fluid/Water.h>
 #include <Fluid/Air.h>
+#include <Dynamic/MovingBodyComponent.h>
 
-class Ballast: public Component
+class Ballast: public Component, public MovingBodyComponent
 {
 	Water water;
 	Air air;

@@ -5,8 +5,9 @@
 #include <Submarine/Tank.h>
 #include <Submarine/Pump.h>
 #include <Fluid/Water.h>
+#include <Dynamic/MovingBodyComponent.h>
 
-class CompensatingTank: public Component
+class CompensatingTank: public Component, public MovingBodyComponent
 {
 	Water water;
 	
