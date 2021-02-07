@@ -66,6 +66,7 @@ export class Thrust extends React.Component {
 		return (
 			<div className="Thrust">
 				<h2>{this.props.name}</h2>
+				<Gauge current={this.props.data.targeted_rate} max={1} />
 				<Gauge current={this.props.data.rate} max={1} />
 			</div>
 		);

@@ -16,11 +16,11 @@ void Thrust::HandleCommand(const nlohmann::json &j)
 	}
 	else if(j["action"]=="angle_x_minus")
 	{
-		angle_x = -M_PI/12.0;
+		angle_x = M_PI/12.0;
 	}
 	else if(j["action"]=="angle_x_plus")
 	{
-		angle_x = M_PI/12.0;
+		angle_x = -M_PI/12.0;
 	}
 	else if(j["action"]=="angle_z_neutral")
 	{
@@ -36,15 +36,35 @@ void Thrust::HandleCommand(const nlohmann::json &j)
 	}
 	else if(j["action"]=="rate_minus")
 	{
-		rate -= 0.1;
-		if(rate<0)
-			rate = 0;
+		targeted_rate -= 0.1;
+		if(targeted_rate<0)
+			targeted_rate = 0;
 	}
 	else if(j["action"]=="rate_plus")
 	{
-		rate += 0.1;
-		if(rate>1)
-			rate = 1;
+		targeted_rate += 0.1;
+		if(targeted_rate>1)
+			targeted_rate = 1;
+	}
+}
+
+void Thrust::StepTime(double dt)
+{
+	if(targeted_rate==rate)
+		return;
+	
+	if(rate<targeted_rate)
+	{
+		rate += rate_second * dt;
+		if(rate>targeted_rate)
+			rate = targeted_rate;
+	}
+	
+	if(rate>targeted_rate)
+	{
+		rate -= rate_second * dt;
+		if(rate<targeted_rate)
+			rate = targeted_rate;
 	}
 }
 
@@ -54,5 +74,6 @@ json Thrust::ToJson() const
 	j["angle_x"] = angle_x;
 	j["angle_z"] = angle_z;
 	j["rate"] = rate;
+	j["targeted_rate"] = targeted_rate;
 	return j;
 }
