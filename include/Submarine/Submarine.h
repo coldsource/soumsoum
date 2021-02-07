@@ -6,6 +6,9 @@
 #include <Dynamic/MovingBody.h>
 #include <Dynamic/MovingBodyPart.h>
 #include <Simulation/SimulationObject.h>
+#include <Submarine/SubmarineBow.h>
+#include <Submarine/SubmarinePart.h>
+#include <Submarine/SubmarineStern.h>
 #include <Submarine/DivingPlane.h>
 #include <Submarine/Tank.h>
 #include <Submarine/Pump.h>
@@ -13,64 +16,12 @@
 #include <Submarine/CompensatingTank.h>
 #include <Submarine/Ballast.h>
 #include <Submarine/Thrust.h>
-#include <Volume/Sphere.h>
 #include <Volume/Cylinder.h>
 
 #include <map>
 #include <string>
 
 #include <nlohmann/json.hpp>
-
-class SubmarineBow:public MovingBodyPart, public Sphere
-{
-public:
-	SubmarineBow(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 137392.318717), Sphere(4) {};
-	
-	double GetVolume() const { return Sphere::GetVolume() / 2.0; }
-	double GetImmersedVolume(double depth) const { return Sphere::GetImmersedVolume(depth) / 2.0; }
-	void GetContactSurfaces(Vector3D *positive, Vector3D *negative) const
-	{
-		Sphere::GetContactSurfaces(positive, negative);
-		positive->x = negative->x = positive->x / 2;
-		positive->z = negative->z = positive->z / 2;
-	}
-	void GetCx(Vector3D *positive, Vector3D *negative) const
-	{
-		Sphere::GetCx(positive, negative);
-		negative->y = 0;
-	}
-};
-
-class SubmarineStern:public MovingBodyPart, public Sphere
-{
-public:
-	SubmarineStern(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 137392.318717), Sphere(4) {};
-	
-	double GetVolume() const { return Sphere::GetVolume() / 2.0; }
-	double GetImmersedVolume(double depth) const { return Sphere::GetImmersedVolume(depth) / 2.0; }
-	void GetContactSurfaces(Vector3D *positive, Vector3D *negative) const
-	{
-		Sphere::GetContactSurfaces(positive, negative);
-		positive->x = negative->x = positive->x / 2;
-		positive->z = negative->z = positive->z / 2;
-	}
-	void GetCx(Vector3D *positive, Vector3D *negative) const
-	{
-		Sphere::GetCx(positive, negative);
-		positive->y = 0;
-	}
-};
-
-class SubmarinePart:public MovingBodyPart, public Cylinder
-{
-public:
-	SubmarinePart(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 1323580.25224 ), Cylinder(4, 30) {};
-	void GetCx(Vector3D *positive, Vector3D *negative) const
-	{
-		Cylinder::GetCx(positive, negative);
-		negative->y = positive->y = 0;
-	}
-};
 
 class Submarine: public MovingBody, public SimulationObject
 {
