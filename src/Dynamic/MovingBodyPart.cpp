@@ -1,5 +1,6 @@
 #include <Dynamic/MovingBodyPart.h>
 #include <Dynamic/MovingBodyComponent.h>
+#include <Dynamic/MovingBody.h>
 
 using namespace std;
 
@@ -10,8 +11,23 @@ MovingBodyPart::MovingBodyPart(const string &name, const Vector3D &position, dou
 	this->mass = mass;
 }
 
+Vector3D MovingBodyPart::GetRelativePosition() const
+{
+	Vector3D rel_position = position;
+	rel_position.Rotate(moving_body->GetAttitude());
+	return rel_position;
+}
+
+Vector3D MovingBodyPart::GetAbsolutePosition() const
+{
+	return moving_body->GetPosition() + GetRelativePosition();
+}
+
 void MovingBodyPart::AddComponent(MovingBodyComponent *component)
 {
+	component->moving_body = moving_body;
+	component->moving_body_part = this;
+	
 	components.push_back(component);
 }
 

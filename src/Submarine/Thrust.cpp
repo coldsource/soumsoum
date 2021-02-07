@@ -6,7 +6,7 @@
 using json = nlohmann::json;
 using namespace std;
 
-Thrust::Thrust(Submarine *submarine)
+Thrust::Thrust()
 {
 	this->submarine = submarine;
 }
@@ -15,7 +15,7 @@ map<string, Vector3D> Thrust::GetForces() const
 {
 	map<string, Vector3D> forces;
 	
-	const Vector3D attitude = submarine->GetAttitude();
+	const Vector3D attitude = moving_body->GetAttitude();
 	
 	forces["thrust"] = { Vector3D::FromSpherical(GetForce(), attitude.x + GetAngleX(), attitude.z + GetAngleZ())};
 	

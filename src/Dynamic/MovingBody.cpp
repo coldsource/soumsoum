@@ -13,6 +13,7 @@ using json = nlohmann::json;
 
 void MovingBody::AddPart(MovingBodyPart *part)
 {
+	part->moving_body = this;
 	parts.push_back(part);
 }
 
@@ -27,11 +28,8 @@ void MovingBody::StepTime(double dt)
 		MovingBodyPart *part = *it;
 		
 		// Compute relative position in submarine
-		Vector3D rel_position = part->position;
-		rel_position.Rotate(attitude);
-		
-		// Compute absolute position
-		Vector3D abs_position = position + rel_position;
+		Vector3D rel_position = part->GetRelativePosition();
+		Vector3D abs_position = part->GetAbsolutePosition();
 		
 		// Compute relative and absolute speed (submarine speed + rotating linear speed)
 		Vector3D rel_speed = rel_position * angular_speed;

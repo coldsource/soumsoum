@@ -9,7 +9,7 @@ Submarine::Submarine():
 	stern("stern", Vector3D(0, -49, 0)),
 	back("back", Vector3D(0, -30, 0)),
 	center("center", Vector3D(0, -0, 0)),
-	diving_plane("diving_plane", Vector3D(0, 0, 3)),
+	diving_plane("diving_plane", Vector3D(0, 0, 6)),
 	front("front", Vector3D(0, 30, 0)),
 	bow("bow", Vector3D(0, 49, 0)),
 	air_tank(Tank::en_opening_type::CLOSED, 10),
@@ -17,7 +17,7 @@ Submarine::Submarine():
 	compensating_tank_center(16, 5),
 	compensating_tank_front(10, 5),
 	compensating_tank_back(10, 5),
-	thrust(this)
+	thrust()
 {
 	AddPart(&stern);
 	AddPart(&back);

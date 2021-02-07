@@ -20,6 +20,11 @@ void DivingPlane::GetCx(Vector3D *positive, Vector3D *negative) const
 
 double DivingPlane::GetCz() const
 {
+	// Check if we are in the water
+	const Vector3D abs_pos = GetAbsolutePosition();
+	if(abs_pos.z>0)
+		return 0;
+	
 	return Cz*tilt;
 }
 

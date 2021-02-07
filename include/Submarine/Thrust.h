@@ -21,7 +21,7 @@ class Thrust: public Component, public SimulationObject, public MovingBodyCompon
 	double rate_second = 0.05;
 	
 public:
-	Thrust(Submarine *submarine);
+	Thrust();
 	
 	double GetMass() const { return 0; }
 	double GetAngleX() const { return angle_x; }
