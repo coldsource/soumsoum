@@ -5,7 +5,6 @@
 #include <Fluid/Air.h>
 #include <Dynamic/MovingBody.h>
 #include <Dynamic/MovingBodyPart.h>
-#include <Simulation/SimulationObject.h>
 #include <Submarine/SubmarineBow.h>
 #include <Submarine/SubmarinePart.h>
 #include <Submarine/SubmarineStern.h>
@@ -23,7 +22,7 @@
 
 #include <nlohmann/json.hpp>
 
-class Submarine: public MovingBody, public SimulationObject
+class Submarine: public MovingBody
 {
 	Water water;
 	Air air;
@@ -58,8 +57,6 @@ public:
 	Submarine();
 	
 	double GetMomentOfInertia() const;
-	
-	void StepTime(double dt);
 	
 	void HandleCommand(const nlohmann::json &json);
 	

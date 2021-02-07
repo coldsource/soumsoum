@@ -5,6 +5,7 @@
 #include <Volume/Volume.h>
 #include <Force/Force.h>
 #include <Fluid/Water.h>
+#include <Simulation/SimulationObject.h>
 
 #include <map>
 #include <string>
@@ -14,7 +15,7 @@
 
 class MovingBodyPart;
 
-class MovingBody
+class MovingBody: public SimulationObject
 {
 protected:
 	Water water;

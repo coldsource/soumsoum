@@ -1,11 +1,25 @@
 #include <Submarine/Thrust.h>
+#include <Submarine/Submarine.h>
 
 #include <math.h>
 
 using json = nlohmann::json;
+using namespace std;
 
-Thrust::Thrust()
+Thrust::Thrust(Submarine *submarine)
 {
+	this->submarine = submarine;
+}
+
+map<string, Vector3D> Thrust::GetForces() const
+{
+	map<string, Vector3D> forces;
+	
+	const Vector3D attitude = submarine->GetAttitude();
+	
+	forces["thrust"] = { Vector3D::FromSpherical(GetForce(), attitude.x + GetAngleX(), attitude.z + GetAngleZ())};
+	
+	return forces;
 }
 
 void Thrust::HandleCommand(const nlohmann::json &j)

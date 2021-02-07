@@ -4,7 +4,7 @@
 #include <Vector/Vector3D.h>
 #include <Volume/Volume.h>
 
-#include <vector>
+#include <map>
 #include <string>
 
 class MovingBodyComponent;
@@ -27,6 +27,8 @@ public:
 	void AddComponent(MovingBodyComponent *component);
 	
 	double GetMass() const;
+	
+	std::map<std::string, Vector3D> GetForces() const;
 };
 
 #endif

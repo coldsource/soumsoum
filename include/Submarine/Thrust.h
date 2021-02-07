@@ -3,11 +3,16 @@
 
 #include <Submarine/Component.h>
 #include <Simulation/SimulationObject.h>
+#include <Dynamic/MovingBodyComponent.h>
 
 #include <nlohmann/json.hpp>
 
-class Thrust: public Component, public SimulationObject
+class Submarine;
+
+class Thrust: public Component, public SimulationObject, public MovingBodyComponent
 {
+	Submarine *submarine;
+	
 	double angle_x = 0;
 	double angle_z = 0;
 	
@@ -16,12 +21,14 @@ class Thrust: public Component, public SimulationObject
 	double rate_second = 0.05;
 	
 public:
-	Thrust();
+	Thrust(Submarine *submarine);
 	
 	double GetMass() const { return 0; }
 	double GetAngleX() const { return angle_x; }
 	double GetAngleZ() const { return angle_z; }
 	double GetForce() const { return 3000000 * rate; }
+	
+	virtual std::map<std::string, Vector3D> GetForces() const;
 	
 	void HandleCommand(const nlohmann::json &j);
 	

@@ -16,7 +16,8 @@ Submarine::Submarine():
 	ballast(&air_tank),
 	compensating_tank_center(16, 5),
 	compensating_tank_front(10, 5),
-	compensating_tank_back(10, 5)
+	compensating_tank_back(10, 5),
+	thrust(this)
 {
 	AddPart(&stern);
 	AddPart(&back);
@@ -26,6 +27,7 @@ Submarine::Submarine():
 	AddPart(&bow);
 	
 	stern.AddComponent(&compensating_tank_back);
+	stern.AddComponent(&thrust);
 	center.AddComponent(&ballast);
 	center.AddComponent(&compensating_tank_center);
 	bow.AddComponent(&compensating_tank_front);
@@ -44,16 +46,6 @@ Submarine::Submarine():
 double Submarine::GetMomentOfInertia() const
 {
 	return 90000000;
-}
-
-void Submarine::StepTime(double dt)
-{
-	double L = 49.75;
-	
-	Vector3D back_vector = Vector3D::FromSpherical(L, attitude.x - M_PI, attitude.z);
-	forces["thrust"] = { back_vector, Vector3D::FromSpherical(thrust.GetForce(), attitude.x + thrust.GetAngleX(), attitude.z + thrust.GetAngleZ())};
-	
-	MovingBody::StepTime(dt);
 }
 
 void Submarine::HandleCommand(const nlohmann::json &json)

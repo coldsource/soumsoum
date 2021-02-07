@@ -26,18 +26,27 @@ void MovingBody::StepTime(double dt)
 	{
 		MovingBodyPart *part = *it;
 		
+		// Compute relative position in submarine
 		Vector3D rel_position = part->position;
 		rel_position.Rotate(attitude);
 		
+		// Compute absolute position
 		Vector3D abs_position = position + rel_position;
 		
+		// Compute relative and absolute speed (submarine speed + rotating linear speed)
 		Vector3D rel_speed = rel_position * angular_speed;
 		Vector3D abs_speed = speed + rel_speed * -1;
 		
+		// Automatic forces
 		forces[part->name+"_ap"] = { rel_position, ArchimedesPrinciple(*part, water, -abs_position.z)};
 		forces[part->name+"_gravity"] = { rel_position, Gravity(part->GetMass())};
 		forces[part->name+"_drag"] = { rel_position, Drag(*part, water, attitude, abs_speed)};
 		forces[part->name+"_lift"] = { rel_position, Lift(*part, water, attitude, abs_speed)};
+		
+		// Component forces
+		auto component_forces = part->GetForces();
+		for(auto it = component_forces.begin(); it!=component_forces.end(); ++it)
+			forces[part->name+"_"+it->first] = {rel_position, it->second};
 	}
 	
 	for(auto it = forces.begin();it!=forces.end(); ++it)

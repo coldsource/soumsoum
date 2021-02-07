@@ -24,3 +24,17 @@ double MovingBodyPart::GetMass() const
 	
 	return mass;
 }
+
+map<string, Vector3D> MovingBodyPart::GetForces() const
+{
+	map<string, Vector3D> forces;
+	
+	for(auto it=components.begin(); it!=components.end(); ++it)
+	{
+		auto component_forces = (*it)->GetForces();
+		for(auto it2 = component_forces.begin(); it2!=component_forces.end(); ++it2)
+			forces[it2->first] = it2->second;
+	}
+	
+	return forces;
+}
