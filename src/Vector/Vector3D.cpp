@@ -1,4 +1,5 @@
 #include <Vector/Vector3D.h>
+#include <Vector/Matrix3D.h>
 
 #include <math.h>
 
@@ -29,7 +30,7 @@ Vector3D Vector3D::FromSpherical(double L, double x, double z)
 
 void Vector3D::ToSpherical(double *L, double *ax, double *az) const
 {
-	*L = GetNorm();
+	double N = GetNorm();
 	
 	if(x==0 && y==0)
 	{
@@ -38,9 +39,12 @@ void Vector3D::ToSpherical(double *L, double *ax, double *az) const
 	}
 	else
 	{
-		*ax = M_PI / 2.0 - acos(z / *L);
+		*ax = M_PI / 2.0 - acos(z / N);
 		*az = M_PI / 2.0 - atan2(y,x);
 	}
+	
+	if(L)
+		*L = N;
 }
 
 bool Vector3D::IsNull() const
@@ -53,31 +57,70 @@ double Vector3D::GetNorm() const
 	return sqrt(x*x + y*y + z*z);
 }
 
+Vector3D Vector3D::GetUnit() const
+{
+	double n = GetNorm();
+	return Vector3D(x / n, y / n, z / n);
+}
+
 void Vector3D::RotateX(double a)
 {
 	a *= -1;
-	y = cos(a) * y + sin(a) * z;
-	z = -sin(a) * y + cos(a) * z;
+	
+	double yr = cos(a) * y + sin(a) * z;
+	double zr = -sin(a) * y + cos(a) * z;
+	
+	y = yr;
+	z = zr;
 }
 
 void Vector3D::RotateY(double a)
 {
-	x = cos(a) * x -sin(a) * z;
-	z = sin(a) * x + cos(a) * z;
+	double xr = cos(a) * x -sin(a) * z;
+	double zr = sin(a) * x + cos(a) * z;
+	
+	x = xr;
+	z = zr;
 }
 
 void Vector3D::RotateZ(double a)
 {
-	a *= -1;
-	x = cos(a) * x + sin(a) * y;
-	y = -sin(a) * x + cos(a) * y;
+	double xr = cos(a) * x + sin(a) * y;
+	double yr = -sin(a) * x + cos(a) * y;
+	
+	x = xr;
+	y = yr;
 }
 
-void Vector3D::Rotate(const Vector3D &angles)
+void Vector3D::Rotate(const Vector3D &r)
 {
-	RotateX(angles.x);
-	RotateY(angles.y);
-	RotateZ(angles.z);
+	Rotate(r, r.GetNorm());
+}
+
+void Vector3D::Rotate(const Vector3D &nr, double a)
+{
+	if(nr.IsNull())
+		return;
+	
+	Vector3D r = nr.GetUnit();
+	
+	Matrix3D M = Matrix3D(1, 0, 0, 0, 1, 0, 0, 0, 1) * cos(a);
+	M += Matrix3D(r.x*r.x, r.x*r.y, r.x*r.z, r.x*r.y, r.y*r.y, r.y*r.z, r.x*r.z, r.y*r.z, r.z*r.z) * (1-cos(a));
+	M += Matrix3D(0, -r.z, r.y, r.z, 0, -r.x, -r.y, r.x, 0) * sin(a);
+	
+	*this = M*(*this);
+}
+
+void Vector3D::FromRG(const Vector3D &attitude)
+{
+	RotateX(attitude.x);
+	RotateZ(attitude.z);
+}
+
+void Vector3D::ToRG(const Vector3D &attitude)
+{
+	RotateZ(-attitude.z);
+	RotateX(-attitude.x);
 }
 
 void Vector3D::Printf(const std::string &name) const
@@ -105,10 +148,10 @@ Vector3D Vector3D::operator*(double d) const
 	return v;
 }
 
-Vector3D Vector3D::operator*(const Vector3D &v) const
+Vector3D Vector3D::operator^(const Vector3D &v) const
 {
 	Vector3D r = *this;
-	r *= v;
+	r ^= v;
 	
 	return r;
 }
@@ -130,7 +173,7 @@ Vector3D &Vector3D::operator*=(double d)
 	return *this;
 }
 
-Vector3D &Vector3D::operator*=(const Vector3D &v)
+Vector3D &Vector3D::operator^=(const Vector3D &v)
 {
 	double nx = y*v.z - z*v.y;
 	double ny = z*v.x - x*v.z;

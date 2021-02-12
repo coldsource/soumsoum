@@ -14,7 +14,7 @@ MovingBodyPart::MovingBodyPart(const string &name, const Vector3D &position, dou
 Vector3D MovingBodyPart::GetRelativePosition() const
 {
 	Vector3D rel_position = position;
-	rel_position.Rotate(moving_body->GetAttitude());
+	rel_position.FromRG(moving_body->GetAttitude());
 	return rel_position;
 }
 

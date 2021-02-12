@@ -14,8 +14,7 @@ Drag::Drag(const Volume &v, const Fluid &f, const Vector3D &attitude, const Vect
 	v.GetContactSurfaces(&SP, &SN);
 	
 	Vector3D incident_speed = speed;
-	incident_speed.RotateX(-attitude.x);
-	incident_speed.RotateZ(-attitude.z);
+	incident_speed.ToRG(attitude);
 	
 	double density = f.GetDensity();
 	if(incident_speed.x > 0)
@@ -38,6 +37,5 @@ Drag::Drag(const Volume &v, const Fluid &f, const Vector3D &attitude, const Vect
 	if(incident_speed.z>=0)
 		z *= -1;
 	
-	RotateX(attitude.x);
-	RotateZ(attitude.z);
+	FromRG(attitude);
 }

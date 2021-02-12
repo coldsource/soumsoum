@@ -101,7 +101,6 @@ int callback_ws(struct lws *wsi, enum lws_callback_reasons reason, void *user, v
 		{
 			string input_json_str((char *)in,len);
 			
-			printf("%s\n",input_json_str.c_str());
 			json command = json::parse(input_json_str);
 			
 			context->submarine->HandleCommand(command);

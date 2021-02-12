@@ -41,6 +41,11 @@ Submarine::Submarine():
 	components.insert(pair<string, Component *>("compensating_tank_back", &compensating_tank_back));
 	components.insert(pair<string, Component *>("thrust", &thrust));
 	components.insert(pair<string, Component *>("diving_plane", &diving_plane));
+	
+	latitude = 48.308898557355235;
+	longitude = -4.506347834823013;
+	
+	//attitude.z = M_PI;
 }
 
 double Submarine::GetMomentOfInertia() const

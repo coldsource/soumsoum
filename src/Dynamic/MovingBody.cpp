@@ -1,6 +1,5 @@
 #include <Dynamic/MovingBody.h>
 #include <Dynamic/MovingBodyPart.h>
-
 #include <Force/ArchimedesPrinciple.h>
 #include <Force/Gravity.h>
 #include <Force/Drag.h>
@@ -10,6 +9,12 @@
 
 using namespace std;
 using json = nlohmann::json;
+
+MovingBody::MovingBody()
+{
+	double a = 6378137, f = 1/298.257223563; /* WGS84 */ 
+	geod_init(&geod, a, f);
+}
 
 void MovingBody::AddPart(MovingBodyPart *part)
 {
@@ -32,7 +37,7 @@ void MovingBody::StepTime(double dt)
 		Vector3D abs_position = part->GetAbsolutePosition();
 		
 		// Compute relative and absolute speed (submarine speed + rotating linear speed)
-		Vector3D rel_speed = rel_position * angular_speed;
+		Vector3D rel_speed = rel_position ^ angular_speed;
 		Vector3D abs_speed = speed + rel_speed * -1;
 		
 		// Automatic forces
@@ -50,16 +55,34 @@ void MovingBody::StepTime(double dt)
 	for(auto it = forces.begin();it!=forces.end(); ++it)
 	{
 		resulting_force += it->second.force;
-		resulting_torque += it->second.position * it->second.force;
+		
+		if(it->second.position.IsNull())
+			continue; // Ignore forces applied to gravity center for torque
+		
+		resulting_torque += it->second.position ^ it->second.force;
 	}
+	
+	Vector3D deltapos;
 	
 	acceleration = resulting_force / GetMass();
 	speed += acceleration * dt;
-	position += speed * dt;
+	position += (deltapos = speed * dt);
 	
 	angular_acceleration = resulting_torque / GetMomentOfInertia();
 	angular_speed += angular_acceleration * dt;
-	attitude += angular_speed * dt;
+	
+	Vector3D vattitude(0, 1, 0);
+	vattitude.FromRG(attitude);
+	vattitude.Rotate(angular_speed * dt);
+	//vattitude.Printf("vattitude");
+	
+	vattitude.ToSpherical(0, &attitude.x, &attitude.z);
+	
+	//attitude += angular_speed * dt;
+	
+	double azimuth = 180/M_PI * atan2(deltapos.x, deltapos.y);
+	double distance = sqrt(deltapos.x*deltapos.x + deltapos.y*deltapos.y);
+	geod_direct(&geod, latitude, longitude, azimuth, distance, &latitude, &longitude, &azimuth);
 }
 
 double MovingBody::GetMass() const
@@ -79,7 +102,11 @@ json MovingBody::ToJson() const
 	j["acceleration"] = acceleration.ToJson();
 	j["speed"] = speed.ToJson();
 	j["position"] = position.ToJson();
+	j["angular_acceleration"] = angular_acceleration.ToJson();
+	j["angular_speed"] = angular_speed.ToJson();
 	j["attitude"] = attitude.ToJson();
+	j["gps"]["latitude"] = latitude;
+	j["gps"]["longitude"] = longitude;
 	
 	json jforces;
 	for(auto it = forces.begin(); it!=forces.end(); ++it)

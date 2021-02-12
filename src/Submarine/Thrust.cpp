@@ -17,7 +17,12 @@ map<string, Vector3D> Thrust::GetForces() const
 	
 	const Vector3D attitude = moving_body->GetAttitude();
 	
-	forces["thrust"] = { Vector3D::FromSpherical(GetForce(), attitude.x + GetAngleX(), attitude.z + GetAngleZ())};
+	Vector3D thrust(0, GetForce(), 0);
+	thrust.RotateX(angle_x);
+	thrust.RotateZ(angle_z);
+	thrust.FromRG(attitude);
+	
+	forces["thrust"] = thrust;
 	
 	return forces;
 }
