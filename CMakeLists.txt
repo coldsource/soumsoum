@@ -11,6 +11,7 @@ aux_source_directory(src/Force srcForce)
 aux_source_directory(src/Dynamic srcDynamic)
 aux_source_directory(src/Submarine srcSubmarine)
 aux_source_directory(src/Simulation srcSimulation)
+aux_source_directory(src/Geodesic srcGeodesic)
 
 add_executable(soumsoum
 	${srcFluid}
@@ -20,6 +21,7 @@ add_executable(soumsoum
 	${srcDynamic}
 	${srcSubmarine}
 	${srcSimulation}
+	${srcGeodesic}
 	
 	src/main.cpp
 	)

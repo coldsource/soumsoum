@@ -52,10 +52,15 @@ export class Thrust extends React.Component {
 			App.api.command({component: this.props.name, action: "angle_x_minus"});
 		if(e.key=="8")
 			App.api.command({component: this.props.name, action: "angle_x_plus"});
+		if(e.key=="4")
+			App.api.command({component: this.props.name, action: "angle_z_plus"});
+		if(e.key=="6")
+			App.api.command({component: this.props.name, action: "angle_z_minus"});
 	}
 	
 	keyUp(e) {
 		App.api.command({component: this.props.name, action: "angle_x_neutral"});
+		App.api.command({component: this.props.name, action: "angle_z_neutral"});
 	}
 	
 	render() {

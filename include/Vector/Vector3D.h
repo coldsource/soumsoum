@@ -22,23 +22,27 @@ public:
 	
 	bool IsNull() const;
 	double GetNorm() const;
+	Vector3D GetUnit() const;
 	
 	void RotateX(double a);
 	void RotateY(double a);
 	void RotateZ(double a);
-	void Rotate(const Vector3D &angles);
+	void Rotate(const Vector3D &r);
+	void Rotate(const Vector3D &nr, double a);
+	void FromRG(const Vector3D &attitude);
+	void ToRG(const Vector3D &attitude);
 	
 	void Printf(const std::string &name) const;
 	void PrintfSpherical(const std::string &name) const;
 	
 	Vector3D operator+(const Vector3D &v) const;
 	Vector3D operator*(double d) const;
-	Vector3D operator*(const Vector3D &v) const;
+	Vector3D operator^(const Vector3D &v) const;
 	Vector3D operator/(double d) const;
 	
 	Vector3D &operator+=(const Vector3D &v);
 	Vector3D &operator*=(double d);
-	Vector3D &operator*=(const Vector3D &v);
+	Vector3D &operator^=(const Vector3D &v);
 	Vector3D &operator/=(double d);
 	
 	Vector3D &operator=(const Vector3D &v);

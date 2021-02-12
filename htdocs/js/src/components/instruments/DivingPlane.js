@@ -49,8 +49,8 @@ export class DivingPlane extends React.Component {
 			App.api.command({component: this.props.name, action: "rate_minus"});
 		if(e.key=="9")
 			App.api.command({component: this.props.name, action: "surface"});
-		if(e.key=="6")
-			App.api.command({component: this.props.name, action: "neutral"});
+		/*if(e.key=="6")
+			App.api.command({component: this.props.name, action: "neutral"});*/
 		if(e.key=="3")
 			App.api.command({component: this.props.name, action: "dive"});
 	}

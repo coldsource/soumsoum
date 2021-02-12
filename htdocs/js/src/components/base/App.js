@@ -24,6 +24,8 @@ import {Ballast} from '../instruments/Ballast.js';
 import {CompensatingTank} from '../instruments/CompensatingTank.js';
 import {Thrust} from '../instruments/Thrust.js';
 import {DivingPlane} from '../instruments/DivingPlane.js';
+import {Forces} from '../instruments/Forces.js';
+import {Map} from '../instruments/Map.js';
 
 export class App extends React.Component {
 	constructor(props) {
@@ -46,47 +48,6 @@ export class App extends React.Component {
 		return Object.keys(tank).map((fluid_name) => { 
 			let fluid = tank[fluid_name];
 			return (<b key={fluid_name}>{fluid_name} {fluid.volume} {fluid.pressure}</b>);
-		});
-	}
-	
-	renderSVG() {
-		return (
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -20 120 40" style={{width:800, height:600}}>
-				<defs>
-					<marker id="arrowhead" markerWidth="5" markerHeight="3.5" refX="0" refY="1.75" orient="auto">
-						<polygon points="0 0, 5 1.75, 0 3.5" />
-					</marker>
-				</defs>
-				{ this.renderSVGForces() }
-			</svg>
-		);
-	}
-	
-	renderSVGForces() {
-		return Object.keys(this.state.data.forces).map((force_name) => {
-			let f = Object.assign({},this.state.data.forces[force_name]);
-			
-			if(f.x==0 && f.y==0 && f.z==0)
-				return;
-			
-			f.z0 = -f.z0;
-			
-			let scale = 500000;
-			if(scale==0)
-				scale = 1;
-			
-			f.y = f.y/scale;
-			f.z = -f.z/scale;
-			
-			let text_x = f.y0 + f.y - 10;
-			let text_y = f.z>0?f.z0 + f.z + 7:f.z0 + f.z - 6;
-			
-			return (
-				<React.Fragment key={force_name}>
-					<line x1={f.y0} y1={f.z0} x2={f.y0 + f.y} y2={f.z0 + f.z} stroke="#ff0000" strokeWidth="1" markerEnd="url(#arrowhead)" />
-					<text fontSize="2" x={text_x} y={text_y}>{force_name} {Math.round(f.norm/1000)} kN</text>
-				</React.Fragment>
-			);
 		});
 	}
 	
@@ -130,14 +91,21 @@ export class App extends React.Component {
 					<b>Position</b> : {data.position.x.toFixed(2)} {data.position.y.toFixed(2)} {data.position.z.toFixed(2)}
 				</div>
 				<div>
+					<b>Angular acceleration</b> : {this.radToDeg(data.angular_acceleration.x).toFixed(2)} {this.radToDeg(data.angular_acceleration.y).toFixed(2)} {this.radToDeg(data.angular_acceleration.z).toFixed(2)}
+				</div>
+				<div>
+					<b>Angular speed</b> : {this.radToDeg(data.angular_speed.x).toFixed(2)} {this.radToDeg(data.angular_speed.y).toFixed(2)} {this.radToDeg(data.angular_speed.z).toFixed(2)}
+				</div>
+				<div>
 					<b>Attitude</b> : {this.radToDeg(data.attitude.x).toFixed(2)} {this.radToDeg(data.attitude.y).toFixed(2)} {this.radToDeg(data.attitude.z).toFixed(2)}
 				</div>
 				<div>
 					<b>Air Tank</b> : { this.renderTank(data.air_tank) }
 				</div>
 				<div>
-					{ this.renderSVG() }
+					<Forces forces={this.state.data.forces} />
 				</div>
+				<Map data={data.gps} />
 				<div style={{position: 'absolute', top: '0px', right: '0px', width: '800px', height: '1000px'}}>
 					<div style={{position: 'relative', top: '0px', overflow: 'hidden'}}>{this.renderYAxis(data.position.y)}</div>
 					<div style={{position: 'absolute', top: '240px', right: '0px', width: '800px', height: '900px', backgroundColor: '#bff2ff'}}></div>

@@ -6,6 +6,7 @@
 #include <Force/Force.h>
 #include <Fluid/Water.h>
 #include <Simulation/SimulationObject.h>
+#include <Geodesic/geodesic.h>
 
 #include <map>
 #include <string>
@@ -23,10 +24,15 @@ protected:
 	Vector3D acceleration;
 	Vector3D speed;
 	Vector3D position;
+	Vector3D position_gps;
 	
 	Vector3D angular_acceleration;
 	Vector3D angular_speed;
 	Vector3D attitude;
+	
+	struct geod_geodesic geod;
+	double latitude;
+	double longitude;
 	
 	std::vector<MovingBodyPart *> parts;
 	
@@ -39,6 +45,8 @@ protected:
 	std::map <std::string, st_force> forces;
 	
 public:
+	MovingBody();
+	
 	void AddPart(MovingBodyPart *part);
 	
 	void StepTime(double dt);
