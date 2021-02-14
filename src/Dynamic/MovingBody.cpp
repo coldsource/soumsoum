@@ -10,7 +10,7 @@
 using namespace std;
 using json = nlohmann::json;
 
-MovingBody::MovingBody()
+MovingBody::MovingBody(): map(this)
 {
 	double a = 6378137, f = 1/298.257223563; /* WGS84 */ 
 	geod_init(&geod, a, f);
@@ -105,8 +105,10 @@ json MovingBody::ToJson() const
 	j["angular_acceleration"] = angular_acceleration.ToJson();
 	j["angular_speed"] = angular_speed.ToJson();
 	j["attitude"] = attitude.ToJson();
-	j["gps"]["latitude"] = latitude;
-	j["gps"]["longitude"] = longitude;
+	
+	j["compass"] = fmod((attitude.z/(2*M_PI)*360)+360, 360);
+	j["speed"]["vertical"] = speed.z;
+	j["speed"]["horizontal"] = sqrt(pow(speed.x, 2)+pow(speed.y, 2));
 	
 	json jforces;
 	for(auto it = forces.begin(); it!=forces.end(); ++it)

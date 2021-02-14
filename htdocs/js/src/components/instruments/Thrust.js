@@ -31,6 +31,8 @@ export class Thrust extends React.Component {
 		
 		this.keyDown = this.keyDown.bind(this);
 		this.keyUp = this.keyUp.bind(this);
+		
+		App.registerComponent("thrust", this);
 	}
 	
 	componentDidMount() {
@@ -45,34 +47,31 @@ export class Thrust extends React.Component {
 	
 	keyDown(e) {
 		if(e.key=="+")
-			App.api.command({component: this.props.name, action: "rate_plus"});
+			App.api.command({component: "thrust", action: "rate_plus"});
 		if(e.key=="-")
-			App.api.command({component: this.props.name, action: "rate_minus"});
+			App.api.command({component: "thrust", action: "rate_minus"});
 		if(e.key=="2")
-			App.api.command({component: this.props.name, action: "angle_x_minus"});
+			App.api.command({component: "thrust", action: "angle_x_minus"});
 		if(e.key=="8")
-			App.api.command({component: this.props.name, action: "angle_x_plus"});
+			App.api.command({component: "thrust", action: "angle_x_plus"});
 		if(e.key=="4")
-			App.api.command({component: this.props.name, action: "angle_z_plus"});
+			App.api.command({component: "thrust", action: "angle_z_plus"});
 		if(e.key=="6")
-			App.api.command({component: this.props.name, action: "angle_z_minus"});
+			App.api.command({component: "thrust", action: "angle_z_minus"});
 	}
 	
 	keyUp(e) {
-		App.api.command({component: this.props.name, action: "angle_x_neutral"});
-		App.api.command({component: this.props.name, action: "angle_z_neutral"});
+		App.api.command({component: "thrust", action: "angle_x_neutral"});
+		App.api.command({component: "thrust", action: "angle_z_neutral"});
 	}
 	
 	render() {
-		let fill = ''+Math.round(this.props.data.volume * 1000);
-		let len = (''+(this.props.data.capacity*1000)).length;
-		fill = fill.padStart(5, '0');
+		if(this.state.data===undefined)
+			return null;
 		
 		return (
 			<div className="Thrust">
-				<h2>{this.props.name}</h2>
-				<Gauge current={this.props.data.targeted_rate} max={1} />
-				<Gauge current={this.props.data.rate} max={1} />
+				<Gauge current={[this.state.data.targeted_rate, this.state.data.rate]} min="0" max="1" display={'Power: '+Math.round(this.state.data.rate*100)+'%'} />
 			</div>
 		);
 	}

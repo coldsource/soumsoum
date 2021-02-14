@@ -6,7 +6,9 @@
 #include <Force/Force.h>
 #include <Fluid/Water.h>
 #include <Simulation/SimulationObject.h>
-#include <Geodesic/geodesic.h>
+#include <Simulation/SimulationStatus.h>
+#include <Map/geodesic.h>
+#include <Map/Map.h>
 
 #include <map>
 #include <string>
@@ -16,7 +18,7 @@
 
 class MovingBodyPart;
 
-class MovingBody: public SimulationObject
+class MovingBody: public SimulationObject, public SimulationStatus
 {
 protected:
 	Water water;
@@ -30,6 +32,7 @@ protected:
 	Vector3D angular_speed;
 	Vector3D attitude;
 	
+	Map map;
 	struct geod_geodesic geod;
 	double latitude;
 	double longitude;
@@ -61,6 +64,7 @@ public:
 	const Vector3D &GetAttitude() const { return attitude; }
 	const Vector3D &GetAngularSpeed() const { return angular_speed; }
 	const Vector3D &GetAngularAcceleration() const { return angular_acceleration; }
+	void GetLatLng(double *lat, double *lng) const { *lat = latitude; *lng = longitude; }
 	
 	nlohmann::json ToJson() const;
 	

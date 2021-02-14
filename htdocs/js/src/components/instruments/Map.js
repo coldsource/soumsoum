@@ -25,13 +25,11 @@ export class Map extends React.Component {
 	constructor(props) {
 		super(props);
 		
-		let now = Date.now();
 		this.state = {
-			t: now,
-			last_t: now
+			track: true
 		};
 		
-		this.int = null;
+		App.registerComponent("gps", this);
 	}
 	
 	componentDidMount() {
@@ -43,42 +41,40 @@ export class Map extends React.Component {
 			"https://stamen-tiles-c.a.ssl.fastly.net/watercolor/${z}/${x}/${y}.jpg",
 			"https://stamen-tiles-d.a.ssl.fastly.net/watercolor/${z}/${x}/${y}.jpg"
 		]));
-		
-		let lonLat = new OpenLayers.LonLat(this.props.data.longitude, this.props.data.latitude).transform(
-			new OpenLayers.Projection("EPSG:4326"), // transformation de WGS 1984
-			new OpenLayers.Projection("EPSG:900913") // en projection Mercator sphérique
-		);
-		
-		this.map.setCenter(lonLat, 15);
-		
-		this.markers = new OpenLayers.Layer.Markers("Markers");
-		this.map.addLayer(this.markers);
-		
-		this.marker = new OpenLayers.Marker(lonLat);
-		this.markers.addMarker(this.marker);
-		
-		this.int = setInterval(() => { this.setState({t: Date.now()}); }, 1000);
 	}
 	
 	render() {
-		if(this.state.t!=this.state.last_t)
+		if(this.state.data!==undefined)
 		{
-			let lonLatNew = new OpenLayers.LonLat(this.props.data.longitude, this.props.data.latitude).transform(
+			let lonLatNew = new OpenLayers.LonLat(this.state.data.longitude, this.state.data.latitude).transform(
 				new OpenLayers.Projection("EPSG:4326"),
 				new OpenLayers.Projection("EPSG:900913")
 			);
 			
+			if(this.markers===undefined)
+			{
+				this.map.setCenter(lonLatNew, 15);
+				
+				this.markers = new OpenLayers.Layer.Markers("Markers");
+				this.map.addLayer(this.markers);
+				
+				this.marker = new OpenLayers.Marker(lonLatNew);
+				this.markers.addMarker(this.marker);
+			}
+			
 			var newPx = this.map.getLayerPxFromViewPortPx(this.map.getPixelFromLonLat(lonLatNew));
 			
-			this.map.setCenter(lonLatNew, 15);
+			if(this.state.track)
+				this.map.setCenter(lonLatNew, 15);
 			
 			this.marker.moveTo(newPx);
-			
-			this.state.last_t = this.state.t;
 		}
 		
 		return (
-			<div id="map" className="Map"></div>
+			<div className="Map">
+				<input type="checkbox" checked={this.state.track} onChange={ () => this.setState({track: !this.state.track}) }/> Track
+				<div id="map" className="Map"></div>
+			</div>
 		);
 	}
 }

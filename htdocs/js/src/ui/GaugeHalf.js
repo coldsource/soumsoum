@@ -57,6 +57,6 @@ export class GaugeHalf extends React.Component {
 }
 
 GaugeHalf.defaultProps = {
-  min: 0,
-  max: 1,
+	min: 0,
+	max: 1,
 };

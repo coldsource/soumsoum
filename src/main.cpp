@@ -27,8 +27,9 @@ double GetDtime()
 
 struct per_session_data
 {
-	std::thread simulation_thread;
+	thread simulation_thread;
 	Submarine *submarine;
+	string status;
 	volatile bool exit = false;
 };
 
@@ -44,9 +45,12 @@ void simulation(struct lws *wsi, per_session_data *context)
 		if(context->exit)
 			break;
 		
-		double dt = GetDtime()-cur_time;
+		double t = GetDtime();
+		double dt = t-cur_time;
 		
 		SimulationObject::StepSimulation(dt);
+		
+		context->status = SimulationStatus::GetStatus(t).dump();
 		
 		lws_callback_on_writable(wsi);
 		lws_cancel_service(ws_context);
@@ -109,8 +113,9 @@ int callback_ws(struct lws *wsi, enum lws_callback_reasons reason, void *user, v
 		
 		case LWS_CALLBACK_SERVER_WRITEABLE:
 		{
-			json j = context->submarine->ToJson();
-			string json_str = j.dump();
+			double t = GetDtime();
+			
+			string json_str = context->status;
 			
 			json_str.insert(0,LWS_PRE,' ');
 			lws_write(wsi, (unsigned char *)json_str.c_str() + LWS_PRE, json_str.length()-LWS_PRE, LWS_WRITE_TEXT);
@@ -138,6 +143,8 @@ const struct lws_protocols protocols[] =
 };
 
 #include <Volume/Cylinder.h>
+#include <Vector/Matrix3D.h>
+#include <Map/Map.h>
 
 int main(void)
 {

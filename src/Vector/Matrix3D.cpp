@@ -17,6 +17,36 @@ Matrix3D::Matrix3D(double a00, double a01, double a02, double a10, double a11, d
 	M[2][2] = a22;
 }
 
+double Matrix3D::GetDet(void)
+{
+	double det = 0;
+	
+	det += M[0][0] * M[1][1] * M[2][2];
+	det += M[0][1] * M[1][2] * M[2][0];
+	det += M[0][2] * M[1][0] * M[2][1];
+	det -= M[0][2] * M[1][1] * M[2][0];
+	det -= M[1][2] * M[2][1] * M[0][0];
+	det -= M[2][2] * M[0][1] * M[1][0];
+	
+	printf("det = %f\n", det);
+	return det;
+}
+
+void Matrix3D::Invert(void)
+{
+	double det = GetDet();
+	
+	M[0][0] = (M[1][1]*M[2][2] - M[1][2]*M[2][1]) / det;
+	M[0][1] = (M[0][2]*M[2][1] - M[0][1]*M[2][2]) / det;
+	M[0][2] = (M[0][1]*M[1][2] - M[0][2]*M[1][1]) / det;
+	M[1][0] = (M[1][2]*M[2][0] - M[1][0]*M[2][2]) / det;
+	M[1][1] = (M[0][0]*M[2][2] - M[0][2]*M[2][0]) / det;
+	M[1][2] = (M[0][2]*M[1][0] - M[0][0]*M[1][2]) / det;
+	M[2][0] = (M[1][0]*M[2][1] - M[1][1]*M[2][0]) / det;
+	M[2][1] = (M[0][1]*M[2][0] - M[0][0]*M[2][1]) / det;
+	M[2][2] = (M[0][0]*M[1][1] - M[0][1]*M[1][0]) / det;
+}
+
 Matrix3D Matrix3D::operator*(double d) const
 {
 	Matrix3D M = *this;

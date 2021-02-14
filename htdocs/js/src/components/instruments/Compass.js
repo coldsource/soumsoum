@@ -17,35 +17,33 @@
   * Author: Thibault Kummer
   */
 
-export class SoumsoumAPI
-{
-	constructor(parameters)
-	{
-		SoumsoumAPI.instance = this;
-	}
-	
-	connect(app)
-	{
-		var self = this;
+'use strict';
+
+import {App} from '../base/App.js';
+
+export class Compass extends React.Component {
+	constructor(props) {
+		super(props);
 		
-		self.ws = new WebSocket("ws://localhost:7000", "api");
-		
-		// Event on connection
-		self.ws.onopen = function (event) {
-			console.log("Connected");
+		this.state = {
 		};
-			
-		// Event on disconnection
-		self.ws.onclose = function(event) {
-			console.log("Disconnected");
-		}
-			
-		self.ws.onmessage = function (event) {
-			app.handleData(JSON.parse(event.data));
-		}
+		
+		App.registerComponent("compass", this);
 	}
 	
-	command(data) {
-		this.ws.send(JSON.stringify(data));
+	render() {
+		if(this.state.data===undefined)
+			return null;
+		
+		return (
+			<div className="Compass">
+				<div className="compass">
+					<div style={{transform: 'rotate(-'+this.state.data+'deg)'}}>
+						<div style={{transform: 'rotate(+'+this.state.data+'deg)'}}></div>
+					</div>
+				</div>
+				<div className="display">{this.state.data.toFixed(1)}</div>
+			</div>
+		);
 	}
 }

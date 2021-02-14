@@ -90,9 +90,10 @@ void Thrust::StepTime(double dt)
 json Thrust::ToJson() const
 {
 	json j;
-	j["angle_x"] = angle_x;
-	j["angle_z"] = angle_z;
-	j["rate"] = rate;
-	j["targeted_rate"] = targeted_rate;
+	j["thrust"]["angle_x"] = angle_x;
+	j["thrust"]["angle_z"] = angle_z;
+	j["thrust"]["rate"] = rate;
+	j["thrust"]["targeted_rate"] = targeted_rate;
+	
 	return j;
 }

@@ -3,13 +3,14 @@
 
 #include <Submarine/Component.h>
 #include <Simulation/SimulationObject.h>
+#include <Simulation/SimulationStatus.h>
 #include <Dynamic/MovingBodyComponent.h>
 
 #include <nlohmann/json.hpp>
 
 class Submarine;
 
-class Thrust: public Component, public SimulationObject, public MovingBodyComponent
+class Thrust: public Component, public SimulationObject, public SimulationStatus, public MovingBodyComponent
 {
 	Submarine *submarine;
 	

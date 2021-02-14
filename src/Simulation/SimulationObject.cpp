@@ -20,7 +20,7 @@ SimulationObject::~SimulationObject()
 	
 	for(auto it = simulation_objs.begin(); it!=simulation_objs.end(); ++it)
 	{
-		if((*it).obj == this)
+		if(it->obj == this)
 		{
 			simulation_objs.erase(it);
 			break;
@@ -36,8 +36,8 @@ void SimulationObject::StepSimulation(double dt)
 	
 	for(auto it = simulation_objs.begin(); it!=simulation_objs.end(); ++it)
 	{
-		if((*it).thread_id==this_thread::get_id())
-			((*it).obj)->StepTime(dt);
+		if(it->thread_id==this_thread::get_id())
+			it->obj->StepTime(dt);
 	}
 	
 	g_mutex.unlock();

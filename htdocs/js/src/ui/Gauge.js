@@ -27,15 +27,40 @@ export class Gauge extends React.Component {
 		};
 	}
 	
+	computeNeedleAngle(val) {
+		let min_a = -170;
+		let max_a = 170;
+		return min_a + (max_a - min_a) * (val - this.props.min) / (this.props.max - this.props.min);
+	}
+	
+	renderNeedles() {
+		if(typeof(this.props.current)!='object')
+		{
+			let a = this.computeNeedleAngle(this.props.current);
+			return (<div className="needle" style={{rotate: a+'deg'}}></div>);
+		}
+		else return this.props.current.map((cur, idx) => {
+			let a = this.computeNeedleAngle(cur);
+			return (<div key={idx} className="needle" style={{rotate: a+'deg'}}></div>);
+		});
+	}
+	
 	render() {
-		let min_a = 0.5 * 3.14 + 0.3;
-		let max_a = 2.5 * 3.14 - 0.3;
-		let a = min_a + (max_a - min_a) * this.props.current / this.props.max;
 		
 		return (
 			<div className="Gauge">
-				<div className="needle" style={{rotate: a+'rad'}}></div>
+				<div className="gauge">
+					<div>
+						{this.renderNeedles()}
+					</div>
+				</div>
+				<div className="display">{this.props.display}</div>
 			</div>
 		);
 	}
 }
+
+Gauge.defaultProps = {
+	min: 0,
+	max: 1,
+};

@@ -23,20 +23,52 @@ import {SoumsoumAPI} from '../../websockets/soumsoum_api.js';
 import {Ballast} from '../instruments/Ballast.js';
 import {CompensatingTank} from '../instruments/CompensatingTank.js';
 import {Thrust} from '../instruments/Thrust.js';
+import {Speed} from '../instruments/Speed.js';
 import {DivingPlane} from '../instruments/DivingPlane.js';
 import {Forces} from '../instruments/Forces.js';
+import {Compass} from '../instruments/Compass.js';
 import {Map} from '../instruments/Map.js';
+import {DepthMap} from '../instruments/DepthMap.js';
 
 export class App extends React.Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
-			data: undefined
 		};
 		
+		this.components = {};
+		
+		App.instance = this;
+		App.registerComponent = this.registerComponent;
+		
 		App.api = this.api = new SoumsoumAPI();
+		
 		this.api.connect(this);
+	}
+	
+	handleData(data) {
+		if(data===null)
+			return;
+		
+		for(const [name, value] of Object.entries(data)) {
+			if(this.components[name]!==undefined)
+			{
+				for(let i=0;i<this.components[name].length;i++)
+					this.components[name][i].setState({data: value});
+			}
+		}
+	}
+	
+	registerComponent(name, instance) {
+		App.instance.register_component(name, instance);
+	}
+	
+	register_component(name, instance) {
+		if(this.components[name]===undefined)
+			this.components[name] = [];
+		
+		this.components[name].push(instance);
 	}
 	
 	radToDeg(rad)
@@ -68,18 +100,21 @@ export class App extends React.Component {
 	}
 	
 	render() {
-		if(this.state.data===undefined)
-			return null;
-		
-		let data = this.state.data;
-		let components = data.components;
+		return (
+			<div>
+				<Compass />
+				<Thrust />
+				<Speed />
+				<Map />
+				<DepthMap />
+			</div>
+		);
 		return (
 			<div>
 				<Ballast name="ballast" data={components.ballast} />
 				<CompensatingTank name="compensating_tank_back" data={components.compensating_tank_back} />
 				<CompensatingTank name="compensating_tank_center" data={components.compensating_tank_center} />
 				<CompensatingTank name="compensating_tank_front" data={components.compensating_tank_front} />
-				<Thrust name="thrust" data={components.thrust} />
 				<DivingPlane name="diving_plane" data={components.diving_plane} />
 				<div>
 					<b>Acceleration</b> : {data.acceleration.x.toFixed(2)} {data.acceleration.y.toFixed(2)} {data.acceleration.z.toFixed(2)}
@@ -105,7 +140,7 @@ export class App extends React.Component {
 				<div>
 					<Forces forces={this.state.data.forces} />
 				</div>
-				<Map data={data.gps} />
+				<DepthMap />
 				<div style={{position: 'absolute', top: '0px', right: '0px', width: '800px', height: '1000px'}}>
 					<div style={{position: 'relative', top: '0px', overflow: 'hidden'}}>{this.renderYAxis(data.position.y)}</div>
 					<div style={{position: 'absolute', top: '240px', right: '0px', width: '800px', height: '900px', backgroundColor: '#bff2ff'}}></div>
