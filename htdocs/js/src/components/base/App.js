@@ -23,6 +23,7 @@ import {SoumsoumAPI} from '../../websockets/soumsoum_api.js';
 import {Ballast} from '../instruments/Ballast.js';
 import {CompensatingTank} from '../instruments/CompensatingTank.js';
 import {Thrust} from '../instruments/Thrust.js';
+import {Rudder} from '../instruments/Rudder.js';
 import {Speed} from '../instruments/Speed.js';
 import {DivingPlane} from '../instruments/DivingPlane.js';
 import {Forces} from '../instruments/Forces.js';
@@ -104,6 +105,7 @@ export class App extends React.Component {
 			<div>
 				<Compass />
 				<Thrust />
+				<Rudder />
 				<Speed />
 				<Map />
 				<DepthMap />

@@ -17,6 +17,9 @@ class SimulationObject
 	static std::vector<obj_thread> simulation_objs;
 	static std::mutex g_mutex;
 	
+protected:
+	void variable_sim(double *current, double target, double rate, double dt) const;
+	
 public:
 	SimulationObject();
 	virtual ~SimulationObject();

@@ -106,7 +106,7 @@ json MovingBody::ToJson() const
 	j["angular_speed"] = angular_speed.ToJson();
 	j["attitude"] = attitude.ToJson();
 	
-	j["compass"] = fmod((attitude.z/(2*M_PI)*360)+360, 360);
+	j["compass"] = fmod((attitude.z/M_PI*180)+360, 360);
 	j["speed"]["vertical"] = speed.z;
 	j["speed"]["horizontal"] = sqrt(pow(speed.x, 2)+pow(speed.y, 2));
 	

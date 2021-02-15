@@ -28,8 +28,8 @@ export class Gauge extends React.Component {
 	}
 	
 	computeNeedleAngle(val) {
-		let min_a = -170;
-		let max_a = 170;
+		let min_a = parseFloat(this.props.min_angle);
+		let max_a = parseFloat(this.props.max_angle);
 		return min_a + (max_a - min_a) * (val - this.props.min) / (this.props.max - this.props.min);
 	}
 	
@@ -63,4 +63,6 @@ export class Gauge extends React.Component {
 Gauge.defaultProps = {
 	min: 0,
 	max: 1,
+	min_angle: -170,
+	max_angle: 170
 };

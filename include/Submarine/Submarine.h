@@ -15,6 +15,7 @@
 #include <Submarine/CompensatingTank.h>
 #include <Submarine/Ballast.h>
 #include <Submarine/Thrust.h>
+#include <Submarine/Rudder.h>
 #include <Volume/Cylinder.h>
 
 #include <map>
@@ -50,6 +51,7 @@ class Submarine: public MovingBody
 	CompensatingTank compensating_tank_back;
 	
 	Thrust thrust;
+	Rudder rudder;
 	
 	std::map<std::string, Component *> components;
 	

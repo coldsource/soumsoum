@@ -22,7 +22,7 @@
 import {App} from '../base/App.js';
 import {Gauge} from '../../ui/Gauge.js';
 
-export class Thrust extends React.Component {
+export class Rudder extends React.Component {
 	constructor(props) {
 		super(props);
 		
@@ -32,7 +32,7 @@ export class Thrust extends React.Component {
 		this.keyDown = this.keyDown.bind(this);
 		this.keyUp = this.keyUp.bind(this);
 		
-		App.registerComponent("thrust", this);
+		App.registerComponent("rudder", this);
 	}
 	
 	componentDidMount() {
@@ -46,15 +46,19 @@ export class Thrust extends React.Component {
 	}
 	
 	keyDown(e) {
-		if(e.key=="+")
-			App.api.command({component: "thrust", action: "rate_plus"});
-		if(e.key=="-")
-			App.api.command({component: "thrust", action: "rate_minus"});
+		if(e.key=="2")
+			App.api.command({component: "rudder", action: "angle_x_minus"});
+		if(e.key=="8")
+			App.api.command({component: "rudder", action: "angle_x_plus"});
+		if(e.key=="4")
+			App.api.command({component: "rudder", action: "angle_z_plus"});
+		if(e.key=="6")
+			App.api.command({component: "rudder", action: "angle_z_minus"});
 	}
 	
 	keyUp(e) {
-		App.api.command({component: "thrust", action: "angle_x_neutral"});
-		App.api.command({component: "thrust", action: "angle_z_neutral"});
+		App.api.command({component: "rudder", action: "angle_x_neutral"});
+		App.api.command({component: "rudder", action: "angle_z_neutral"});
 	}
 	
 	render() {
@@ -62,8 +66,9 @@ export class Thrust extends React.Component {
 			return null;
 		
 		return (
-			<div className="Thrust">
-				<Gauge current={[this.state.data.targeted_rate, this.state.data.rate]} min="0" max="1" display={'Power: '+Math.round(this.state.data.rate*100)+'%'} />
+			<div className="Rudder">
+				<Gauge current={this.state.data.angle_z} min="-15" max="15" min_angle="-220" max_angle="-140" display={Math.round(this.state.data.angle_z)} />
+				<Gauge current={this.state.data.angle_x} min="-15" max="15" min_angle="-130" max_angle="-50" display={Math.round(this.state.data.angle_x)} />
 			</div>
 		);
 	}

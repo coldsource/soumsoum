@@ -42,3 +42,22 @@ void SimulationObject::StepSimulation(double dt)
 	
 	g_mutex.unlock();
 }
+
+void SimulationObject::variable_sim(double *current, double target, double rate, double dt) const
+{
+	if(*current==target)
+		return;
+	
+	if(*current<target)
+	{
+		*current += rate * dt;
+		if(*current>target)
+			*current = target;
+	}
+	else
+	{
+		*current -= rate * dt;
+		if(*current<target)
+			*current = target;
+	}
+}

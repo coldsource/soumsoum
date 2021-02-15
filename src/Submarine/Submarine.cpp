@@ -17,7 +17,8 @@ Submarine::Submarine():
 	compensating_tank_center(16, 5),
 	compensating_tank_front(10, 5),
 	compensating_tank_back(10, 5),
-	thrust()
+	thrust(),
+	rudder()
 {
 	AddPart(&stern);
 	AddPart(&back);
@@ -28,6 +29,7 @@ Submarine::Submarine():
 	
 	stern.AddComponent(&compensating_tank_back);
 	stern.AddComponent(&thrust);
+	stern.AddComponent(&rudder);
 	center.AddComponent(&ballast);
 	center.AddComponent(&compensating_tank_center);
 	bow.AddComponent(&compensating_tank_front);
@@ -40,6 +42,7 @@ Submarine::Submarine():
 	components.insert(pair<string, Component *>("compensating_tank_front", &compensating_tank_front));
 	components.insert(pair<string, Component *>("compensating_tank_back", &compensating_tank_back));
 	components.insert(pair<string, Component *>("thrust", &thrust));
+	components.insert(pair<string, Component *>("rudder", &rudder));
 	components.insert(pair<string, Component *>("diving_plane", &diving_plane));
 	
 	latitude = 48.308898557355235;
