@@ -45,13 +45,27 @@ export class Gauge extends React.Component {
 		});
 	}
 	
+	renderMark(angle, s) {
+		return (
+			<div className="mark" style={{transform: 'rotate('+angle+'deg)'}}>
+				<div></div>
+				<span style={{transform: 'rotate('+(-angle)+'deg)'}}>{s}</span>
+			</div>
+		);
+	}
+	
 	render() {
+		let middle = parseFloat(this.props.min)+(parseFloat(this.props.max)-parseFloat(this.props.min))/2;
+		let middle_str = (middle<1 && middle!=0)?middle.toFixed(1):Math.round(middle);
 		
 		return (
 			<div className="Gauge">
 				<div className="gauge">
 					<div>
 						{this.renderNeedles()}
+						{this.renderMark(this.computeNeedleAngle(this.props.min)+90, this.props.min)}
+						{this.renderMark(this.computeNeedleAngle(middle)+90, middle_str)}
+						{this.renderMark(this.computeNeedleAngle(this.props.max)+90, this.props.max)}
 					</div>
 				</div>
 				<div className="display">{this.props.display}</div>

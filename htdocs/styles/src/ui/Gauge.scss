@@ -8,7 +8,8 @@ div.Gauge {
 		min-height: 7rem;
 		position: relative;
 		
-		div {
+		&>div {
+			position: relative;
 			width: 100%;
 			height: 100%;
 			min-width: 7rem;
@@ -17,7 +18,7 @@ div.Gauge {
 			background-size: 100% 100%;
 			overflow: hidden;
 			
-			div {
+			div.needle {
 				width: 100%;
 				height: 100%;
 				background-size: 100% 100%;
@@ -31,6 +32,32 @@ div.Gauge {
 				
 				&:nth-child(2n) {
 					background-image: url("/images/gauge-red-needle.svg");
+				}
+			}
+			
+			div.mark {
+				width: 50%;
+				position: absolute;
+				bottom:50%;
+				transform-origin: bottom right;
+				
+				div {
+					border: 1px solid red;
+					height: 0px;
+					width: 5px;
+					position: absolute;
+					bottom: 0;
+					left: 2px;
+					display: inline-block;
+				}
+				
+				span {
+					display: inline-block;
+					position: absolute;
+					left: 13px;
+					bottom: -0.4rem;
+					font-family: arial;
+					font-size: 0.7rem;
 				}
 			}
 		}
