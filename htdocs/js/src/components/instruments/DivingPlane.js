@@ -58,14 +58,13 @@ export class DivingPlane extends React.Component {
 	}
 	
 	render() {
-		if(this.state.data===undefined)
+		if(this.state.diving_plane===undefined)
 			return null;
 		
-		console.log(this.state.data);
 		return (
 			<div className="DivingPlane container">
 				<div className="legend">Diving plane</div>
-				<Gauge current={this.state.data.tilt} min="-15" max="15" min_angle="-120" max_angle="-60" display={Math.round(this.state.data.tilt)} />
+				<Gauge current={this.state.diving_plane.tilt} min="-15" max="15" min_angle="-120" max_angle="-60" display={Math.round(this.state.diving_plane.tilt)} />
 			</div>
 		);
 	}

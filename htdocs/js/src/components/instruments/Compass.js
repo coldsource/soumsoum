@@ -28,21 +28,22 @@ export class Compass extends React.Component {
 		this.state = {
 		};
 		
-		App.registerComponent("compass", this);
+		App.registerComponent("moving_body", this);
 	}
 	
 	render() {
-		if(this.state.data===undefined)
+		if(this.state.moving_body===undefined)
 			return null;
 		
 		return (
-			<div className="Compass">
+			<div className="Compass container">
+				<div className="legend">Compass</div>
 				<div className="compass">
-					<div style={{transform: 'rotate(-'+this.state.data+'deg)'}}>
-						<div style={{transform: 'rotate(+'+this.state.data+'deg)'}}></div>
+					<div style={{transform: 'rotate(-'+this.state.moving_body.compass+'deg)'}}>
+						<div style={{transform: 'rotate(+'+this.state.moving_body.compass+'deg)'}}></div>
 					</div>
 				</div>
-				<div className="display">{this.state.data.toFixed(1)}</div>
+				<div className="display">{this.state.moving_body.compass.toFixed(1)}</div>
 			</div>
 		);
 	}

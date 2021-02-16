@@ -28,6 +28,8 @@ public:
 	SimulationStatus();
 	virtual ~SimulationStatus();
 	
+	virtual std::string GetName() const = 0;
+	
 	virtual nlohmann::json ToJson() const = 0;
 	
 	static nlohmann::json GetStatus(double t);

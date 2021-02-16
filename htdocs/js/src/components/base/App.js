@@ -28,6 +28,7 @@ import {Speed} from '../instruments/Speed.js';
 import {DivingPlane} from '../instruments/DivingPlane.js';
 import {Forces} from '../instruments/Forces.js';
 import {Compass} from '../instruments/Compass.js';
+import {DepthMeter} from '../instruments/DepthMeter.js';
 import {Map} from '../instruments/Map.js';
 import {DepthMap} from '../instruments/DepthMap.js';
 
@@ -56,7 +57,11 @@ export class App extends React.Component {
 			if(this.components[name]!==undefined)
 			{
 				for(let i=0;i<this.components[name].length;i++)
-					this.components[name][i].setState({data: value});
+				{
+					let state = {};
+					state[name] = value;
+					this.components[name][i].setState(state);
+				}
 			}
 		}
 	}
@@ -104,6 +109,7 @@ export class App extends React.Component {
 		return (
 			<div>
 				<Compass />
+				<DepthMeter />
 				<Thrust />
 				<Rudder />
 				<DivingPlane />

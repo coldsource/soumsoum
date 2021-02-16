@@ -8,6 +8,8 @@
 class Component
 {
 public:
+	virtual std::string GetName() const = 0;
+	
 	virtual void HandleCommand(const nlohmann::json &json) = 0;
 	
 	virtual nlohmann::json ToJson() const = 0;

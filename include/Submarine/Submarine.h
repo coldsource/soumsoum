@@ -60,6 +60,7 @@ public:
 	
 	double GetMomentOfInertia() const;
 	
+	void AddComponent(Component *component);
 	void HandleCommand(const nlohmann::json &json);
 	
 	nlohmann::json ToJson() const;

@@ -1,0 +1,56 @@
+div.DepthMeter {
+	position: relative;
+	
+	div.depth_meter {
+		width: 300px;
+		height: 300px;
+		position: relative;
+		overflow: hidden;
+		
+		div.infos {
+			position: absolute;
+			font-family: digital;
+			color: red;
+			font-weight: bold;
+			line-height: 1.1rem;
+		}
+		
+		div.surface {
+		}
+		
+		div.water {
+			background-color: #42b6f5;
+		}
+		
+		div.ground {
+			background-color: grey;
+		}
+		
+		div.submarine {
+			position: absolute;
+			bottom: 50%;
+			left: 50%;
+			transform: translate(-50%, 0%);
+			
+			img {
+				height: 100%;
+				transform-origin: bottom;
+			}
+		}
+	}
+	
+	div.display {
+		font-family: digital;
+		text-align: center;
+		font-size: 1.5rem;
+		margin: 0.5rem;
+		color: red;
+	}
+	
+	div.zoom {
+		position: absolute;
+		top: 0;
+		right: 0.5rem;
+		cursor: pointer;
+	}
+}

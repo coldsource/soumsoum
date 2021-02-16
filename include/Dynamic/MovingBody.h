@@ -50,6 +50,8 @@ protected:
 public:
 	MovingBody();
 	
+	std::string GetName() const { return "moving_body"; }
+	
 	void AddPart(MovingBodyPart *part);
 	
 	void StepTime(double dt);

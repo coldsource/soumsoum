@@ -21,6 +21,8 @@ class Rudder: public Component, public SimulationObject, public SimulationStatus
 public:
 	Rudder();
 	
+	std::string GetName() const { return "rudder"; }
+	
 	double GetMass() const { return 0; }
 	
 	virtual std::map<std::string, Vector3D> GetForces() const;

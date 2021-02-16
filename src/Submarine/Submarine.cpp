@@ -14,9 +14,9 @@ Submarine::Submarine():
 	bow("bow", Vector3D(0, 49, 0)),
 	air_tank(Tank::en_opening_type::CLOSED, 10),
 	ballast(&air_tank),
-	compensating_tank_center(16, 5),
-	compensating_tank_front(10, 5),
-	compensating_tank_back(10, 5),
+	compensating_tank_center(16, 5, "compensating_tank_center"),
+	compensating_tank_front(10, 5, "compensating_tank_front"),
+	compensating_tank_back(10, 5, "compensating_tank_back"),
 	thrust(),
 	rudder()
 {
@@ -37,13 +37,13 @@ Submarine::Submarine():
 	air_tank.Fill(air, 3000);
 	compensating_tank_center.Fill(8);
 	
-	components.insert(pair<string, Component *>("ballast", &ballast));
-	components.insert(pair<string, Component *>("compensating_tank_center", &compensating_tank_center));
-	components.insert(pair<string, Component *>("compensating_tank_front", &compensating_tank_front));
-	components.insert(pair<string, Component *>("compensating_tank_back", &compensating_tank_back));
-	components.insert(pair<string, Component *>("thrust", &thrust));
-	components.insert(pair<string, Component *>("rudder", &rudder));
-	components.insert(pair<string, Component *>("diving_plane", &diving_plane));
+	AddComponent(&ballast);
+	AddComponent(&compensating_tank_center);
+	AddComponent(&compensating_tank_front);
+	AddComponent(&compensating_tank_back);
+	AddComponent(&thrust);
+	AddComponent(&rudder);
+	AddComponent(&diving_plane);
 	
 	latitude = 48.308898557355235;
 	longitude = -4.506347834823013;
@@ -54,6 +54,11 @@ Submarine::Submarine():
 double Submarine::GetMomentOfInertia() const
 {
 	return 90000000;
+}
+
+void Submarine::AddComponent(Component *component)
+{
+	components.insert(pair<string, Component *>(component->GetName(), component));
 }
 
 void Submarine::HandleCommand(const nlohmann::json &json)

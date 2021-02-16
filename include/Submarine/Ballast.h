@@ -20,6 +20,8 @@ class Ballast: public Component, public MovingBodyComponent
 public:
 	Ballast(Tank *air_source);
 	
+	std::string GetName() const { return "ballast"; }
+	
 	double GetMass() const { return tank.GetMass(); }
 	
 	void HandleCommand(const nlohmann::json &j);

@@ -48,8 +48,8 @@ void Thrust::StepTime(double dt)
 json Thrust::ToJson() const
 {
 	json j;
-	j["thrust"]["rate"] = rate;
-	j["thrust"]["targeted_rate"] = targeted_rate;
+	j["rate"] = rate;
+	j["targeted_rate"] = targeted_rate;
 	
 	return j;
 }

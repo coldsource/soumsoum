@@ -38,6 +38,8 @@ public:
 	Map(const MovingBody *moving_body);
 	~Map();
 	
+	std::string GetName() const { return "map"; }
+	
 	short GetDepth(double lat, double lng) const;
 	
 	nlohmann::json ToJson() const;

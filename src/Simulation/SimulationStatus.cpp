@@ -46,7 +46,7 @@ nlohmann::json SimulationStatus::GetStatus(double t)
 				continue;
 			
 			it->obj->last_update = t;
-			j.update(it->obj->ToJson());
+			j[it->obj->GetName()] = it->obj->ToJson();
 		}
 	}
 	

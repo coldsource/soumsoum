@@ -58,13 +58,13 @@ export class Thrust extends React.Component {
 	}
 	
 	render() {
-		if(this.state.data===undefined)
+		if(this.state.thrust===undefined)
 			return null;
 		
 		return (
 			<div className="Thrust container">
 				<div className="legend">Thrust</div>
-				<Gauge current={[this.state.data.targeted_rate, this.state.data.rate]} min="0" max="1" display={'Power: '+Math.round(this.state.data.rate*100)+'%'} />
+				<Gauge current={[this.state.thrust.targeted_rate, this.state.thrust.rate]} min="0" max="1" display={'Power: '+Math.round(this.state.thrust.rate*100)+'%'} />
 			</div>
 		);
 	}

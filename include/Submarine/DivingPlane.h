@@ -19,6 +19,8 @@ class DivingPlane:public MovingBodyPart, public Component, public SimulationObje
 public:
 	DivingPlane(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 0) {};
 	
+	std::string GetName() const { return "diving_plane"; }
+	
 	double GetVolume() const { return 0; }
 	double GetImmersedVolume(double depth) const { return 0; };
 	void GetContactSurfaces(Vector3D *positive, Vector3D *negative) const;

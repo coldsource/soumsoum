@@ -29,7 +29,7 @@ export class Map extends React.Component {
 			track: true
 		};
 		
-		App.registerComponent("gps", this);
+		App.registerComponent("map", this);
 	}
 	
 	componentDidMount() {
@@ -44,9 +44,9 @@ export class Map extends React.Component {
 	}
 	
 	render() {
-		if(this.state.data!==undefined)
+		if(this.state.map!==undefined)
 		{
-			let lonLatNew = new OpenLayers.LonLat(this.state.data.longitude, this.state.data.latitude).transform(
+			let lonLatNew = new OpenLayers.LonLat(this.state.map.gps.longitude, this.state.map.gps.latitude).transform(
 				new OpenLayers.Projection("EPSG:4326"),
 				new OpenLayers.Projection("EPSG:900913")
 			);

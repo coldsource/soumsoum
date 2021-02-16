@@ -55,8 +55,8 @@ json DivingPlane::ToJson() const
 {
 	json j;
 	
-	j["diving_plane"]["tilt"] = tilt*10;
-	j["diving_plane"]["targeted_tilt"] = targeted_tilt;
+	j["tilt"] = tilt*10;
+	j["targeted_tilt"] = targeted_tilt;
 	
 	return j;
 }

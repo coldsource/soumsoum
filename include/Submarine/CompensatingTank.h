@@ -15,8 +15,12 @@ class CompensatingTank: public Component, public MovingBodyComponent
 	Pump fill_pump;
 	Pump empty_pump;
 	
+	std::string name;
+	
 public:
-	CompensatingTank(double capacity, double flow);
+	CompensatingTank(double capacity, double flow, const std::string &name);
+	
+	std::string GetName() const { return name; }
 	
 	double GetMass() const { return tank.GetMass(); }
 	double Fill(double volume) { return tank.Fill(water, volume); }

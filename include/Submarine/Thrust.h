@@ -17,6 +17,8 @@ class Thrust: public Component, public SimulationObject, public SimulationStatus
 public:
 	Thrust();
 	
+	std::string GetName() const { return "thrust"; }
+	
 	double GetMass() const { return 0; }
 	double GetForce() const { return 1000000 * rate; }
 	

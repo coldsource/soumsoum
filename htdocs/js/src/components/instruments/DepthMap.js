@@ -28,7 +28,7 @@ export class DepthMap extends React.Component {
 		this.state = {
 		};
 		
-		App.registerComponent("depthmap", this);
+		App.registerComponent("map", this);
 	}
 	
 	renderRow(row) {
@@ -59,13 +59,13 @@ export class DepthMap extends React.Component {
 	}
 	
 	renderRows() {
-		return this.state.data.map((row, idx) => {
+		return this.state.map.depthmap.map((row, idx) => {
 			return (<div key={idx}>{this.renderRow(row)}</div>);
 		});
 	}
 	
 	render() {
-		if(this.state.data===undefined)
+		if(this.state.map===undefined)
 			return null;
 		
 		return (

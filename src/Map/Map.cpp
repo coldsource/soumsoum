@@ -100,6 +100,7 @@ json Map::ToJson() const
 	
 	json j;
 	j["depthmap"] = rows;
+	j["depth"] = GetDepth(latitude, longitude);
 	
 	j["gps"]["latitude"] = latitude;
 	j["gps"]["longitude"] = longitude;

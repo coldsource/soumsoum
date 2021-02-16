@@ -52,8 +52,8 @@ void Rudder::StepTime(double dt)
 json Rudder::ToJson() const
 {
 	json j;
-	j["rudder"]["angle_x"] = angle_x / M_PI * 180;
-	j["rudder"]["angle_z"] = angle_z / M_PI * 180;
+	j["angle_x"] = angle_x / M_PI * 180;
+	j["angle_z"] = angle_z / M_PI * 180;
 	
 	return j;
 }

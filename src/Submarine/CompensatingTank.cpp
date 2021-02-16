@@ -1,13 +1,14 @@
 #include <Submarine/CompensatingTank.h>
 
 using json = nlohmann::json;
+using namespace std;
 
-CompensatingTank::CompensatingTank(double capacity, double flow):
+CompensatingTank::CompensatingTank(double capacity, double flow, const string &name):
 	tank(Tank::en_opening_type::CLOSED, capacity),
 	fill_pump(water, flow, 0, &tank),
 	empty_pump(water, flow, &tank, 0)
 {
-	;
+	this->name = name;
 }
 
 void CompensatingTank::HandleCommand(const json &j)
