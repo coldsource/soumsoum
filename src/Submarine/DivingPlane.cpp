@@ -48,30 +48,15 @@ void DivingPlane::HandleCommand(const nlohmann::json &j)
 
 void DivingPlane::StepTime(double dt)
 {
-	if(targeted_tilt==tilt)
-		return;
-	
-	if(tilt<targeted_tilt)
-	{
-		tilt += tilt_second * dt;
-		if(tilt>targeted_tilt)
-			tilt = targeted_tilt;
-	}
-	
-	if(tilt>targeted_tilt)
-	{
-		tilt -= tilt_second * dt;
-		if(tilt<targeted_tilt)
-			tilt = targeted_tilt;
-	}
+	variable_sim(&tilt, targeted_tilt, tilt_second, dt);
 }
 
 json DivingPlane::ToJson() const
 {
 	json j;
 	
-	j["tilt"] = tilt;
-	j["targeted_tilt"] = targeted_tilt;
+	j["diving_plane"]["tilt"] = tilt*10;
+	j["diving_plane"]["targeted_tilt"] = targeted_tilt;
 	
 	return j;
 }

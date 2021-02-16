@@ -106,6 +106,7 @@ export class App extends React.Component {
 				<Compass />
 				<Thrust />
 				<Rudder />
+				<DivingPlane />
 				<Speed />
 				<Map />
 				<DepthMap />
@@ -117,7 +118,6 @@ export class App extends React.Component {
 				<CompensatingTank name="compensating_tank_back" data={components.compensating_tank_back} />
 				<CompensatingTank name="compensating_tank_center" data={components.compensating_tank_center} />
 				<CompensatingTank name="compensating_tank_front" data={components.compensating_tank_front} />
-				<DivingPlane name="diving_plane" data={components.diving_plane} />
 				<div>
 					<b>Acceleration</b> : {data.acceleration.x.toFixed(2)} {data.acceleration.y.toFixed(2)} {data.acceleration.z.toFixed(2)}
 				</div>

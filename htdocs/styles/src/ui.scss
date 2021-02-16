@@ -3,6 +3,7 @@
 	src: url("/fonts/digital-7/digital-7 (mono).ttf");
 }
 
+@import 'ui/container.scss';
 @import 'ui/Gauge.scss';
 @import 'ui/GaugeLed.scss';
 @import 'ui/GaugeHalf.scss';

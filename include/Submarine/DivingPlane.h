@@ -2,18 +2,19 @@
 #define _DIVINGPLANE_H_
 
 #include <Simulation/SimulationObject.h>
+#include <Simulation/SimulationStatus.h>
 #include <Dynamic/MovingBodyPart.h>
 #include <Submarine/Component.h>
 
 #include <nlohmann/json.hpp>
 
-class DivingPlane:public MovingBodyPart, public Component, public SimulationObject
+class DivingPlane:public MovingBodyPart, public Component, public SimulationObject, public SimulationStatus
 {
 	const double Cz = -0.6;
 	
 	double tilt = 0;
 	double targeted_tilt = 0;
-	double tilt_second = 0.2;
+	double tilt_second = 0.25;
 
 public:
 	DivingPlane(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 0) {};

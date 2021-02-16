@@ -20,7 +20,7 @@
 'use strict';
 
 import {App} from '../base/App.js';
-import {GaugeHalf} from '../../ui/GaugeHalf.js';
+import {Gauge} from '../../ui/Gauge.js';
 
 export class DivingPlane extends React.Component {
 	constructor(props) {
@@ -30,6 +30,8 @@ export class DivingPlane extends React.Component {
 		};
 		
 		this.keyDown = this.keyDown.bind(this);
+		
+		App.registerComponent("diving_plane", this);
 	}
 	
 	componentDidMount() {
@@ -44,26 +46,26 @@ export class DivingPlane extends React.Component {
 	
 	keyDown(e) {
 		if(e.key=="+")
-			App.api.command({component: this.props.name, action: "rate_plus"});
+			App.api.command({component: "diving_plane", action: "rate_plus"});
 		if(e.key=="-")
-			App.api.command({component: this.props.name, action: "rate_minus"});
+			App.api.command({component: "diving_plane", action: "rate_minus"});
 		if(e.key=="9")
-			App.api.command({component: this.props.name, action: "surface"});
+			App.api.command({component: "diving_plane", action: "surface"});
 		/*if(e.key=="6")
-			App.api.command({component: this.props.name, action: "neutral"});*/
+			App.api.command({component: "diving_plane", action: "neutral"});*/
 		if(e.key=="3")
-			App.api.command({component: this.props.name, action: "dive"});
+			App.api.command({component: "diving_plane", action: "dive"});
 	}
 	
 	render() {
-		let fill = ''+Math.round(this.props.data.volume * 1000);
-		let len = (''+(this.props.data.capacity*1000)).length;
-		fill = fill.padStart(5, '0');
+		if(this.state.data===undefined)
+			return null;
 		
+		console.log(this.state.data);
 		return (
-			<div className="DivingPlane">
-				<h2>{this.props.name}</h2>
-				<GaugeHalf current={[this.props.data.targeted_tilt, this.props.data.tilt]} min="-3" max="3" />
+			<div className="DivingPlane container">
+				<div className="legend">Diving plane</div>
+				<Gauge current={this.state.data.tilt} min="-15" max="15" min_angle="-120" max_angle="-60" display={Math.round(this.state.data.tilt)} />
 			</div>
 		);
 	}
