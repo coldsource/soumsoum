@@ -33,42 +33,49 @@ export class Map extends React.Component {
 	}
 	
 	componentDidMount() {
-		this.map = new OpenLayers.Map("map");
-	
-		this.map.addLayer(new OpenLayers.Layer.OSM('Water', [
-			"https://stamen-tiles-a.a.ssl.fastly.net/watercolor/${z}/${x}/${y}.jpg",
-			"https://stamen-tiles-b.a.ssl.fastly.net/watercolor/${z}/${x}/${y}.jpg",
-			"https://stamen-tiles-c.a.ssl.fastly.net/watercolor/${z}/${x}/${y}.jpg",
-			"https://stamen-tiles-d.a.ssl.fastly.net/watercolor/${z}/${x}/${y}.jpg"
-		]));
+		this.map = new ol.Map({
+			target: 'map',
+			layers: [
+				new ol.layer.Tile({
+					source: new ol.source.OSM({
+						//url: "https://stamen-tiles-{a-d}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
+						maxZoom: 18
+					})
+				})
+			],
+			view: new ol.View({
+				zoom: 15
+			})
+		});
 	}
 	
 	render() {
-		return null;
 		if(this.state.map!==undefined)
 		{
-			let lonLatNew = new OpenLayers.LonLat(this.state.map.gps.longitude, this.state.map.gps.latitude).transform(
-				new OpenLayers.Projection("EPSG:4326"),
-				new OpenLayers.Projection("EPSG:900913")
-			);
+			this.map.updateSize();
 			
-			if(this.markers===undefined)
+			let lonlat = ol.proj.transform([this.state.map.gps.longitude, this.state.map.gps.latitude], 'EPSG:4326', 'EPSG:3857');
+			
+			if(this.marker===undefined)
 			{
-				this.map.setCenter(lonLatNew, 15);
+				this.marker = new ol.geom.Point(lonlat);
 				
-				this.markers = new OpenLayers.Layer.Markers("Markers");
-				this.map.addLayer(this.markers);
-				
-				this.marker = new OpenLayers.Marker(lonLatNew);
-				this.markers.addMarker(this.marker);
+				let layer = new ol.layer.Vector({
+					source: new ol.source.Vector({
+						features: [
+							new ol.Feature({
+								geometry: this.marker
+							})
+						]
+					})
+				});
+				this.map.addLayer(layer);
 			}
 			
-			var newPx = this.map.getLayerPxFromViewPortPx(this.map.getPixelFromLonLat(lonLatNew));
-			
 			if(this.state.track)
-				this.map.setCenter(lonLatNew, 15);
+				this.map.getView().setCenter(lonlat);
 			
-			this.marker.moveTo(newPx);
+			this.marker.setCoordinates(lonlat);
 		}
 		
 		return (
