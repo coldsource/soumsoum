@@ -44,6 +44,7 @@ export class Map extends React.Component {
 	}
 	
 	render() {
+		return null;
 		if(this.state.map!==undefined)
 		{
 			let lonLatNew = new OpenLayers.LonLat(this.state.map.gps.longitude, this.state.map.gps.latitude).transform(

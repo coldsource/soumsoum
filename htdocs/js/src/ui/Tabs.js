@@ -43,7 +43,7 @@ export class Tabs extends React.Component {
 		});
 	}
 	
-	renderActiveTab() {
+	renderTabsContent() {
 		if(this.props.render)
 			return this.props.render(this.state.current);
 		
@@ -52,21 +52,19 @@ export class Tabs extends React.Component {
 				return;
 			
 			if(i!=this.state.current)
-				return;
+				return (<div className="s-tabs-content" style={{display: 'none'}}>{child.props.children}</div>);
 			
-			return child.props.children;
+			return (<div className="s-tabs-content" style={{display: 'block'}}>{child.props.children}</div>);
 		});
 	}
 	
 	render() {
 		return (
 			<div>
-				<ul className="evq-tabs">
+				<ul className="s-tabs">
 					{this.renderTabs()}
 				</ul>
-				<div className="evq-tabs-content">
-					{this.renderActiveTab()}
-				</div>
+				{this.renderTabsContent()}
 			</div>
 		);
 	}
