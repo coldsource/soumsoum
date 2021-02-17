@@ -69,7 +69,7 @@ export class DepthMeter extends React.Component {
 				<div className="depth_meter">
 					<div className="infos">
 						Depth: {-this.state.map.depth}
-						<br />Surface  : {this.state.moving_body.position.z<0?(-this.state.moving_body.position.z).toFixed(1):0}
+						<br />Surface  : {(-this.state.moving_body.position.z-8).toFixed(1)}
 						<br />Ground : {(-this.state.map.depth+this.state.moving_body.position.z).toFixed(1)}
 					</div>
 					<div className="zoom">

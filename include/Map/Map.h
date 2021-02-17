@@ -2,6 +2,7 @@
 #define _MAP_H_
 
 #include <Simulation/SimulationStatus.h>
+#include <Submarine/Component.h>
 
 #include <stdio.h>
 
@@ -12,10 +13,11 @@
 
 class MovingBody;
 
-class Map: public SimulationStatus
+class Map: public SimulationStatus, public Component
 {
 	static const int constexpr npts = 21600;
 	static const double constexpr cellsize = 0.004166666667;
+	double scale = 0.05;
 	
 	std::string directory;
 	
@@ -41,6 +43,8 @@ public:
 	std::string GetName() const { return "map"; }
 	
 	short GetDepth(double lat, double lng) const;
+	
+	void HandleCommand(const nlohmann::json &j);
 	
 	nlohmann::json ToJson() const;
 	

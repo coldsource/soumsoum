@@ -33,6 +33,7 @@ public:
 	virtual nlohmann::json ToJson() const = 0;
 	
 	static nlohmann::json GetStatus(double t);
+	void Invalidate();
 };
 
 #endif

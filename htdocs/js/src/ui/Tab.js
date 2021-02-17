@@ -19,29 +19,14 @@
 
 'use strict';
 
-import {App} from '../base/App.js';
-
-export class Speed extends React.Component {
+export class Tab extends React.Component {
 	constructor(props) {
 		super(props);
-		
-		this.state = {
-		};
-		
-		App.registerComponent("moving_body", this);
 	}
 	
 	render() {
-		if(this.state.moving_body===undefined)
-			return null;
-		
 		return (
-			<div className="Speed container">
-				<div className="legend">Speed</div>
-				V Speed : {this.state.moving_body.speed.vertical.toFixed(1)} m/s
-				<br />
-				<br />H Speed : {this.state.moving_body.speed.horizontal.toFixed(1)} m/s
-			</div>
+			<li> { this.props.children } </li>
 		);
 	}
 }

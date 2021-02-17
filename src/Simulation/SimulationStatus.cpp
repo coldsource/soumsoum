@@ -54,3 +54,8 @@ nlohmann::json SimulationStatus::GetStatus(double t)
 	
 	return j;
 }
+
+void SimulationStatus::Invalidate()
+{
+	last_update = 0;
+}

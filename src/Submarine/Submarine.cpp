@@ -44,6 +44,7 @@ Submarine::Submarine():
 	AddComponent(&thrust);
 	AddComponent(&rudder);
 	AddComponent(&diving_plane);
+	AddComponent(&map);
 	
 	latitude = 48.308898557355235;
 	longitude = -4.506347834823013;

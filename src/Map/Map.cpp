@@ -73,15 +73,33 @@ short Map::GetDepth(double lat, double lng) const
 	return depth;
 }
 
+void Map::HandleCommand(const nlohmann::json &j)
+{
+	if(j["action"]=="scale_plus")
+	{
+		scale -= 0.005;
+		if(scale<0.01)
+			scale = 0.01;
+	}
+	else if(j["action"]=="scale_minus")
+	{
+		scale += 0.005;
+		if(scale>0.1)
+			scale = 0.1;
+	}
+	
+	Invalidate();
+}
+
 json Map::ToJson() const
 {
 	double latitude, longitude;
 	moving_body->GetLatLng(&latitude, &longitude);
 	
-	double from_lat = latitude+0.05;
-	double from_lng = longitude-0.05;
-	double to_lat = latitude-0.05;
-	double to_lng = longitude+0.05;
+	double from_lat = latitude+scale;
+	double from_lng = longitude-scale;
+	double to_lat = latitude-scale;
+	double to_lng = longitude+scale;
 	
 	int xpts = abs((to_lng - from_lng)/cellsize);
 	int ypts = abs((to_lat - from_lat)/cellsize);
@@ -90,17 +108,20 @@ json Map::ToJson() const
 	double ystep = (to_lat>=from_lat)?cellsize:-cellsize;
 	
 	json rows;
-	for(int y = 0; y < ypts; y++)
+	for(int y = 0; y <= ypts; y++)
 	{
 		json row;
-		for(int x = 0; x < xpts; x++)
+		for(int x = 0; x <= xpts; x++)
 			row[x] = GetDepth(from_lat + y * ystep, from_lng + x * xstep);
 		rows[y] = row;
 	}
 	
+	Vector3D attitude = moving_body->GetAttitude();
+	
 	json j;
 	j["depthmap"] = rows;
 	j["depth"] = GetDepth(latitude, longitude);
+	j["orientation"] = attitude.z/M_PI*180;
 	
 	j["gps"]["latitude"] = latitude;
 	j["gps"]["longitude"] = longitude;

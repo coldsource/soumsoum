@@ -28,6 +28,8 @@ export class Forces extends React.Component {
 		this.state = {
 			proj: "x"
 		};
+		
+		App.registerComponent("moving_body", this);
 	}
 	
 	renderSVG() {
@@ -44,10 +46,10 @@ export class Forces extends React.Component {
 	}
 	
 	renderSVGForces() {
-		return Object.keys(this.props.forces).map((force_name) => {
+		return Object.keys(this.state.moving_body.forces).map((force_name) => {
 			let proj = this.state.proj;
 			
-			let f = Object.assign({},this.props.forces[force_name]);
+			let f = Object.assign({},this.state.moving_body.forces[force_name]);
 			
 			let pf;
 			if(proj=="x")
@@ -78,6 +80,9 @@ export class Forces extends React.Component {
 	}
 	
 	render() {
+		if(this.state.moving_body===undefined)
+			return null;
+		
 		return (
 			<div className="Forces">
 				<div>Projection : <span onClick={() => this.setState({proj: "x"}) }>x</span> <span onClick={() => this.setState({proj: "z"}) }>z</span></div>

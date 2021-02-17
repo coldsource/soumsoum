@@ -14,7 +14,7 @@ class DivingPlane:public MovingBodyPart, public Component, public SimulationObje
 	
 	double tilt = 0;
 	double targeted_tilt = 0;
-	double tilt_second = 0.25;
+	double tilt_second = 0.5;
 
 public:
 	DivingPlane(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 0) {};

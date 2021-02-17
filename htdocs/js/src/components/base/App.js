@@ -31,6 +31,8 @@ import {Compass} from '../instruments/Compass.js';
 import {DepthMeter} from '../instruments/DepthMeter.js';
 import {Map} from '../instruments/Map.js';
 import {DepthMap} from '../instruments/DepthMap.js';
+import {Tabs} from '../../ui/Tabs.js';
+import {Tab} from '../../ui/Tab.js';
 
 export class App extends React.Component {
 	constructor(props) {
@@ -108,54 +110,23 @@ export class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<Compass />
-				<DepthMeter />
-				<Thrust />
-				<Rudder />
-				<DivingPlane />
-				<Speed />
-				<Map />
-				<DepthMap />
-			</div>
-		);
-		return (
-			<div>
-				<Ballast name="ballast" data={components.ballast} />
-				<CompensatingTank name="compensating_tank_back" data={components.compensating_tank_back} />
-				<CompensatingTank name="compensating_tank_center" data={components.compensating_tank_center} />
-				<CompensatingTank name="compensating_tank_front" data={components.compensating_tank_front} />
-				<div>
-					<b>Acceleration</b> : {data.acceleration.x.toFixed(2)} {data.acceleration.y.toFixed(2)} {data.acceleration.z.toFixed(2)}
-				</div>
-				<div>
-					<b>Speed</b> : {data.speed.x.toFixed(2)} {data.speed.y.toFixed(2)} {data.speed.z.toFixed(2)}
-				</div>
-				<div>
-					<b>Position</b> : {data.position.x.toFixed(2)} {data.position.y.toFixed(2)} {data.position.z.toFixed(2)}
-				</div>
-				<div>
-					<b>Angular acceleration</b> : {this.radToDeg(data.angular_acceleration.x).toFixed(2)} {this.radToDeg(data.angular_acceleration.y).toFixed(2)} {this.radToDeg(data.angular_acceleration.z).toFixed(2)}
-				</div>
-				<div>
-					<b>Angular speed</b> : {this.radToDeg(data.angular_speed.x).toFixed(2)} {this.radToDeg(data.angular_speed.y).toFixed(2)} {this.radToDeg(data.angular_speed.z).toFixed(2)}
-				</div>
-				<div>
-					<b>Attitude</b> : {this.radToDeg(data.attitude.x).toFixed(2)} {this.radToDeg(data.attitude.y).toFixed(2)} {this.radToDeg(data.attitude.z).toFixed(2)}
-				</div>
-				<div>
-					<b>Air Tank</b> : { this.renderTank(data.air_tank) }
-				</div>
-				<div>
-					<Forces forces={this.state.data.forces} />
-				</div>
-				<DepthMap />
-				<div style={{position: 'absolute', top: '0px', right: '0px', width: '800px', height: '1000px'}}>
-					<div style={{position: 'relative', top: '0px', overflow: 'hidden'}}>{this.renderYAxis(data.position.y)}</div>
-					<div style={{position: 'absolute', top: '240px', right: '0px', width: '800px', height: '900px', backgroundColor: '#bff2ff'}}></div>
-					<div style={{position: 'absolute', top: (-data.position.z * 10)+'px'}}>
-						<img style={{height: '240px', rotate:(-data.attitude.x)+'rad'}} src="images/submarine.png" />
-					</div>
-				</div>
+				<Tabs>
+					<Tab title="Control">
+						<Compass />
+						<DepthMeter />
+						<Thrust />
+						<Rudder />
+						<DivingPlane />
+						<Speed />
+						<DepthMap />
+					</Tab>
+					<Tab title="Map">
+						<Map />
+					</Tab>
+					<Tab title="Forces">
+						<Forces />
+					</Tab>
+				</Tabs>
 			</div>
 		);
 	}

@@ -20,7 +20,7 @@ public:
 	std::string GetName() const { return "thrust"; }
 	
 	double GetMass() const { return 0; }
-	double GetForce() const { return 1000000 * rate; }
+	double GetForce() const { return 1500000 * rate; }
 	
 	virtual std::map<std::string, Vector3D> GetForces() const;
 	
