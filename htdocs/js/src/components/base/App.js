@@ -120,6 +120,9 @@ export class App extends React.Component {
 						<Speed />
 						<DepthMap />
 					</Tab>
+					<Tab title="Buoyancy">
+						<Ballast />
+					</Tab>
 					<Tab title="Map">
 						<Map />
 					</Tab>

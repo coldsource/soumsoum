@@ -6,7 +6,7 @@
 class SubmarinePart:public MovingBodyPart, public Cylinder
 {
 public:
-	SubmarinePart(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 1323580.25224 ), Cylinder(4, 30) {};
+	SubmarinePart(const std::string name, const Vector3D &position):MovingBodyPart(name, position, 1320580 ), Cylinder(4, 30) {};
 	void GetCx(Vector3D *positive, Vector3D *negative) const
 	{
 		Cylinder::GetCx(positive, negative);

@@ -34,10 +34,10 @@ class Map: public SimulationStatus, public Component
 	int get_datafile_index(double lat, double lng) const;
 	long get_datafile_offset(int datafile_idx, double lat, double lng) const;
 	
-	const MovingBody *moving_body;
+	MovingBody *moving_body;
 	
 public:
-	Map(const MovingBody *moving_body);
+	Map(MovingBody *moving_body);
 	~Map();
 	
 	std::string GetName() const { return "map"; }

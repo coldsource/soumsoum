@@ -26,8 +26,11 @@ export class Map extends React.Component {
 		super(props);
 		
 		this.state = {
-			track: true
+			track: true,
+			jumpto: ''
 		};
+		
+		this.jumpTo = this.jumpTo.bind(this);
 		
 		App.registerComponent("map", this);
 	}
@@ -47,6 +50,14 @@ export class Map extends React.Component {
 				zoom: 15
 			})
 		});
+	}
+	
+	jumpTo() {
+		let latlon = this.state.jumpto.split(',');
+		if(latlon.length!=2)
+			return 0;
+		
+		App.api.command({component: "map", action: "jumpto", latitude: latlon[0], longitude: latlon[1]});
 	}
 	
 	render() {
@@ -81,6 +92,8 @@ export class Map extends React.Component {
 		return (
 			<div className="Map">
 				<input type="checkbox" checked={this.state.track} onChange={ () => this.setState({track: !this.state.track}) }/> Track
+				<input type="text" value={this.state.jumpto} onChange={(e) => this.setState({jumpto: e.target.value}) } />
+				<button onClick={this.jumpTo}>Jump</button>
 				<div id="map" className="Map"></div>
 			</div>
 		);

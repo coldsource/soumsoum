@@ -1,6 +1,7 @@
 #ifndef _BALLAST_H_
 #define _BALLAST_H_
 
+#include <Simulation/SimulationStatus.h>
 #include <Submarine/Component.h>
 #include <Submarine/Tank.h>
 #include <Submarine/Pump.h>
@@ -8,7 +9,7 @@
 #include <Fluid/Air.h>
 #include <Dynamic/MovingBodyComponent.h>
 
-class Ballast: public Component, public MovingBodyComponent
+class Ballast: public Component, public MovingBodyComponent, public SimulationStatus
 {
 	Water water;
 	Air air;

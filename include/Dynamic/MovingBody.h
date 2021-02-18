@@ -68,6 +68,8 @@ public:
 	const Vector3D &GetAngularAcceleration() const { return angular_acceleration; }
 	void GetLatLng(double *lat, double *lng) const { *lat = latitude; *lng = longitude; }
 	
+	void JumpTo(double lat, double lon) { this->latitude = lat; this->longitude = lon; }
+	
 	nlohmann::json ToJson() const;
 	
 };

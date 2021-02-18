@@ -9,7 +9,7 @@ using namespace std;
 
 using json = nlohmann::json;
 
-Map::Map(const MovingBody *moving_body)
+Map::Map(MovingBody *moving_body)
 {
 	directory = "/home/bob/fonds/data";
 	
@@ -86,6 +86,10 @@ void Map::HandleCommand(const nlohmann::json &j)
 		scale += 0.005;
 		if(scale>0.1)
 			scale = 0.1;
+	}
+	else if(j["action"]=="jumpto")
+	{
+		moving_body->JumpTo(stod((string)j["latitude"]), stod((string)j["longitude"]));
 	}
 	
 	Invalidate();

@@ -26,23 +26,31 @@ export class Ballast extends React.Component {
 	constructor(props) {
 		super(props);
 		
+		this.state = {
+		};
+		
 		this.fill = this.fill.bind(this);
 		this.empty = this.empty.bind(this);
+		
+		App.registerComponent("ballast", this);
 	}
 	
 	fill(e) {
-		App.api.command({component: this.props.name, action: "fill"});
+		App.api.command({component: "ballast", action: "fill"});
 	}
 	
 	empty(e) {
-		App.api.command({component: this.props.name, action: "empty"});
+		App.api.command({component: "ballast", action: "empty"});
 	}
 	
 	render() {
+		if(this.state.ballast===undefined)
+			return null;
+		
 		return (
-			<div className="Ballast">
-				<h2>{this.props.name}</h2>
-				<GaugeDel size="8" fill={this.props.data.fill} />
+			<div className="Ballast container">
+				<div className="legend">Ballast</div>
+				<GaugeDel size="8" fill={this.state.ballast.fill} />
 				<button onClick={this.fill}>Fill</button>
 				<button onClick={this.empty}>Empty</button>
 			</div>
