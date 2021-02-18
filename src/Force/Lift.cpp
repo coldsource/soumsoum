@@ -15,11 +15,11 @@ Lift::Lift(const Volume &v, const Fluid &f, const Vector3D &attitude, const Vect
 	v.GetContactSurfaces(&SP, &SN);
 	
 	Vector3D incident_speed = speed;
-	incident_speed.Rotate(attitude * -1);
+	incident_speed.ToRG(attitude);
 	
 	double density = f.GetDensity();
 	if(incident_speed.y > 0)
 		z = 0.5 * density * (SP.z+SN.z) * Cz * pow(incident_speed.y, 2);
 	
-	Rotate(attitude);
+	FromRG(attitude);
 }
