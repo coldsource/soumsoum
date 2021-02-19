@@ -19,7 +19,7 @@ map<string, Vector3D> Rudder::GetForces() const
 	Vector3D rel_speed = moving_body->GetSpeed();
 	rel_speed.ToRG(moving_body->GetAttitude());
 	
-	Vector3D rudder(angle_z * force * rel_speed.y, 0, angle_x * force * rel_speed.y);
+	Vector3D rudder(angle_z * force_z * rel_speed.y, 0, angle_x * force_x * rel_speed.y);
 	rudder.FromRG(moving_body->GetAttitude());
 	
 	forces["rudder"] = rudder;
