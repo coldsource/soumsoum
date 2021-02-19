@@ -30,6 +30,7 @@ import {DivingPlane} from '../instruments/DivingPlane.js';
 import {Forces} from '../instruments/Forces.js';
 import {Compass} from '../instruments/Compass.js';
 import {DepthMeter} from '../instruments/DepthMeter.js';
+import {AttitudeIndicator} from '../instruments/AttitudeIndicator.js';
 import {Map} from '../instruments/Map.js';
 import {DepthMap} from '../instruments/DepthMap.js';
 import {Tabs} from '../../ui/Tabs.js';
@@ -115,6 +116,7 @@ export class App extends React.Component {
 					<Tab title="Control">
 						<Compass />
 						<DepthMeter />
+						<AttitudeIndicator />
 						<Thrust />
 						<Rudder />
 						<DivingPlane />

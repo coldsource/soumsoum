@@ -1,0 +1,75 @@
+div.AttitudeIndicator {
+	div.indicator {
+		width: 10rem;
+		height: 10rem;
+		border: 1px solid black;
+		position: relative;
+		overflow: hidden;
+		
+		div.graducation_big {
+			position: absolute;
+			left: 30%;
+			border: 1px solid red;
+			width: 40%;
+			height: 0px;
+			
+			span.left {
+				position: absolute;
+				top: -0.6rem;
+				left: -1.8rem;
+				font-size: 0.8rem;
+				width: 1.5rem;
+				text-align: right;
+			}
+			
+			span.right {
+				position: absolute;
+				top: -0.6rem;
+				right: -1.8rem;
+				font-size: 0.8rem;
+				width: 1.5rem;
+			}
+		}
+		
+		div.graducation_small {
+			position: absolute;
+			left: 40%;
+			border: 1px solid red;
+			width: 20%;
+			height: 0px;
+		}
+		
+		div.middle_horiz {
+			position: absolute;
+			top: 50%;
+			left: 30%;
+			width: 40%;
+			height: 0px;
+			border: 1px solid black;
+		}
+		
+		div.middle_vert {
+			position: absolute;
+			top: 30%;
+			left: 50%;
+			width: 0;
+			height: 40%;
+			border: 1px solid black;
+			opacity: 0.5;
+		}
+		
+		div.water {
+			background-color: #42b6f5;
+			position: absolute;
+			height: 100%;
+			width: 100%;
+		}
+		
+		div.ground {
+			background-color: #99760e;
+			position: absolute;
+			height: 100%;
+			width: 100%;
+		}
+	}
+}

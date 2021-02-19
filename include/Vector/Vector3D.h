@@ -48,6 +48,7 @@ public:
 	Vector3D &operator=(const Vector3D &v);
 	
 	nlohmann::json ToJson() const;
+	nlohmann::json ToJsonDeg() const;
 	nlohmann::json ToJson(double x0, double y0, double z0) const;
 	nlohmann::json ToJson(const Vector3D &position) const;
 };

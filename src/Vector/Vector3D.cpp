@@ -224,6 +224,16 @@ nlohmann::json Vector3D::ToJson() const
 	return j;
 }
 
+nlohmann::json Vector3D::ToJsonDeg() const
+{
+	json j;
+	j["x"] = x/M_PI*180;
+	j["y"] = y/M_PI*180;
+	j["z"] = z/M_PI*180;
+	
+	return j;
+}
+
 nlohmann::json Vector3D::ToJson(double x0, double y0, double z0) const
 {
 	json j = ToJson();

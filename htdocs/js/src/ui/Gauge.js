@@ -47,7 +47,7 @@ export class Gauge extends React.Component {
 	
 	renderMark(angle, s) {
 		return (
-			<div className="mark" style={{transform: 'rotate('+angle+'deg)'}}>
+			<div key={s} className="mark" style={{transform: 'rotate('+angle+'deg)'}}>
 				<div></div>
 				<span style={{transform: 'rotate('+(-angle)+'deg)'}}>{s}</span>
 			</div>

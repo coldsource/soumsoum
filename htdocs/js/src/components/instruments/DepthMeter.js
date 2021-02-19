@@ -78,7 +78,7 @@ export class DepthMeter extends React.Component {
 					<span className="fa fa-plus" onClick={() => this.scale(-10) }></span>
 				</div>
 					<div className="submarine" style={{height: submarine_height+'%'}}>
-						<img src="images/submarine.png" style={{transform: 'rotate('+(-this.state.moving_body.attitude.x)+'rad)'}} />
+						<img src="images/submarine.png" style={{transform: 'rotate('+(-this.state.moving_body.attitude.x)+'deg)'}} />
 						</div>
 					<div className="surface" style={{height: surface_height+'%'}}></div>
 					<div className="water" style={{height: water_height+'%'}}></div>
