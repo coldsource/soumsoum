@@ -64,7 +64,7 @@ export class DivingPlane extends React.Component {
 		return (
 			<div className="DivingPlane container">
 				<div className="legend">Diving plane</div>
-				<Gauge current={this.state.diving_plane.tilt} min="-15" max="15" min_angle="-120" max_angle="-60" display={Math.round(this.state.diving_plane.tilt)} />
+				<Gauge current={this.state.diving_plane.tilt} min="-15" max="15" min_angle="-140" max_angle="-40" marks={[-5, 0, 10]} display={Math.round(this.state.diving_plane.tilt)} />
 			</div>
 		);
 	}

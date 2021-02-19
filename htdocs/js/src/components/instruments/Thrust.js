@@ -64,7 +64,13 @@ export class Thrust extends React.Component {
 		return (
 			<div className="Thrust container">
 				<div className="legend">Thrust</div>
-				<Gauge current={[this.state.thrust.targeted_rate, this.state.thrust.rate]} min="0" max="1" display={'Power: '+Math.round(this.state.thrust.rate*100)+'%'} />
+				<Gauge
+					current={[this.state.thrust.targeted_rate, this.state.thrust.rate]}
+					min="0"
+					max="1"
+					display={'Power: '+Math.round(this.state.thrust.rate*100)+'%'}
+					marks={[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]}
+				/>
 			</div>
 		);
 	}

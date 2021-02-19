@@ -68,8 +68,8 @@ export class Rudder extends React.Component {
 		return (
 			<div className="Rudder container">
 				<div className="legend">Rudder</div>
-				<Gauge current={this.state.rudder.angle_z} min="-15" max="15" min_angle="-220" max_angle="-140" display={Math.round(this.state.rudder.angle_z)} />
-				<Gauge current={this.state.rudder.angle_x} min="-15" max="15" min_angle="-130" max_angle="-50" display={Math.round(this.state.rudder.angle_x)} />
+				<Gauge current={this.state.rudder.angle_z} min="-15" max="15" min_angle="-220" max_angle="-140" marks={[-15, 0, 15]} display={Math.round(this.state.rudder.angle_z)} />
+				<Gauge current={this.state.rudder.angle_x} min="-15" max="15" min_angle="-130" max_angle="-50" marks={[-15, 0, 15]} display={Math.round(this.state.rudder.angle_x)} />
 			</div>
 		);
 	}

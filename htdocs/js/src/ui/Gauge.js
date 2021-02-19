@@ -54,6 +54,12 @@ export class Gauge extends React.Component {
 		);
 	}
 	
+	renderMarks() {
+		return this.props.marks.map((mark) => {
+			return this.renderMark(this.computeNeedleAngle(mark)+90, mark);
+		});
+	}
+	
 	render() {
 		let middle = parseFloat(this.props.min)+(parseFloat(this.props.max)-parseFloat(this.props.min))/2;
 		let middle_str = (middle<1 && middle!=0)?middle.toFixed(1):Math.round(middle);
@@ -63,9 +69,7 @@ export class Gauge extends React.Component {
 				<div className="gauge">
 					<div>
 						{this.renderNeedles()}
-						{this.renderMark(this.computeNeedleAngle(this.props.min)+90, this.props.min)}
-						{this.renderMark(this.computeNeedleAngle(middle)+90, middle_str)}
-						{this.renderMark(this.computeNeedleAngle(this.props.max)+90, this.props.max)}
+						{this.renderMarks()}
 					</div>
 				</div>
 				<div className="display">{this.props.display}</div>
@@ -78,5 +82,6 @@ Gauge.defaultProps = {
 	min: 0,
 	max: 1,
 	min_angle: -170,
-	max_angle: 170
+	max_angle: 170,
+	marks: []
 };
