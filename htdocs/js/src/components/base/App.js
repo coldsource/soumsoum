@@ -25,6 +25,7 @@ import {CompensatingTank} from '../instruments/CompensatingTank.js';
 import {Thrust} from '../instruments/Thrust.js';
 import {Rudder} from '../instruments/Rudder.js';
 import {Speed} from '../instruments/Speed.js';
+import {Acceleration} from '../instruments/Acceleration.js';
 import {DivingPlane} from '../instruments/DivingPlane.js';
 import {Forces} from '../instruments/Forces.js';
 import {Compass} from '../instruments/Compass.js';
@@ -118,6 +119,7 @@ export class App extends React.Component {
 						<Rudder />
 						<DivingPlane />
 						<Speed />
+						<Acceleration />
 						<DepthMap />
 					</Tab>
 					<Tab title="Buoyancy">
