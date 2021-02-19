@@ -1,0 +1,135 @@
+div.AirController {
+	position: relative;
+	width: 20rem;
+	height: 11rem;
+	
+	div.Ballast {
+		div.drain {
+			position: absolute;
+			top: 1.5rem;
+			left: calc(0.5rem + 4rem - 0.5rem);
+			width: 1rem;
+			height: 0.55rem;
+			border-top: 1px solid red;
+			background: white;
+			z-index: 900;
+		}
+		
+		div.external_shell {
+			position: absolute;
+			width: 8rem;
+			height: 8rem;
+			left: 0.5rem;
+			top: 2rem;
+			border: 1px solid black;
+			border-radius: 4rem;
+			overflow: hidden;
+			box-sizing: border-box;
+			
+			div.water {
+				background-color: #42b6f5;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+			}
+			
+			div.internal_shell {
+				position: absolute;
+				left: 1rem;
+				top: 1rem;
+				width: 6rem;
+				height: 6rem;
+				border: 1px solid black;
+				background-color: white;
+				border-radius: 3rem;
+				box-sizing: border-box;
+				
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+		
+		div.ballast_control {
+			text-align: center;
+			width: 8rem;
+			position: absolute;
+			left: 0.5rem;
+			bottom: 0.5rem;
+			
+			span {
+				cursor: pointer;
+				font-size: 1.2rem;
+			}
+		}
+	}
+	
+	div.ballast_pipe {
+		position: absolute;
+		top: calc(2rem + 4rem - 0.5rem);
+		left: calc(0.5rem + 8rem - 2px);
+		background: white;
+		border-top: 1px solid black;
+		border-bottom: 1px solid black;
+		width: calc(100% - 8rem - 6rem - 1rem + 3px);
+		height: 1rem;
+		text-align: center;
+		
+		img {
+			vertical-align: top;
+			margin-top: 2px;
+			height: 0.8rem;
+			transform: rotate(-180deg);
+			cursor: pointer;
+		}
+		
+		span {
+			position: relative;
+			top: -0.25rem;
+		}
+	}
+	
+	div.surface_pipe {
+		position: absolute;
+		right: calc(0.5rem + 3rem - 0.5rem);
+		top: 0.5rem;
+		background: white;
+		border-left: 1px solid black;
+		border-right: 1px solid black;
+		width: 1rem;
+		height: calc(3rem + 1px);
+		text-align: center;
+		
+		img {
+			position: relative;
+			left: -0.1rem;
+			vertical-align: top;
+			height: 0.8rem;
+			transform: rotate(90deg);
+			cursor: pointer;
+		}
+		
+		span {
+			position: relative;
+			top: -0.25rem;
+			transform: rotate(90deg);
+		}
+	}
+	
+	div.air_tank {
+		position: absolute;
+		top: calc(3rem + 0.5rem);
+		right: 0.5rem;
+		height: 6rem;
+		width: 6rem;
+		border: 1px solid black;
+		box-sizing: border-box;
+		
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: digital;
+		color: red;
+		font-weight: bold;
+	}
+}

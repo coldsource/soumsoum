@@ -20,7 +20,7 @@
 'use strict';
 
 import {SoumsoumAPI} from '../../websockets/soumsoum_api.js';
-import {Ballast} from '../instruments/Ballast.js';
+import {AirController} from '../instruments/AirController.js';
 import {CompensatingTank} from '../instruments/CompensatingTank.js';
 import {Thrust} from '../instruments/Thrust.js';
 import {Rudder} from '../instruments/Rudder.js';
@@ -118,7 +118,6 @@ export class App extends React.Component {
 						<Compass />
 						<DepthMeter />
 						<AttitudeIndicator />
-						<Ballast />
 						<Thrust />
 						<Rudder />
 						<DivingPlane />
@@ -127,6 +126,7 @@ export class App extends React.Component {
 						<DepthMap />
 					</Tab>
 					<Tab title="Buoyancy">
+						<AirController />
 						<PitchControl />
 					</Tab>
 					<Tab title="Map">

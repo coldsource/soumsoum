@@ -16,6 +16,7 @@
 #include <Submarine/Ballast.h>
 #include <Submarine/Thrust.h>
 #include <Submarine/Rudder.h>
+#include <Submarine/AirController.h>
 #include <Volume/Cylinder.h>
 
 #include <map>
@@ -49,6 +50,8 @@ class Submarine: public MovingBody
 	CompensatingTank compensating_tank_center;
 	CompensatingTank compensating_tank_front;
 	CompensatingTank compensating_tank_back;
+	
+	AirController air_controller;
 	
 	Thrust thrust;
 	Rudder rudder;

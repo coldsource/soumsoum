@@ -26,6 +26,7 @@ public:
 	void Transfer(double volume);
 	void On(void);
 	void Off(void);
+	bool IsOn(void) const { return volume_to_transfer>0; }
 	
 	void StepTime(double dt);
 	

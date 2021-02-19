@@ -17,6 +17,7 @@ Submarine::Submarine():
 	compensating_tank_center(16, 5, "compensating_tank_center"),
 	compensating_tank_front(10, 0.8, "compensating_tank_front"),
 	compensating_tank_back(10, 0.8, "compensating_tank_back"),
+	air_controller(&air_tank),
 	thrust(),
 	rudder()
 {
@@ -47,6 +48,7 @@ Submarine::Submarine():
 	AddComponent(&rudder);
 	AddComponent(&diving_plane);
 	AddComponent(&map);
+	AddComponent(&air_controller);
 	
 	compensating_tank_front.SetTwinCompensatingTank(&compensating_tank_back);
 	compensating_tank_back.SetTwinCompensatingTank(&compensating_tank_front);
@@ -61,6 +63,8 @@ Submarine::Submarine():
 	
 	latitude = 48.308898557355235;
 	longitude = -4.506347834823013;
+	
+	position.z = -5;
 }
 
 double Submarine::GetMomentOfInertia() const
@@ -70,6 +74,7 @@ double Submarine::GetMomentOfInertia() const
 
 void Submarine::AddComponent(Component *component)
 {
+	component->submarine = this;
 	components.insert(pair<string, Component *>(component->GetName(), component));
 }
 

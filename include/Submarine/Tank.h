@@ -30,6 +30,7 @@ public:
 	double GetMass() const;
 	double GetCapacity() const { return capacity; };
 	double GetVolume(const Fluid &fluid) const;
+	en_opening_type GetOpening() const { return opening_type; }
 	
 	nlohmann::json ToJson() const;
 };

@@ -5,8 +5,15 @@
 
 #include <nlohmann/json.hpp>
 
+class Submarine;
+
 class Component
 {
+	friend class Submarine;
+	
+protected:
+	Submarine *submarine;
+	
 public:
 	virtual std::string GetName() const = 0;
 	
