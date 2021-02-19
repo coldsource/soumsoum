@@ -95,13 +95,21 @@ double MovingBody::GetMass() const
 	return mass;
 }
 
+double MovingBody::GetVolume() const
+{
+	double volume = 0;
+	
+	for(auto it = parts.begin(); it!=parts.end(); ++it)
+		volume += (*it)->GetVolume();
+	
+	return volume;
+}
+
 json MovingBody::ToJson() const
 {
 	json j;
 	
 	j["acceleration"] = acceleration.ToJson();
-	j["speed"] = speed.ToJson();
-	j["position"] = position.ToJson();
 	j["angular_acceleration"] = angular_acceleration.ToJson();
 	j["angular_speed"] = angular_speed.ToJson();
 	j["attitude"] = attitude.ToJson();

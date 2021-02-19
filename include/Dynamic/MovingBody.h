@@ -57,6 +57,7 @@ public:
 	void StepTime(double dt);
 	
 	double GetMass() const;
+	double GetVolume() const;
 	
 	virtual double GetMomentOfInertia() const = 0;
 	

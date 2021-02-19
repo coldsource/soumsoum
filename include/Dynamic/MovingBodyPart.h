@@ -31,6 +31,7 @@ public:
 	void AddComponent(MovingBodyComponent *component);
 	
 	double GetMass() const;
+	void SetMass(double mass) { this->mass = mass; }
 	
 	std::map<std::string, Vector3D> GetForces() const;
 };

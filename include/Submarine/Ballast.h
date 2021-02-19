@@ -18,12 +18,15 @@ class Ballast: public Component, public MovingBodyComponent, public SimulationSt
 	Pump fill_pump;
 	Pump empty_pump;
 	
+	static const double constexpr volume = 650;
+	
 public:
 	Ballast(Tank *air_source);
 	
 	std::string GetName() const { return "ballast"; }
 	
 	double GetMass() const { return tank.GetMass(); }
+	double GetMassMax() const { return volume * water.GetDensity(); }
 	
 	void HandleCommand(const nlohmann::json &j);
 	

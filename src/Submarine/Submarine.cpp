@@ -46,10 +46,16 @@ Submarine::Submarine():
 	AddComponent(&diving_plane);
 	AddComponent(&map);
 	
+	// Submarine auto weighing
+	double diving_mass = GetMass() + ballast.GetMassMax();
+	double volume = GetVolume();
+	double delta = volume * water.GetDensity() - diving_mass;
+	back.SetMass(delta / 3);
+	center.SetMass(delta / 3);
+	front.SetMass(delta / 3);
+	
 	latitude = 48.308898557355235;
 	longitude = -4.506347834823013;
-	
-	//attitude.z = M_PI;
 }
 
 double Submarine::GetMomentOfInertia() const
