@@ -63,3 +63,15 @@ void Pump::StepTime(double dt)
 	else if(volume_to_transfer!=DBL_MAX)
 		volume_to_transfer -= rv;
 }
+
+Pump &Pump::operator=(const Pump &p)
+{
+	delete fluid;
+	fluid = p.fluid->clone();
+	flow = p.flow;
+	flow_rate = p.flow_rate;
+	src = p.src;
+	dst = p.dst;
+	
+	return *this;
+}

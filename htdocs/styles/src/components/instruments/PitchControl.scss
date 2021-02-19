@@ -1,0 +1,70 @@
+div.PitchControl {
+	div.scheme {
+		width: 30rem;
+		height: 10rem;
+		position: relative;
+		
+		div.back_tank {
+			position: absolute;
+			top: 10%;
+			left: 0.5rem;
+			height: 80%;
+			width: 20%;
+			border: 1px solid black;
+			box-sizing: border-box;
+		}
+		
+		div.front_tank {
+			position: absolute;
+			top: 10%;
+			right: 0.5rem;
+			height: 80%;
+			width: 20%;
+			border: 1px solid black;
+			box-sizing: border-box;
+		}
+		
+		div.pipe {
+			position: absolute;
+			left: calc(20% + 0.5rem - 1px);
+			width: calc(60% - 1rem + 2px);
+			height: 1rem;
+			top: calc(50% - 0.5rem);
+			background: white;
+			border-top: 1px solid black;
+			border-bottom: 1px solid black;
+		}
+		
+		div.back_tank, div.front_tank, div.pipe {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: digital;
+			color: red;
+			font-weight: bold;
+		}
+		
+		div.back_to_front {
+			cursor: pointer;
+			
+			img {
+				height: 1rem;
+			}
+		}
+		
+		div.front_to_back {
+			cursor: pointer;
+			
+			img {
+				height: 1rem;
+				transform: rotate(-180deg);
+			}
+		}
+		
+		.SliderH {
+			position: absolute;
+			top: calc(50% - 2.2rem);
+			left: calc(50% - 2.8rem);
+		}
+	}
+}

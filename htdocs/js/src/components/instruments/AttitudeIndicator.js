@@ -48,8 +48,8 @@ export class AttitudeIndicator extends React.Component {
 		if(ground_pos<0)
 			ground_pos = 0;
 		
-		graduations.push(<div className="water" style={{bottom: water_pos+'%'}}></div>);
-		graduations.push(<div className="ground" style={{top: ground_pos+'%'}}></div>);
+		graduations.push(<div key="water" className="water" style={{bottom: water_pos+'%'}}></div>);
+		graduations.push(<div key="ground" className="ground" style={{top: ground_pos+'%'}}></div>);
 		
 		for(let i=1; i<=13;i++)
 		{

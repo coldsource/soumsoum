@@ -50,9 +50,15 @@ export class Ballast extends React.Component {
 		return (
 			<div className="Ballast container">
 				<div className="legend">Ballast</div>
-				<GaugeDel size="8" fill={this.state.ballast.fill} />
-				<button onClick={this.fill}>Fill</button>
-				<button onClick={this.empty}>Empty</button>
+				<div className="external_shell">
+					<div className="water" style={{top: (100-this.state.ballast.fill*100)+'%'}}></div>
+					<div className="internal_shell"></div>
+				</div>
+				<div className="control">
+					<span className="empty fa fa-minus" onClick={this.empty}></span>
+					&#160;&#160;&#160;
+					<span className="fill fa fa-plus" onClick={this.fill}></span>
+				</div>
 			</div>
 		);
 	}

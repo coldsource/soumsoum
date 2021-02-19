@@ -9,6 +9,13 @@ CompensatingTank::CompensatingTank(double capacity, double flow, const string &n
 	empty_pump(water, flow, &tank, 0)
 {
 	this->name = name;
+	this->flow = flow;
+}
+
+void CompensatingTank::SetTwinCompensatingTank(CompensatingTank *twin_tank)
+{
+	fill_pump = Pump(water, flow, &twin_tank->tank, &tank);
+	empty_pump = Pump(water, flow, &tank, &twin_tank->tank);
 }
 
 void CompensatingTank::HandleCommand(const json &j)
@@ -33,7 +40,8 @@ json CompensatingTank::ToJson() const
 	json j;
 	j["rate"] = fill_pump.GetRate();
 	j["capacity"] = tank.GetCapacity();
-	j["volume"] = tank.GetMass() / water.GetDensity();
+	j["volume"] = tank.GetVolume(water);
+	j["flow"] = flow * fill_pump.GetRate();
 	
 	return j;
 }

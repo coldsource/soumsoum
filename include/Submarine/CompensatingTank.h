@@ -1,16 +1,18 @@
 #ifndef _COMPENSATINGTANK_H_
 #define _COMPENSATINGTANK_H_
 
+#include <Simulation/SimulationStatus.h>
 #include <Submarine/Component.h>
 #include <Submarine/Tank.h>
 #include <Submarine/Pump.h>
 #include <Fluid/Water.h>
 #include <Dynamic/MovingBodyComponent.h>
 
-class CompensatingTank: public Component, public MovingBodyComponent
+class CompensatingTank: public Component, public MovingBodyComponent, public SimulationStatus
 {
 	Water water;
 	
+	double flow;
 	Tank tank;
 	Pump fill_pump;
 	Pump empty_pump;
@@ -19,6 +21,8 @@ class CompensatingTank: public Component, public MovingBodyComponent
 	
 public:
 	CompensatingTank(double capacity, double flow, const std::string &name);
+	
+	void SetTwinCompensatingTank(CompensatingTank *twin_tank);
 	
 	std::string GetName() const { return name; }
 	

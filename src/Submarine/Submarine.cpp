@@ -15,8 +15,8 @@ Submarine::Submarine():
 	air_tank(Tank::en_opening_type::CLOSED, 10),
 	ballast(&air_tank),
 	compensating_tank_center(16, 5, "compensating_tank_center"),
-	compensating_tank_front(10, 5, "compensating_tank_front"),
-	compensating_tank_back(10, 5, "compensating_tank_back"),
+	compensating_tank_front(10, 0.8, "compensating_tank_front"),
+	compensating_tank_back(10, 0.8, "compensating_tank_back"),
 	thrust(),
 	rudder()
 {
@@ -35,6 +35,8 @@ Submarine::Submarine():
 	bow.AddComponent(&compensating_tank_front);
 	
 	air_tank.Fill(air, 3000);
+	compensating_tank_back.Fill(5);
+	compensating_tank_front.Fill(5);
 	compensating_tank_center.Fill(8);
 	
 	AddComponent(&ballast);
@@ -45,6 +47,9 @@ Submarine::Submarine():
 	AddComponent(&rudder);
 	AddComponent(&diving_plane);
 	AddComponent(&map);
+	
+	compensating_tank_front.SetTwinCompensatingTank(&compensating_tank_back);
+	compensating_tank_back.SetTwinCompensatingTank(&compensating_tank_front);
 	
 	// Submarine auto weighing
 	double diving_mass = GetMass() + ballast.GetMassMax();

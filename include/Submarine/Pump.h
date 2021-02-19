@@ -28,6 +28,8 @@ public:
 	void Off(void);
 	
 	void StepTime(double dt);
+	
+	Pump &operator=(const Pump &p);
 };
 
 #endif

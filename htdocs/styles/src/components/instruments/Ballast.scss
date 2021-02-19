@@ -1,14 +1,36 @@
 div.Ballast {
-	display: inline-block;
-	padding: 0.2rem;
-	border: 1px solid black;
-	border-radius: 0.2rem;
-	margin: 0.2rem;
-	vertical-align: top;
+	div.external_shell {
+		position: relative;
+		width: 8rem;
+		height: 8rem;
+		border: 1px solid black;
+		border-radius: 4rem;
+		overflow: hidden;
+		
+		div.water {
+			background-color: #42b6f5;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+		
+		div.internal_shell {
+			position: absolute;
+			left: 1rem;
+			top: 1rem;
+			width: 6rem;
+			height: 6rem;
+			border: 1px solid black;
+			background-color: white;
+			border-radius: 3rem;
+		}
+	}
 	
-	h2 {
+	div.control {
 		text-align: center;
-		margin: 0.2rem;
-		font-size: 0.8rem;
+		
+		span {
+			cursor: pointer;
+		}
 	}
 }
