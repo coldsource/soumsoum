@@ -26,9 +26,6 @@
 
 class Submarine: public MovingBody
 {
-	Water water;
-	Air air;
-	
 	SubmarineStern stern;
 	SubmarinePart back;
 	SubmarinePart center;
@@ -58,8 +55,13 @@ class Submarine: public MovingBody
 	
 	std::map<std::string, Component *> components;
 	
+	static Submarine *instances;
+	
 public:
 	Submarine();
+	~Submarine();
+	
+	static Submarine *GetInstance() { return instances; }
 	
 	double GetMomentOfInertia() const;
 	

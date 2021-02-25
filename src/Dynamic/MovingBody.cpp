@@ -62,6 +62,12 @@ void MovingBody::StepTime(double dt)
 		resulting_torque += it->second.position ^ it->second.force;
 	}
 	
+	// Set external water pressure
+	if(position.z>=0)
+		water.SetPressure(1);
+	else
+		water.SetPressure(1.0 + (-position.z) / 10.0);
+	
 	Vector3D deltapos;
 	
 	acceleration = resulting_force / GetMass();

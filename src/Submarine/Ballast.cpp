@@ -2,8 +2,8 @@
 
 using json = nlohmann::json;
 
-Ballast::Ballast(Tank *air_source):
-	tank(Tank::en_opening_type::BOTTOM, volume),
+Ballast::Ballast(Tank *air_source, const Fluid *water_source):
+	tank(Tank::en_opening_type::BOTTOM, volume, water_source),
 	fill_pump(water, 15, 0, &tank),
 	empty_pump(air, 20, air_source, &tank)
 {
@@ -37,6 +37,7 @@ json Ballast::ToJson() const
 {
 	json j;
 	j["fill"] = tank.GetVolume(water) / tank.GetCapacity();
+	j["pressure"] = tank.GetPressure();
 	j["air_pump"] = empty_pump.IsOn()?"on":"off";
 	j["opened"] = tank.GetOpening()==Tank::en_opening_type::TOP?true:false;
 	return j;

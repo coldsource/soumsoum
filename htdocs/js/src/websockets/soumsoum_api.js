@@ -28,7 +28,7 @@ export class SoumsoumAPI
 	{
 		var self = this;
 		
-		self.ws = new WebSocket("ws://localhost:7000", "api");
+		self.ws = new WebSocket("ws://192.168.0.117:7000", "api");
 		
 		// Event on connection
 		self.ws.onopen = function (event) {

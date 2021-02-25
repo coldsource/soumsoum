@@ -5,6 +5,8 @@
 using namespace std;
 using json = nlohmann::json;
 
+Submarine* Submarine::instances = 0;
+
 Submarine::Submarine():
 	stern("stern", Vector3D(0, -49, 0)),
 	back("back", Vector3D(0, -30, 0)),
@@ -13,7 +15,7 @@ Submarine::Submarine():
 	front("front", Vector3D(0, 30, 0)),
 	bow("bow", Vector3D(0, 49, 0)),
 	air_tank(Tank::en_opening_type::CLOSED, 10),
-	ballast(&air_tank),
+	ballast(&air_tank, &water),
 	compensating_tank_center(16, 5, "compensating_tank_center"),
 	compensating_tank_front(10, 0.8, "compensating_tank_front"),
 	compensating_tank_back(10, 0.8, "compensating_tank_back"),
@@ -35,7 +37,7 @@ Submarine::Submarine():
 	center.AddComponent(&compensating_tank_center);
 	bow.AddComponent(&compensating_tank_front);
 	
-	air_tank.Fill(air, 3000);
+	air_tank.Fill(Air(), 3000);
 	compensating_tank_back.Fill(5);
 	compensating_tank_front.Fill(5);
 	compensating_tank_center.Fill(8);
@@ -65,6 +67,13 @@ Submarine::Submarine():
 	longitude = -4.506347834823013;
 	
 	position.z = -5;
+	
+	instances = this;
+}
+
+Submarine::~Submarine()
+{
+	instances = 0;
 }
 
 double Submarine::GetMomentOfInertia() const

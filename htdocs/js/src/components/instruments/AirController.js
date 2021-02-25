@@ -73,6 +73,7 @@ export class AirController extends React.Component {
 							<span className={this.state.ballast.opened?"fa fa-toggle-off":"fa fa-toggle-on"} onClick={this.toggleBallast}></span>
 						</div>
 					</div>
+					<div className="pressure">{this.state.ballast.pressure.toFixed(1)} BAR</div>
 				</div>
 				
 				<div className="air_tank">{Math.round(this.state.air_controller.main_tank.air.pressure)} BAR</div>

@@ -21,7 +21,7 @@ class Ballast: public Component, public MovingBodyComponent, public SimulationSt
 	static const double constexpr volume = 650;
 	
 public:
-	Ballast(Tank *air_source);
+	Ballast(Tank *air_source, const Fluid *water_source);
 	
 	std::string GetName() const { return "ballast"; }
 	
