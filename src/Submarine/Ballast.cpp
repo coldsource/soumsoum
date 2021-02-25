@@ -7,7 +7,11 @@ Ballast::Ballast(Tank *air_source, const Fluid *water_source):
 	fill_pump(water, 15, 0, &tank),
 	empty_pump(air, 20, air_source, &tank)
 {
-	tank.Fill(air, volume);
+}
+
+void Ballast::FillAir()
+{
+	tank.Fill(air, volume * 2);
 }
 
 void Ballast::HandleCommand(const nlohmann::json &j)

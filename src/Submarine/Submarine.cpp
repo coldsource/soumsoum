@@ -16,7 +16,7 @@ Submarine::Submarine():
 	bow("bow", Vector3D(0, 49, 0)),
 	air_tank(Tank::en_opening_type::CLOSED, 10),
 	ballast(&air_tank, &water),
-	compensating_tank_center(16, 5, "compensating_tank_center"),
+	compensating_tank_center(16, 0.5, "compensating_tank_center"),
 	compensating_tank_front(10, 0.8, "compensating_tank_front"),
 	compensating_tank_back(10, 0.8, "compensating_tank_back"),
 	air_controller(&air_tank),
@@ -66,7 +66,9 @@ Submarine::Submarine():
 	latitude = 48.308898557355235;
 	longitude = -4.506347834823013;
 	
-	position.z = -5;
+	position.z = -6;
+	water.SetPressure(1.6);
+	ballast.FillAir();
 	
 	instances = this;
 }

@@ -28,6 +28,8 @@ public:
 	double GetMass() const { return tank.GetMass(); }
 	double GetMassMax() const { return volume * water.GetDensity(); }
 	
+	void FillAir();
+	
 	void HandleCommand(const nlohmann::json &j);
 	
 	nlohmann::json ToJson() const;

@@ -32,6 +32,7 @@ import {Compass} from '../instruments/Compass.js';
 import {DepthMeter} from '../instruments/DepthMeter.js';
 import {AttitudeIndicator} from '../instruments/AttitudeIndicator.js';
 import {PitchControl} from '../instruments/PitchControl.js';
+import {DepthControlTank} from '../instruments/DepthControlTank.js';
 import {Map} from '../instruments/Map.js';
 import {DepthMap} from '../instruments/DepthMap.js';
 import {Tabs} from '../../ui/Tabs.js';
@@ -128,6 +129,7 @@ export class App extends React.Component {
 					<Tab title="Buoyancy">
 						<AirController />
 						<PitchControl />
+						<DepthControlTank />
 					</Tab>
 					<Tab title="Map">
 						<Map />

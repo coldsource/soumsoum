@@ -1,0 +1,53 @@
+div.DepthControlTank {
+	div.scheme {
+		width: 15rem;
+		height: 10rem;
+		position: relative;
+		
+		div.tank {
+			position: absolute;
+			top: 10%;
+			left: 0.5rem;
+			height: 8rem;
+			width: 6rem;
+			border: 1px solid black;
+			box-sizing: border-box;
+		}
+		
+		div.tank {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: digital;
+			color: red;
+			font-weight: bold;
+		}
+		
+		div.fill_empty {
+			display: inline-block;
+			position: absolute;
+			left: 7rem;
+			top: 4.5rem;
+			font-family: digital;
+			color: red;
+			font-weight: bold;
+		}
+		
+		img.fill {
+			cursor: pointer;
+			height: 1rem;
+			transform: rotate(180deg);
+		}
+		
+		img.empty {
+			cursor: pointer;
+			height: 1rem;
+		}
+		
+		.SliderH {
+			position: absolute;
+			top: calc(50% - 2.2rem);
+			left: 7.5rem;
+		}
+	}
+}
