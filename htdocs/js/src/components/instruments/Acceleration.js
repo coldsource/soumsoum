@@ -38,11 +38,11 @@ export class Acceleration extends React.Component {
 		return (
 			<div className="Acceleration container">
 				<div className="legend">Acceleration</div>
-				Vertical : {this.state.moving_body.acceleration.z.toFixed(1)} m/s
+				Vertical : {this.state.moving_body.acceleration.z.toFixed(2)} m/s
 				<br />
-				<br />Front : {this.state.moving_body.acceleration.y.toFixed(1)} m/s
+				<br />Front : {this.state.moving_body.acceleration.y.toFixed(2)} m/s
 				<br />
-				<br />Side : {this.state.moving_body.acceleration.x.toFixed(1)} m/s
+				<br />Side : {this.state.moving_body.acceleration.x.toFixed(2)} m/s
 			</div>
 		);
 	}
