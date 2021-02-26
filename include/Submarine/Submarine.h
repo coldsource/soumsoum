@@ -17,6 +17,7 @@
 #include <Submarine/Thrust.h>
 #include <Submarine/Rudder.h>
 #include <Submarine/AirController.h>
+#include <Submarine/SimulationControl.h>
 #include <Volume/Cylinder.h>
 
 #include <map>
@@ -54,6 +55,10 @@ class Submarine: public MovingBody
 	Thrust thrust;
 	Rudder rudder;
 	
+	SimulationControl simulation_control;
+	double time_compression = 1;
+	bool simulation_rate_limit = true;
+	
 	std::map<std::string, Component *> components;
 	
 	static std::mutex g_mutex;
@@ -63,6 +68,11 @@ public:
 	~Submarine();
 	
 	double GetMomentOfInertia() const;
+	
+	double GetTimeCompression() const { return time_compression; }
+	void SetTimeCompression(double time_compression) { this->time_compression = time_compression; }
+	bool GetSimulationRateLimit() const { return simulation_rate_limit; }
+	void SetSimulationRateLimit(bool simulation_rate_limit) { this->simulation_rate_limit = simulation_rate_limit; }
 	
 	void AddComponent(Component *component);
 	void HandleCommand(const nlohmann::json &json);

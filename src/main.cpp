@@ -54,7 +54,7 @@ void simulation(struct lws *wsi, per_session_data *context)
 {
 	st_session *session = sessions[context->session_id];
 	
-	session->submarine = new Submarine();
+	Submarine * submarine = session->submarine = new Submarine();
 	
 	double cur_time = GetDtime();
 	
@@ -62,13 +62,14 @@ void simulation(struct lws *wsi, per_session_data *context)
 	int nsim = 0;
 	while(true)
 	{
-		usleep(100000);
+		if(submarine->GetSimulationRateLimit())
+			usleep(100000);
 		
 		if(session->exit)
 			break;
 		
 		double t = GetDtime();
-		double dt = t-cur_time;
+		double dt = (t-cur_time);
 		
 		nsim++;
 		if(t-t0>=1)
@@ -78,7 +79,7 @@ void simulation(struct lws *wsi, per_session_data *context)
 			t0 = t;
 		}
 		
-		SimulationObject::StepSimulation(dt);
+		SimulationObject::StepSimulation(dt * submarine->GetTimeCompression());
 		
 		cur_time += dt;
 		
@@ -99,7 +100,7 @@ void simulation(struct lws *wsi, per_session_data *context)
 		lws_cancel_service(ws_context);
 	}
 	
-	delete session->submarine;
+	delete submarine;
 }
 
 int callback_http(struct lws *wsi, enum lws_callback_reasons reason, void *user, void *in, size_t len )

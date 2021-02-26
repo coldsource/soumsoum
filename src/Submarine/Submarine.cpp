@@ -51,6 +51,7 @@ Submarine::Submarine():
 	AddComponent(&diving_plane);
 	AddComponent(&map);
 	AddComponent(&air_controller);
+	AddComponent(&simulation_control);
 	
 	compensating_tank_front.SetTwinCompensatingTank(&compensating_tank_back);
 	compensating_tank_back.SetTwinCompensatingTank(&compensating_tank_front);

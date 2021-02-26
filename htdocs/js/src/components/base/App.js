@@ -35,6 +35,7 @@ import {PitchControl} from '../instruments/PitchControl.js';
 import {DepthControlTank} from '../instruments/DepthControlTank.js';
 import {Map} from '../instruments/Map.js';
 import {DepthMap} from '../instruments/DepthMap.js';
+import {SimulationControl} from '../instruments/SimulationControl.js';
 import {Tabs} from '../../ui/Tabs.js';
 import {Tab} from '../../ui/Tab.js';
 
@@ -116,6 +117,7 @@ export class App extends React.Component {
 			<div>
 				<Tabs>
 					<Tab title="Control">
+						<SimulationControl />
 						<Compass />
 						<DepthMeter />
 						<AttitudeIndicator />
