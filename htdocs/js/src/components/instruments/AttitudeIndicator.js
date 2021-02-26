@@ -90,6 +90,7 @@ export class AttitudeIndicator extends React.Component {
 					<div className="middle_horiz"></div>
 					<div className="middle_vert"></div>
 				</div>
+				<div className="display">{this.state.moving_body.attitude.x.toFixed(2)} °</div>
 			</div>
 		);
 	}
