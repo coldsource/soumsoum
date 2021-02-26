@@ -31,6 +31,10 @@ export class Speed extends React.Component {
 		App.registerComponent("moving_body", this);
 	}
 	
+	formatFloat(f) {
+		return f.toFixed(1).padStart(6, "\xa0");
+	}
+	
 	render() {
 		if(this.state.moving_body===undefined)
 			return null;
@@ -38,9 +42,16 @@ export class Speed extends React.Component {
 		return (
 			<div className="Speed container">
 				<div className="legend">Speed</div>
-				V Speed : {this.state.moving_body.speed.vertical.toFixed(1)} m/s
-				<br />
-				<br />H Speed : {this.state.moving_body.speed.horizontal.toFixed(1)} m/s
+				<div className="digital_display">
+					<div className="row">
+						V Speed
+						<span className="value">{this.formatFloat(this.state.moving_body.speed.vertical)} m/s</span>
+					</div>
+					<div className="row">
+						H Speed
+						<span className="value">{this.formatFloat(this.state.moving_body.speed.horizontal)} m/s</span>
+					</div>
+				</div>
 			</div>
 		);
 	}

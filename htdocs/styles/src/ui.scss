@@ -1,7 +1,4 @@
-@font-face {
-	font-family: "digital";
-	src: url("/fonts/digital-7/digital-7 (mono).ttf");
-}
+@import 'global/digital.scss';
 
 @import 'ui/container.scss';
 @import 'ui/Gauge.scss';

@@ -5,6 +5,7 @@ div.container {
 	border-radius: 1rem;
 	margin: 0.2rem;
 	vertical-align: top;
+	padding: 0.5rem;
 	
 	div.legend {
 		font-size: 0.7rem;
@@ -13,5 +14,19 @@ div.container {
 		font-family: arial;
 		padding-bottom: 0.2rem;
 		color: grey;
+	}
+	
+	div.digital_display {
+		div.row {
+			@extend .digital;
+			
+			text-align: left;
+			padding-top: 0.2rem;
+			padding-bottom: 0.2rem;
+			
+			span.value {
+				float: right;
+			}
+		}
 	}
 }

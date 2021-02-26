@@ -31,6 +31,10 @@ export class Acceleration extends React.Component {
 		App.registerComponent("moving_body", this);
 	}
 	
+	formatFloat(f) {
+		return f.toFixed(2).padStart(6, "\xa0");
+	}
+	
 	render() {
 		if(this.state.moving_body===undefined)
 			return null;
@@ -38,11 +42,20 @@ export class Acceleration extends React.Component {
 		return (
 			<div className="Acceleration container">
 				<div className="legend">Acceleration</div>
-				Vertical : {this.state.moving_body.acceleration.z.toFixed(2)} m/s
-				<br />
-				<br />Front : {this.state.moving_body.acceleration.y.toFixed(2)} m/s
-				<br />
-				<br />Side : {this.state.moving_body.acceleration.x.toFixed(2)} m/s
+				<div className="digital_display">
+					<div className="row">
+						Vertical
+						<span className="value">{this.formatFloat(this.state.moving_body.acceleration.z)} m/s</span>
+					</div>
+					<div className="row">
+						Front
+						<span className="value">{this.formatFloat(this.state.moving_body.acceleration.y)} m/s</span>
+					</div>
+					<div className="row">
+						Side
+						<span className="value">{this.formatFloat(this.state.moving_body.acceleration.x)} m/s</span>
+					</div>
+				</div>
 			</div>
 		);
 	}
