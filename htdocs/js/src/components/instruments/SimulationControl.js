@@ -45,9 +45,9 @@ export class SimulationControl extends React.Component {
 	}
 	
 	keyDown(e) {
-		if(e.key=="a")
+		if(e.key=="r")
 			App.api.command({component: "simulation_control", action: "uncompressTime"});
-		if(e.key=="z")
+		if(e.key=="t")
 			App.api.command({component: "simulation_control", action: "compressTime"});
 	}
 	
@@ -66,7 +66,7 @@ export class SimulationControl extends React.Component {
 			<div className="SimulationControl container">
 				<div className="legend">Simulation control</div>
 				Time compression : {this.state.simulation_control.time_compression.toFixed(0)} x
-				<br />Simulation rate limiting : <span onClick={this.toggleSimulationRateLimit} className={this.state.simulation_control.rate_limit?"fa fa-check-square":"fa fa-square"}></span>
+				<br />Simulation rate limiting : <span onClick={this.toggleSimulationRateLimit} className={this.state.simulation_control.rate_limit?"fa fa-check-square-o":"fa fa-square-o"}></span>
 			</div>
 		);
 	}

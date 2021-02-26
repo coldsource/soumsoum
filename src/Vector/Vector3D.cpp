@@ -140,12 +140,9 @@ Vector3D Vector3D::operator+(const Vector3D &v) const
 	return Vector3D(x+v.x, y+v.y, z+v.z);
 }
 
-Vector3D Vector3D::operator*(double d) const
+Vector3D Vector3D::operator*(const Vector3D &v) const
 {
-	Vector3D v = *this;
-	v *= d;
-	
-	return v;
+	return Vector3D(x*v.x, y*v.y, z*v.z);
 }
 
 Vector3D Vector3D::operator^(const Vector3D &v) const
@@ -154,14 +151,6 @@ Vector3D Vector3D::operator^(const Vector3D &v) const
 	r ^= v;
 	
 	return r;
-}
-
-Vector3D Vector3D::operator/(double d) const
-{
-	Vector3D v = *this;
-	v /= d;
-	
-	return v;
 }
 
 Vector3D &Vector3D::operator*=(double d)
@@ -191,6 +180,33 @@ Vector3D &Vector3D::operator+=(const Vector3D &v)
 	x += v.x;
 	y += v.y;
 	z += v.z;
+	
+	return *this;
+}
+
+Vector3D &Vector3D::operator+=(double d)
+{
+	x += d;
+	y += d;
+	z += d;
+	
+	return *this;
+}
+
+Vector3D &Vector3D::operator*=(const Vector3D &v)
+{
+	x *= v.x;
+	y *= v.y;
+	z *= v.z;
+	
+	return *this;
+}
+
+Vector3D &Vector3D::operator/=(const Vector3D &v)
+{
+	x /= v.x;
+	y /= v.y;
+	z /= v.z;
 	
 	return *this;
 }

@@ -36,13 +36,24 @@ public:
 	void PrintfSpherical(const std::string &name) const;
 	
 	Vector3D operator+(const Vector3D &v) const;
-	Vector3D operator*(double d) const;
+	friend Vector3D operator+(Vector3D v, double d) { return v += d; }
+	friend Vector3D operator+(double d, Vector3D v) { return v += d; }
+	
+	Vector3D operator*(const Vector3D &v) const;
+	friend Vector3D operator*(Vector3D v, double d) { return v *= d; }
+	friend Vector3D operator*(double d, Vector3D v) { return v *= d; }
+	
+	friend Vector3D operator/(Vector3D v, double d) { return v /= d; }
+	friend Vector3D operator/(double d, Vector3D v) { return Vector3D(d, d, d) /= v; }
+	
 	Vector3D operator^(const Vector3D &v) const;
-	Vector3D operator/(double d) const;
 	
 	Vector3D &operator+=(const Vector3D &v);
+	Vector3D &operator+=(double d);
+	Vector3D &operator*=(const Vector3D &v);
 	Vector3D &operator*=(double d);
 	Vector3D &operator^=(const Vector3D &v);
+	Vector3D &operator/=(const Vector3D &v);
 	Vector3D &operator/=(double d);
 	
 	Vector3D &operator=(const Vector3D &v);
