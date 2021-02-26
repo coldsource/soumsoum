@@ -17,7 +17,7 @@ class Rudder: public Component, public SimulationObject, public SimulationStatus
 	double angle_z = 0;
 	
 	const double force_z = 300000;
-	const double force_x = 80000;
+	const double force_x = 60000;
 	
 public:
 	Rudder();
