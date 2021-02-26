@@ -64,10 +64,14 @@ export class DepthMap extends React.Component {
 				col = colors_pos[Math.round(absdepth/maxdepth*(colors_pos.length-1))];
 			}
 			
+			let text_color = '#000000';
+			if(depth<=-70)
+				text_color = '#e0e0e0';
+			
 			if(size<40)
-				return (<span key={idx} style={{backgroundColor: col}}>{depth}</span>);
+				return (<span key={idx} style={{backgroundColor: col, color: text_color}}>{depth}</span>);
 			else
-				return (<span key={idx} style={{backgroundColor: col}}></span>);
+				return (<span key={idx} style={{backgroundColor: col, color: text_color}}></span>);
 		});
 	}
 	
