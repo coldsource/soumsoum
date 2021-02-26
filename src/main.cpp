@@ -12,8 +12,11 @@
 #include <nlohmann/json.hpp>
 
 #include <thread>
+#include <map>
+#include <mutex>
 
 struct lws_context *ws_context;
+std::mutex ws_mutex;
 
 using json = nlohmann::json;
 using namespace std;
@@ -27,38 +30,76 @@ double GetDtime()
 
 struct per_session_data
 {
-	thread simulation_thread;
-	Submarine *submarine;
+	unsigned int session_id;
 	string status;
-	volatile bool exit = false;
 };
+
+struct st_client
+{
+	struct lws *wsi;
+	per_session_data *context;
+};
+
+struct st_session
+{
+	thread simulation_thread;
+	volatile bool exit = false;
+	Submarine *submarine;
+	vector<st_client> clients;
+};
+
+map<unsigned int, st_session *> sessions;
 
 void simulation(struct lws *wsi, per_session_data *context)
 {
-	context->submarine = new Submarine();
+	st_session *session = sessions[context->session_id];
+	
+	session->submarine = new Submarine();
 	
 	double cur_time = GetDtime();
+	
+	double t0 = cur_time;
+	int nsim = 0;
 	while(true)
 	{
 		usleep(100000);
 		
-		if(context->exit)
+		if(session->exit)
 			break;
 		
 		double t = GetDtime();
 		double dt = t-cur_time;
 		
+		nsim++;
+		if(t-t0>=1)
+		{
+			printf("%d sim / s\n", nsim);
+			nsim = 0;
+			t0 = t;
+		}
+		
 		SimulationObject::StepSimulation(dt);
 		
-		context->status = SimulationStatus::GetStatus(t).dump();
-		
-		lws_callback_on_writable(wsi);
-		lws_cancel_service(ws_context);
-		
 		cur_time += dt;
+		
+		string status = SimulationStatus::GetStatus(t).dump();
+		if(status=="null")
+			continue; // No new status to send due to throttling
+		
+		ws_mutex.lock();
+		
+		for(auto it = session->clients.begin(); it!=session->clients.end(); ++it)
+		{
+			it->context->status = status;
+			lws_callback_on_writable(it->wsi);
+		}
+		
+		ws_mutex.unlock();
+		
+		lws_cancel_service(ws_context);
 	}
 	
-	delete context->submarine;
+	delete session->submarine;
 }
 
 int callback_http(struct lws *wsi, enum lws_callback_reasons reason, void *user, void *in, size_t len )
@@ -80,6 +121,8 @@ int callback_ws(struct lws *wsi, enum lws_callback_reasons reason, void *user, v
 	per_session_data *context = (per_session_data *)user;
 	const lws_protocols *protocol = lws_get_protocol(wsi);
 	
+	unsigned int session_id = 1;
+	
 	switch(reason)
 	{
 		case LWS_CALLBACK_PROTOCOL_INIT:
@@ -90,14 +133,60 @@ int callback_ws(struct lws *wsi, enum lws_callback_reasons reason, void *user, v
 		
 		case LWS_CALLBACK_ESTABLISHED:
 		{
-			context->simulation_thread = std::thread(simulation, wsi, context);
+			ws_mutex.lock();
+			
+			context->session_id = session_id;
+			
+			if(sessions.find(context->session_id)==sessions.end())
+			{
+				st_session *session = new st_session();
+				sessions[context->session_id] = session;
+				
+				session->clients.push_back({wsi, context});
+				session->simulation_thread = std::thread(simulation, wsi, context);
+				
+			}
+			else
+			{
+				auto it = sessions.begin();
+				st_session *session = it->second;
+				
+				session->clients.push_back({wsi, context});
+				
+			}
+			
+			ws_mutex.unlock();
+			
 			break;
 		}
 		
 		case LWS_CALLBACK_CLOSED:
 		{
-			context->exit = true;
-			context->simulation_thread.join();
+			ws_mutex.lock();
+			
+			auto it = sessions.find(context->session_id);
+			st_session *session = it->second;
+			if(session->clients.size()==1)
+			{
+				session->exit = true;
+				session->simulation_thread.join();
+				sessions.erase(context->session_id);
+				delete session;
+			}
+			else
+			{
+				for(auto it2 = session->clients.begin(); it2!=session->clients.end(); ++it2)
+				{
+					if(it2->wsi==wsi)
+					{
+						session->clients.erase(it2);
+						break;
+					}
+				}
+			}
+			
+			ws_mutex.unlock();
+			
 			break;
 		}
 		
@@ -107,14 +196,16 @@ int callback_ws(struct lws *wsi, enum lws_callback_reasons reason, void *user, v
 			
 			json command = json::parse(input_json_str);
 			
-			context->submarine->HandleCommand(command);
+			auto it = sessions.find(context->session_id);
+			st_session *session = it->second;
+			
+			session->submarine->HandleCommand(command);
+			
 			break;
 		}
 		
 		case LWS_CALLBACK_SERVER_WRITEABLE:
 		{
-			double t = GetDtime();
-			
 			string json_str = context->status;
 			
 			json_str.insert(0,LWS_PRE,' ');

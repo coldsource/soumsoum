@@ -5,7 +5,7 @@
 using namespace std;
 using json = nlohmann::json;
 
-Submarine* Submarine::instances = 0;
+std::mutex Submarine::g_mutex;
 
 Submarine::Submarine():
 	stern("stern", Vector3D(0, -49, 0)),
@@ -69,13 +69,10 @@ Submarine::Submarine():
 	position.z = -6;
 	water.SetPressure(1.6);
 	ballast.FillAir();
-	
-	instances = this;
 }
 
 Submarine::~Submarine()
 {
-	instances = 0;
 }
 
 double Submarine::GetMomentOfInertia() const
@@ -91,11 +88,15 @@ void Submarine::AddComponent(Component *component)
 
 void Submarine::HandleCommand(const nlohmann::json &json)
 {
+	g_mutex.lock();
+	
 	auto it = components.find(json["component"]);
 	if(it==components.end())
 		return;
 	
 	it->second->HandleCommand(json);
+	
+	g_mutex.unlock();
 }
 
 json Submarine::ToJson() const

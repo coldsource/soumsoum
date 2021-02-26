@@ -21,6 +21,7 @@
 
 #include <map>
 #include <string>
+#include <mutex>
 
 #include <nlohmann/json.hpp>
 
@@ -55,13 +56,11 @@ class Submarine: public MovingBody
 	
 	std::map<std::string, Component *> components;
 	
-	static Submarine *instances;
+	static std::mutex g_mutex;
 	
 public:
 	Submarine();
 	~Submarine();
-	
-	static Submarine *GetInstance() { return instances; }
 	
 	double GetMomentOfInertia() const;
 	
