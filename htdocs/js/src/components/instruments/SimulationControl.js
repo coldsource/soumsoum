@@ -64,7 +64,6 @@ export class SimulationControl extends React.Component {
 		
 		return (
 			<div className="SimulationControl container">
-				<div className="legend">Simulation control</div>
 				Time compression : {this.state.simulation_control.time_compression.toFixed(0)} x
 				<br />Simulation rate limiting : <span onClick={this.toggleSimulationRateLimit} className={this.state.simulation_control.rate_limit?"fa fa-check-square-o":"fa fa-square-o"}></span>
 			</div>

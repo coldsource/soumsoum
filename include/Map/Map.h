@@ -3,6 +3,7 @@
 
 #include <Simulation/SimulationStatus.h>
 #include <Submarine/Component.h>
+#include <Map/geodesic.h>
 
 #include <stdio.h>
 
@@ -19,6 +20,8 @@ class Map: public SimulationStatus, public Component
 	static const double constexpr cellsize = 0.004166666667;
 	double scale = 0.05;
 	
+	struct geod_geodesic geod;
+	
 	std::string directory;
 	
 	struct st_datafile
@@ -34,6 +37,8 @@ class Map: public SimulationStatus, public Component
 	int get_datafile_index(double lat, double lng) const;
 	long get_datafile_offset(int datafile_idx, double lat, double lng) const;
 	
+	bool get_cell_out(int cell_lat, int cell_lng, double lat, double lng, double heading, double *out_lat, double *out_lng, int *out_dir) const;
+	
 	MovingBody *moving_body;
 	
 public:
@@ -43,6 +48,7 @@ public:
 	std::string GetName() const { return "map"; }
 	
 	short GetDepth(double lat, double lng) const;
+	double GetCollisionDistance(double lat, double lng, double heading) const;
 	
 	void HandleCommand(const nlohmann::json &j);
 	

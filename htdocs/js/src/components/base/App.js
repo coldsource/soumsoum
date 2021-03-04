@@ -26,6 +26,7 @@ import {Thrust} from '../instruments/Thrust.js';
 import {Rudder} from '../instruments/Rudder.js';
 import {Speed} from '../instruments/Speed.js';
 import {Acceleration} from '../instruments/Acceleration.js';
+import {CollisionDetection} from '../instruments/CollisionDetection.js';
 import {DivingPlane} from '../instruments/DivingPlane.js';
 import {Forces} from '../instruments/Forces.js';
 import {Compass} from '../instruments/Compass.js';
@@ -117,16 +118,49 @@ export class App extends React.Component {
 			<div>
 				<Tabs>
 					<Tab title="Control">
-						<SimulationControl />
-						<Compass />
-						<DepthMeter />
-						<AttitudeIndicator />
-						<Thrust />
-						<Rudder />
-						<DivingPlane />
-						<Speed />
-						<Acceleration />
-						<DepthMap />
+						<div className="instruments_row">
+							<SimulationControl />
+							<Compass />
+							<DepthMeter />
+							<table>
+								<tr>
+									<td>
+										<Thrust />
+									</td>
+									<td>
+										<DivingPlane />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<Rudder />
+									</td>
+								</tr>
+							</table>
+							<table>
+								<tr>
+									<td>
+										<AttitudeIndicator />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<Speed />
+									</td>
+									<td rowspan="2">
+										<CollisionDetection />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<Acceleration />
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div className="instruments_row">
+							<DepthMap />
+						</div>
 					</Tab>
 					<Tab title="Buoyancy">
 						<AirController />

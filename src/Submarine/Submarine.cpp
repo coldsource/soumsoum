@@ -99,18 +99,3 @@ void Submarine::HandleCommand(const nlohmann::json &json)
 	
 	g_mutex.unlock();
 }
-
-json Submarine::ToJson() const
-{
-	json j = MovingBody::ToJson();
-	
-	j["air_tank"] = air_tank.ToJson();
-	
-	json j_components;
-	for(auto it = components.begin(); it!=components.end(); ++it)
-		j_components[it->first] = it->second->ToJson();
-	
-	j["components"] = j_components;
-	
-	return j;
-}

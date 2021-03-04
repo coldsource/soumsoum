@@ -77,8 +77,6 @@ public:
 	void AddComponent(Component *component);
 	void HandleCommand(const nlohmann::json &json);
 	
-	nlohmann::json ToJson() const;
-	
 private:
 	double get_immersed_volume(double depth) const;
 };

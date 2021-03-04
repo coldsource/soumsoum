@@ -7,6 +7,9 @@
 @import 'ui/Slider.scss';
 @import 'ui/SliderH.scss';
 @import 'ui/Tabs.scss';
+@import 'ui/TextDisplay.scss';
+
+@import 'components/base/App.scss';
 
 @import 'components/instruments/CompensatingTank.scss';
 @import 'components/instruments/AirController.scss';
@@ -22,3 +25,5 @@
 @import 'components/instruments/AttitudeIndicator.scss';
 @import 'components/instruments/PitchControl.scss';
 @import 'components/instruments/DepthControlTank.scss';
+@import 'components/instruments/CollisionDetection.scss';
+@import 'components/instruments/SimulationControl.scss';
