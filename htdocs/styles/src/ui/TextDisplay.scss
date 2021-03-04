@@ -1,18 +1,28 @@
 div.TextDisplay {
 	border: 1px solid grey;
 	display: inline-block;
-	width: 6rem;
+	width: 8rem;
 	text-align: center;
 	font-family: Arial;
 	font-weight: bold;
 	font-size: 0.8rem;
 	
-	div.on {
+	div.warning.on {
 		color: black;
 		background-color: red;
 	}
 	
-	div.off {
+	div.warning.off {
+		color: grey;
+		background-color: lightgrey;
+	}
+	
+	div.notice.on {
+		color: black;
+		background-color: #b9f0a8;
+	}
+	
+	div.notice.off {
 		color: grey;
 		background-color: lightgrey;
 	}

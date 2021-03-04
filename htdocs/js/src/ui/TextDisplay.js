@@ -28,9 +28,13 @@ export class TextDisplay extends React.Component {
 	}
 	
 	render() {
+		let type = "warning";
+		if(this.props.type!==undefined)
+			type = this.props.type;
+		
 		return (
 			<div className="TextDisplay">
-				<div className={this.props.status}>
+				<div className={type + ' ' + this.props.status}>
 					{this.props.text}
 				</div>
 			</div>

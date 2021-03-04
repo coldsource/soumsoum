@@ -36,6 +36,7 @@ import {PitchControl} from '../instruments/PitchControl.js';
 import {DepthControlTank} from '../instruments/DepthControlTank.js';
 import {Map} from '../instruments/Map.js';
 import {DepthMap} from '../instruments/DepthMap.js';
+import {TextIndicators} from '../instruments/TextIndicators.js';
 import {SimulationControl} from '../instruments/SimulationControl.js';
 import {Tabs} from '../../ui/Tabs.js';
 import {Tab} from '../../ui/Tab.js';
@@ -122,7 +123,7 @@ export class App extends React.Component {
 							<SimulationControl />
 							<Compass />
 							<DepthMeter />
-							<table>
+							<table><tbody>
 								<tr>
 									<td>
 										<Thrust />
@@ -132,22 +133,25 @@ export class App extends React.Component {
 									</td>
 								</tr>
 								<tr>
-									<td colspan="2">
+									<td colSpan="2">
 										<Rudder />
 									</td>
 								</tr>
-							</table>
-							<table>
+							</tbody></table>
+							<table><tbody>
 								<tr>
 									<td>
 										<AttitudeIndicator />
+									</td>
+									<td>
+										<TextIndicators />
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<Speed />
 									</td>
-									<td rowspan="2">
+									<td rowSpan="2">
 										<CollisionDetection />
 									</td>
 								</tr>
@@ -156,7 +160,7 @@ export class App extends React.Component {
 										<Acceleration />
 									</td>
 								</tr>
-							</table>
+							</tbody></table>
 						</div>
 						<div className="instruments_row">
 							<DepthMap />
