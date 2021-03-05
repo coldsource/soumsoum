@@ -44,7 +44,7 @@ export class TextIndicators extends React.Component {
 				<br /><TextDisplay text="DEPTH" type="warning" status={this.state.moving_body.position.z<-300?"on":"off"} />
 				<br /><TextDisplay text="AIR PRESSURE" type="warning" status={this.state.air_controller.main_tank.air.pressure>305 || this.state.air_controller.main_tank.air.pressure<50?"on":"off"} />
 				<br /><TextDisplay text="BALLAST FULL" type="notice" status={this.state.ballast.fill==1?"on":"off"} />
-				<br /><TextDisplay text="BALLAST OPENED" type="warning" status={this.state.ballast.opened?"on":"off"} />
+				<br /><TextDisplay text="BALLAST OPEN" type="warning" status={this.state.ballast.opened?"on":"off"} />
 			</div>
 		);
 	}

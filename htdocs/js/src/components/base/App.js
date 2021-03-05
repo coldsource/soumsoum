@@ -23,6 +23,11 @@ import {SoumsoumAPI} from '../../websockets/soumsoum_api.js';
 import {AirController} from '../instruments/AirController.js';
 import {CompensatingTank} from '../instruments/CompensatingTank.js';
 import {Thrust} from '../instruments/Thrust.js';
+import {ThrustElectric} from '../instruments/ThrustElectric.js';
+import {ThrustMechanical} from '../instruments/ThrustMechanical.js';
+import {ThrustSteam} from '../instruments/ThrustSteam.js';
+import {ThrustSource} from '../instruments/ThrustSource.js';
+import {ThrustTextIndicators} from '../instruments/ThrustTextIndicators.js';
 import {Rudder} from '../instruments/Rudder.js';
 import {Speed} from '../instruments/Speed.js';
 import {Acceleration} from '../instruments/Acceleration.js';
@@ -170,6 +175,13 @@ export class App extends React.Component {
 						<AirController />
 						<PitchControl />
 						<DepthControlTank />
+					</Tab>
+					<Tab title="Propulsion">
+						<ThrustElectric />
+						<ThrustMechanical />
+						<ThrustSteam />
+						<ThrustSource />
+						<ThrustTextIndicators />
 					</Tab>
 					<Tab title="Map">
 						<Map />

@@ -40,7 +40,7 @@ export class CollisionDetection extends React.Component {
 	}
 	
 	render() {
-		if(this.state.moving_body===undefined)
+		if(this.state.moving_body===undefined || this.state.map===undefined)
 			return null;
 		
 		let t_v = '-';

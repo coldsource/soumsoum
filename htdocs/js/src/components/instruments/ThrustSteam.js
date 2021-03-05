@@ -22,33 +22,19 @@
 import {App} from '../base/App.js';
 import {Gauge} from '../../ui/Gauge.js';
 
-export class Thrust extends React.Component {
+export class ThrustSteam extends React.Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
 		};
 		
-		this.keyDown = this.keyDown.bind(this);
-		
 		App.registerComponent("thrust", this);
 	}
 	
-	componentDidMount() {
-		document.addEventListener('keydown', this.keyDown);
-		document.addEventListener('keyup', this.keyUp);
-	}
-	
-	componentWillUnmount() {
-		document.removeEventListener('keydown', this.keyDown);
-		document.addEventListener('keyup', this.keyUp);
-	}
-	
-	keyDown(e) {
-		if(e.key=="+")
-			App.api.command({component: "thrust", action: "ctrlPlus", type: "CURRENT"});
-		if(e.key=="-")
-			App.api.command({component: "thrust", action: "ctrlMinus", type: "CURRENT"});
+	setSteam(dst)
+	{
+		App.api.command({component: "thrust", action: "setSteam", dst: dst});
 	}
 	
 	render() {
@@ -56,15 +42,20 @@ export class Thrust extends React.Component {
 			return null;
 		
 		return (
-			<div className="Thrust container">
-				<div className="legend">Thrust</div>
-				<Gauge
-					current={[this.state.thrust["CURRENT"].ctrl, this.state.thrust["CURRENT"].rate]}
-					min="0"
-					max="1"
-					display={'Power: '+Math.round(this.state.thrust["CURRENT"].rate*100)+'%'}
-					marks={[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]}
-				/>
+			<div className="ThrustSteam container">
+				<div className="legend">Steam</div>
+				<div>
+					<span onClick={ () => this.setSteam("NONE") }className={this.state.thrust.steam=="NONE"?"fa fa-check-circle-o":"fa fa-circle-o"}></span>
+					&#160;None
+				</div>
+				<div>
+					<span onClick={ () => this.setSteam("GENERATOR") }className={this.state.thrust.steam=="GENERATOR"?"fa fa-check-circle-o":"fa fa-circle-o"}></span>
+					&#160;Generator
+				</div>
+				<div>
+					<span onClick={ () => this.setSteam("TURBINE") }className={this.state.thrust.steam=="TURBINE"?"fa fa-check-circle-o":"fa fa-circle-o"}></span>
+					&#160;Turbine
+				</div>
 			</div>
 		);
 	}

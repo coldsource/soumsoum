@@ -22,33 +22,19 @@
 import {App} from '../base/App.js';
 import {Gauge} from '../../ui/Gauge.js';
 
-export class Thrust extends React.Component {
+export class ThrustSource extends React.Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
 		};
 		
-		this.keyDown = this.keyDown.bind(this);
-		
 		App.registerComponent("thrust", this);
 	}
 	
-	componentDidMount() {
-		document.addEventListener('keydown', this.keyDown);
-		document.addEventListener('keyup', this.keyUp);
-	}
-	
-	componentWillUnmount() {
-		document.removeEventListener('keydown', this.keyDown);
-		document.addEventListener('keyup', this.keyUp);
-	}
-	
-	keyDown(e) {
-		if(e.key=="+")
-			App.api.command({component: "thrust", action: "ctrlPlus", type: "CURRENT"});
-		if(e.key=="-")
-			App.api.command({component: "thrust", action: "ctrlMinus", type: "CURRENT"});
+	setType(type)
+	{
+		App.api.command({component: "thrust", action: "setType", type: type});
 	}
 	
 	render() {
@@ -56,15 +42,16 @@ export class Thrust extends React.Component {
 			return null;
 		
 		return (
-			<div className="Thrust container">
-				<div className="legend">Thrust</div>
-				<Gauge
-					current={[this.state.thrust["CURRENT"].ctrl, this.state.thrust["CURRENT"].rate]}
-					min="0"
-					max="1"
-					display={'Power: '+Math.round(this.state.thrust["CURRENT"].rate*100)+'%'}
-					marks={[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]}
-				/>
+			<div className="ThrustSource container">
+				<div className="legend">Source</div>
+				<div>
+					<span onClick={ () => this.setType("ELECTRIC") }className={this.state.thrust.type=="ELECTRIC"?"fa fa-check-circle-o":"fa fa-circle-o"}></span>
+					&#160;Electric
+				</div>
+				<div>
+					<span onClick={ () => this.setType("MECHANICAL") }className={this.state.thrust.type=="MECHANICAL"?"fa fa-check-circle-o":"fa fa-circle-o"}></span>
+					&#160;Mechanical
+				</div>
 			</div>
 		);
 	}

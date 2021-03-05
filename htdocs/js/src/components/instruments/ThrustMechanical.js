@@ -22,33 +22,22 @@
 import {App} from '../base/App.js';
 import {Gauge} from '../../ui/Gauge.js';
 
-export class Thrust extends React.Component {
+export class ThrustMechanical extends React.Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
 		};
 		
-		this.keyDown = this.keyDown.bind(this);
-		
 		App.registerComponent("thrust", this);
 	}
 	
-	componentDidMount() {
-		document.addEventListener('keydown', this.keyDown);
-		document.addEventListener('keyup', this.keyUp);
+	ratePlus() {
+		App.api.command({component: "thrust", action: "ctrlPlus", type: "MECHANICAL"});
 	}
 	
-	componentWillUnmount() {
-		document.removeEventListener('keydown', this.keyDown);
-		document.addEventListener('keyup', this.keyUp);
-	}
-	
-	keyDown(e) {
-		if(e.key=="+")
-			App.api.command({component: "thrust", action: "ctrlPlus", type: "CURRENT"});
-		if(e.key=="-")
-			App.api.command({component: "thrust", action: "ctrlMinus", type: "CURRENT"});
+	rateMinus() {
+		App.api.command({component: "thrust", action: "ctrlMinus", type: "MECHANICAL"});
 	}
 	
 	render() {
@@ -56,13 +45,25 @@ export class Thrust extends React.Component {
 			return null;
 		
 		return (
-			<div className="Thrust container">
-				<div className="legend">Thrust</div>
+			<div className="ThrustMechanical container">
+				<div className="legend">Mechanical</div>
+				<div className="ctrl">
+					<span onClick={this.rateMinus} className="fa fa-minus"></span>
+					&#160;&#160;
+					<span onClick={this.ratePlus} className="fa fa-plus"></span>
+				</div>
+				<div className="digital_display">
+					<div className="row">
+						Thrust
+						<span className="value">{(this.state.thrust["MECHANICAL"].force/1000).toFixed(0)} kN</span>
+					</div>
+				</div>
+				<br />
 				<Gauge
-					current={[this.state.thrust["CURRENT"].ctrl, this.state.thrust["CURRENT"].rate]}
+					current={[this.state.thrust["MECHANICAL"].rate, this.state.thrust["MECHANICAL"].ctrl]}
 					min="0"
 					max="1"
-					display={'Power: '+Math.round(this.state.thrust["CURRENT"].rate*100)+'%'}
+					display={'Power: '+Math.round(this.state.thrust["MECHANICAL"].rate*100)+'%'}
 					marks={[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]}
 				/>
 			</div>
