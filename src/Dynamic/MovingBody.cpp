@@ -115,7 +115,10 @@ json MovingBody::ToJson() const
 {
 	json j;
 	
-	j["acceleration"] = acceleration.ToJson();
+	Vector3D rel_acceleration = acceleration;
+	rel_acceleration.ToRG(attitude);
+	j["acceleration"] = rel_acceleration.ToJson();
+	
 	j["position"] = position.ToJson();
 	j["angular_acceleration"] = angular_acceleration.ToJson();
 	j["angular_speed"] = angular_speed.ToJson();
