@@ -19,7 +19,7 @@ class Thrust: public Component, public SimulationObject, public SimulationStatus
 	double rate_ctrl[2] = {0, 0};
 	double rate[2] = {0, 0};
 	double targeted_rate[2] = {0, 0};
-	static constexpr double rate_second[2] = {0.2, 0.03};
+	static constexpr double rate_second[2] = {0.2, 0.02};
 	static constexpr double max_force[2] = {700000, 1500000};
 	
 	double battery = 1;
