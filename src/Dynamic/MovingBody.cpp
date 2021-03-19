@@ -80,11 +80,7 @@ void MovingBody::StepTime(double dt)
 	Vector3D vattitude(0, 1, 0);
 	vattitude.FromRG(attitude);
 	vattitude.Rotate(angular_speed * dt);
-	//vattitude.Printf("vattitude");
-	
 	vattitude.ToSpherical(0, &attitude.x, &attitude.z);
-	
-	//attitude += angular_speed * dt;
 	
 	double azimuth = 180/M_PI * atan2(deltapos.x, deltapos.y);
 	double distance = sqrt(deltapos.x*deltapos.x + deltapos.y*deltapos.y);

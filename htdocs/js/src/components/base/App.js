@@ -28,6 +28,7 @@ import {ThrustMechanical} from '../instruments/ThrustMechanical.js';
 import {ThrustSteam} from '../instruments/ThrustSteam.js';
 import {ThrustSource} from '../instruments/ThrustSource.js';
 import {ThrustTextIndicators} from '../instruments/ThrustTextIndicators.js';
+import {ThrustDiagram} from '../instruments/ThrustDiagram.js';
 import {Rudder} from '../instruments/Rudder.js';
 import {Speed} from '../instruments/Speed.js';
 import {Acceleration} from '../instruments/Acceleration.js';
@@ -122,7 +123,7 @@ export class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<Tabs>
+				<Tabs active="2">
 					<Tab title="Control">
 						<div className="instruments_row">
 							<SimulationControl />
@@ -182,6 +183,7 @@ export class App extends React.Component {
 						<ThrustSteam />
 						<ThrustSource />
 						<ThrustTextIndicators />
+						<ThrustDiagram />
 					</Tab>
 					<Tab title="Map">
 						<Map />

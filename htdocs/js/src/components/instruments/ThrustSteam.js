@@ -44,6 +44,7 @@ export class ThrustSteam extends React.Component {
 		return (
 			<div className="ThrustSteam container">
 				<div className="legend">Steam</div>
+				
 				<div>
 					<span onClick={ () => this.setSteam("NONE") }className={this.state.thrust.steam=="NONE"?"fa fa-check-circle-o":"fa fa-circle-o"}></span>
 					&#160;None
