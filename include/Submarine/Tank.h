@@ -26,11 +26,12 @@ private:
 	
 public:
 	Tank(en_opening_type opening_type, double capacity, const Fluid *external_fluid = 0);
+	~Tank();
 	
 	void SetOpening(en_opening_type opening_type);
 	
 	double Fill(const Fluid &fluid, double volume);
-	double Empty(const Fluid &fluid, double volume);
+	double Empty(const Fluid &fluid, double volume = -1);
 	
 	double GetMass() const;
 	double GetCapacity() const { return capacity; };

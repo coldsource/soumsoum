@@ -10,6 +10,12 @@ Tank::Tank(en_opening_type opening_type, double capacity, const Fluid *external_
 	this->external_fluid = external_fluid;
 }
 
+Tank::~Tank()
+{
+	for(auto it = content.begin();it!=content.end();++it)
+		delete it->second.fluid;
+}
+
 void Tank::SetOpening(en_opening_type opening_type)
 {
 	this->opening_type = opening_type;
@@ -112,6 +118,9 @@ double Tank::Empty(const Fluid &fluid, double volume)
 	if(it==content.end())
 		return false;
 	
+	if(volume==-1)
+		volume = it->second.volume;
+	
 	if(it->second.volume>volume)
 	{
 		it->second.volume -= volume;
@@ -175,6 +184,17 @@ json Tank::ToJson() const
 	double pressure = GetPressure();
 	
 	json j;
+	
+	// Default init for easier parse in JS
+	json empty;
+	empty["volume"] = 0;
+	empty["pressure"] = 0;
+	
+	j["air"] = empty;
+	j["dioxygen"] = empty;
+	j["carbon_dioxide"] = empty;
+	j["water"] = empty;
+	
 	for(auto it = content.begin(); it!=content.end(); ++it)
 	{
 		if(!it->second.fluid->IsCompressible())

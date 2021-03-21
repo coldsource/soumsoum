@@ -27,6 +27,7 @@ public:
 	
 	Vector3D GetAbsolutePosition() const;
 	Vector3D GetRelativePosition() const;
+	const Vector3D &GetPosition() const { return position; }
 	
 	void AddComponent(MovingBodyComponent *component);
 	

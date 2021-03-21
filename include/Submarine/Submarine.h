@@ -18,6 +18,8 @@
 #include <Submarine/Rudder.h>
 #include <Submarine/AirController.h>
 #include <Submarine/SimulationControl.h>
+#include <Submarine/Crew.h>
+#include <Submarine/Weighing.h>
 #include <Volume/Cylinder.h>
 
 #include <map>
@@ -41,6 +43,8 @@ class Submarine: public MovingBody
 	double stern_radius = 4;
 	
 	double base_mass = 4625 * 1000;
+	double reference_mass;
+	double reference_net_mass;
 	
 	Tank air_tank;
 	
@@ -54,6 +58,10 @@ class Submarine: public MovingBody
 	
 	Thrust thrust;
 	Rudder rudder;
+	
+	Crew crew;
+	
+	Weighing weighing;
 	
 	SimulationControl simulation_control;
 	double time_compression = 1;
@@ -73,6 +81,11 @@ public:
 	void SetTimeCompression(double time_compression) { this->time_compression = time_compression; }
 	bool GetSimulationRateLimit() const { return simulation_rate_limit; }
 	void SetSimulationRateLimit(bool simulation_rate_limit) { this->simulation_rate_limit = simulation_rate_limit; }
+	
+	const Ballast &GetBallast() const { return ballast; }
+	double GetReferenceMass() const { return reference_mass; }
+	double GetReferenceNetMass() const { return reference_net_mass; }
+	double GetMassCentering() const;
 	
 	void AddComponent(Component *component);
 	void HandleCommand(const nlohmann::json &json);

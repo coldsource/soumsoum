@@ -44,6 +44,9 @@ import {Map} from '../instruments/Map.js';
 import {DepthMap} from '../instruments/DepthMap.js';
 import {TextIndicators} from '../instruments/TextIndicators.js';
 import {SimulationControl} from '../instruments/SimulationControl.js';
+import {Crew} from '../instruments/Crew.js';
+import {CrewControl} from '../instruments/CrewControl.js';
+import {Weighing} from '../instruments/Weighing.js';
 import {Tabs} from '../../ui/Tabs.js';
 import {Tab} from '../../ui/Tab.js';
 
@@ -123,7 +126,7 @@ export class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<Tabs active="2">
+				<Tabs active="3">
 					<Tab title="Control">
 						<div className="instruments_row">
 							<SimulationControl />
@@ -176,6 +179,7 @@ export class App extends React.Component {
 						<AirController />
 						<PitchControl />
 						<DepthControlTank />
+						<Weighing />
 					</Tab>
 					<Tab title="Propulsion">
 						<ThrustElectric />
@@ -184,6 +188,10 @@ export class App extends React.Component {
 						<ThrustSource />
 						<ThrustTextIndicators />
 						<ThrustDiagram />
+					</Tab>
+					<Tab title="Crew">
+						<Crew />
+						<CrewControl />
 					</Tab>
 					<Tab title="Map">
 						<Map />

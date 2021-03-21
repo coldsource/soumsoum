@@ -62,6 +62,8 @@ export class AirController extends React.Component {
 		if(this.state.ballast===undefined || this.state.air_controller===undefined)
 			return null;
 		
+		const air_controller = this.state.air_controller;
+		
 		return (
 			<div className="AirController container">
 				<div className="Ballast">
@@ -76,7 +78,7 @@ export class AirController extends React.Component {
 					<div className="pressure">{this.state.ballast.pressure.toFixed(1)} BAR</div>
 				</div>
 				
-				<div className="air_tank">{Math.round(this.state.air_controller.main_tank.air.pressure)} BAR</div>
+				<div className="air_tank">{Math.round(air_controller.main_tank.air.pressure)} BAR</div>
 				
 				<div className="ballast_pipe">
 					<img src="images/arrow.svg" />
@@ -85,7 +87,7 @@ export class AirController extends React.Component {
 				
 				<div className="surface_pipe">
 					<img src="images/arrow.svg" />
-					<span className={this.state.air_controller.surface_fill=="on"?"fa fa-toggle-on":"fa fa-toggle-off"} onClick={this.toggleSurfaceFill}></span>
+					<span className={air_controller.surface_fill=="on"?"fa fa-toggle-on":"fa fa-toggle-off"} onClick={this.toggleSurfaceFill}></span>
 				</div>
 			</div>
 		);
