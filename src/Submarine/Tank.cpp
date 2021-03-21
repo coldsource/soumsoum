@@ -1,12 +1,14 @@
 #include <Submarine/Tank.h>
+#include <Exception/GameOver.h>
 
 using namespace std;
 using json = nlohmann::json;
 
-Tank::Tank(en_opening_type opening_type, double capacity, const Fluid *external_fluid)
+Tank::Tank(en_opening_type opening_type, double capacity, double max_pressure, const Fluid *external_fluid)
 {
 	this->opening_type = opening_type;
 	this->capacity = capacity;
+	this->max_pressure = max_pressure;
 	this->external_fluid = external_fluid;
 }
 
@@ -94,6 +96,9 @@ double Tank::Fill(const Fluid &fluid, double volume)
 			
 			content[fluid_name].volume += filled;
 		}
+		
+		if(max_pressure>0 && GetPressure()>=max_pressure)
+			throw GameOver(1, "Tank has exploded");
 		
 		return filled;
 	}

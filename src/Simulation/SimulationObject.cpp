@@ -32,15 +32,13 @@ SimulationObject::~SimulationObject()
 
 void SimulationObject::StepSimulation(double dt)
 {
-	g_mutex.lock();
+	lock_guard<std::mutex> lock(g_mutex);
 	
 	for(auto it = simulation_objs.begin(); it!=simulation_objs.end(); ++it)
 	{
 		if(it->thread_id==this_thread::get_id())
 			it->obj->StepTime(dt);
 	}
-	
-	g_mutex.unlock();
 }
 
 void SimulationObject::variable_sim(double *current, double target, double rate, double dt) const

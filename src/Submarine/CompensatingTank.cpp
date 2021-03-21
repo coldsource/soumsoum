@@ -4,7 +4,7 @@ using json = nlohmann::json;
 using namespace std;
 
 CompensatingTank::CompensatingTank(double capacity, double flow, const string &name):
-	tank(Tank::en_opening_type::CLOSED, capacity),
+	tank(Tank::en_opening_type::CLOSED, capacity, 0),
 	fill_pump(water, flow, 0, &tank),
 	empty_pump(water, flow, &tank, 0)
 {

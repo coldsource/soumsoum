@@ -1,12 +1,13 @@
 #include <Submarine/Crew.h>
+#include <Exception/GameOver.h>
 
 using json = nlohmann::json;
 
 constexpr int Crew::members;
 
 Crew::Crew():
-	o2_tank(Tank::en_opening_type::CLOSED, 1),
-	co2_tank(Tank::en_opening_type::CLOSED, 1),
+	o2_tank(Tank::en_opening_type::CLOSED, 1, 230),
+	co2_tank(Tank::en_opening_type::CLOSED, 1, 230),
 	regeneration(dioxygen, 0.01, 0, &o2_tank)
 {
 	o2_tank.Fill(dioxygen, 200);
@@ -35,6 +36,15 @@ void Crew::StepTime(double dt)
 	
 	supplies -= eat_rate * members * dt;
 	waste += waste_rate * members * dt;
+	
+	if(supplies<=0)
+		throw GameOver(0, "You ran out of supplies for your crew");
+	
+	if(waste>500)
+		throw GameOver(0, "Your crew was overrun by waste");
+	
+	if(o2_tank.GetVolume(dioxygen)==0)
+		throw GameOver(0, "No more dioxygen available, your crew died");
 }
 
 nlohmann::json Crew::ToJson() const

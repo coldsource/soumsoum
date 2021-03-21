@@ -12,6 +12,7 @@ aux_source_directory(src/Dynamic srcDynamic)
 aux_source_directory(src/Submarine srcSubmarine)
 aux_source_directory(src/Simulation srcSimulation)
 aux_source_directory(src/Map srcMap)
+aux_source_directory(src/Exception srcException)
 
 add_executable(soumsoum
 	${srcFluid}
@@ -22,6 +23,7 @@ add_executable(soumsoum
 	${srcSubmarine}
 	${srcSimulation}
 	${srcMap}
+	${srcException}
 	
 	src/main.cpp
 	)

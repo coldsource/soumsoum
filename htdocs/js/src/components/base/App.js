@@ -46,6 +46,7 @@ import {TextIndicators} from '../instruments/TextIndicators.js';
 import {SimulationControl} from '../instruments/SimulationControl.js';
 import {Crew} from '../instruments/Crew.js';
 import {CrewControl} from '../instruments/CrewControl.js';
+import {CrewTextIndicators} from '../instruments/CrewTextIndicators.js';
 import {Weighing} from '../instruments/Weighing.js';
 import {Tabs} from '../../ui/Tabs.js';
 import {Tab} from '../../ui/Tab.js';
@@ -55,6 +56,8 @@ export class App extends React.Component {
 		super(props);
 		
 		this.state = {
+			game_over: false,
+			game_over_reason: ""
 		};
 		
 		this.components = {};
@@ -70,6 +73,12 @@ export class App extends React.Component {
 	handleData(data) {
 		if(data===null)
 			return;
+		
+		if(data.game_over!==undefined && data.game_over)
+		{
+			this.setState({game_over: true, game_over_reason: data.game_over_reason});
+			return;
+		}
 		
 		for(const [name, value] of Object.entries(data)) {
 			if(this.components[name]!==undefined)
@@ -124,6 +133,16 @@ export class App extends React.Component {
 	}
 	
 	render() {
+		if(this.state.game_over)
+		{
+			return (
+				<div>
+					<h1>Game Over</h1>
+					<div>{this.state.game_over_reason}</div>
+				</div>
+			);
+		}
+		
 		return (
 			<div>
 				<Tabs active="3">
@@ -192,6 +211,7 @@ export class App extends React.Component {
 					<Tab title="Crew">
 						<Crew />
 						<CrewControl />
+						<CrewTextIndicators />
 					</Tab>
 					<Tab title="Map">
 						<Map />

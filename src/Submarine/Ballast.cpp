@@ -3,7 +3,7 @@
 using json = nlohmann::json;
 
 Ballast::Ballast(Tank *air_source, const Fluid *water_source):
-	tank(Tank::en_opening_type::BOTTOM, volume, water_source),
+	tank(Tank::en_opening_type::BOTTOM, volume, 0, water_source),
 	fill_pump(water, 15, 0, &tank),
 	empty_pump(air, 20, air_source, &tank)
 {

@@ -5,8 +5,6 @@
 using namespace std;
 using json = nlohmann::json;
 
-std::mutex Submarine::g_mutex;
-
 Submarine::Submarine():
 	stern("stern", Vector3D(0, -49, 0)),
 	back("back", Vector3D(0, -30, 0)),
@@ -14,7 +12,7 @@ Submarine::Submarine():
 	diving_plane("diving_plane", Vector3D(0, 0, 0)),
 	front("front", Vector3D(0, 30, 0)),
 	bow("bow", Vector3D(0, 49, 0)),
-	air_tank(Tank::en_opening_type::CLOSED, 10),
+	air_tank(Tank::en_opening_type::CLOSED, 10, 330),
 	ballast(&air_tank, &water),
 	compensating_tank_center(16, 0.2, "compensating_tank_center"),
 	compensating_tank_front(10, 0.05, "compensating_tank_front"),
@@ -108,16 +106,11 @@ void Submarine::AddComponent(Component *component)
 
 void Submarine::HandleCommand(const nlohmann::json &json)
 {
-	g_mutex.lock();
+	lock_guard<std::mutex> lock(mutex);
 	
 	auto it = components.find(json["component"]);
 	if(it==components.end())
-	{
-		g_mutex.unlock();
 		return;
-	}
 	
 	it->second->HandleCommand(json);
-	
-	g_mutex.unlock();
 }

@@ -18,6 +18,7 @@ private:
 	const Fluid *external_fluid;
 	
 	double capacity;
+	double max_pressure;
 	
 	struct st_content { Fluid *fluid; double volume; };
 	std::map<std::string, st_content> content;
@@ -25,7 +26,7 @@ private:
 	void balance();
 	
 public:
-	Tank(en_opening_type opening_type, double capacity, const Fluid *external_fluid = 0);
+	Tank(en_opening_type opening_type, double capacity, double max_pressure = 0, const Fluid *external_fluid = 0);
 	~Tank();
 	
 	void SetOpening(en_opening_type opening_type);

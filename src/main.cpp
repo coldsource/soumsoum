@@ -6,6 +6,7 @@
 #include <Dynamic/MovingBody.h>
 #include <Submarine/Submarine.h>
 #include <Simulation/SimulationObject.h>
+#include <Exception/GameOver.h>
 
 #include <libwebsockets.h>
 
@@ -32,6 +33,7 @@ struct per_session_data
 {
 	unsigned int session_id;
 	string status;
+	bool game_over;
 };
 
 struct st_client
@@ -60,6 +62,7 @@ void simulation(struct lws *wsi, per_session_data *context)
 	
 	double t0 = cur_time;
 	int nsim = 0;
+	bool game_over = false;
 	while(true)
 	{
 		if(submarine->GetSimulationRateLimit())
@@ -79,25 +82,43 @@ void simulation(struct lws *wsi, per_session_data *context)
 			t0 = t;
 		}
 		
-		SimulationObject::StepSimulation(dt * submarine->GetTimeCompression());
+		string status;
 		
-		cur_time += dt;
+		try
+		{
+			SimulationObject::StepSimulation(dt * submarine->GetTimeCompression());
+			
+			cur_time += dt;
 		
-		string status = SimulationStatus::GetStatus(t).dump();
-		if(status=="null")
-			continue; // No new status to send due to throttling
+			status = SimulationStatus::GetStatus(t).dump();
+			if(status=="null")
+				continue; // No new status to send due to throttling
+		}
+		catch(GameOver &e)
+		{
+			json j;
+			j["game_over"] = true;
+			j["game_over_reason"] = e.GetError();
+			
+			game_over = true;
+			status = j.dump();
+		}
 		
 		ws_mutex.lock();
 		
 		for(auto it = session->clients.begin(); it!=session->clients.end(); ++it)
 		{
 			it->context->status = status;
+			it->context->game_over = game_over;
 			lws_callback_on_writable(it->wsi);
 		}
 		
 		ws_mutex.unlock();
 		
 		lws_cancel_service(ws_context);
+		
+		if(game_over)
+			break;
 	}
 	
 	delete submarine;
@@ -134,6 +155,7 @@ int callback_ws(struct lws *wsi, enum lws_callback_reasons reason, void *user, v
 		
 		case LWS_CALLBACK_ESTABLISHED:
 		{
+			printf("Established\n");
 			ws_mutex.lock();
 			
 			context->session_id = session_id;
@@ -211,6 +233,10 @@ int callback_ws(struct lws *wsi, enum lws_callback_reasons reason, void *user, v
 			
 			json_str.insert(0,LWS_PRE,' ');
 			lws_write(wsi, (unsigned char *)json_str.c_str() + LWS_PRE, json_str.length()-LWS_PRE, LWS_WRITE_TEXT);
+			
+			if(context->game_over)
+				return 1;
+			
 			break;
 		}
 		

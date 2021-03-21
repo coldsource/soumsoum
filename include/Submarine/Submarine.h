@@ -69,7 +69,7 @@ class Submarine: public MovingBody
 	
 	std::map<std::string, Component *> components;
 	
-	static std::mutex g_mutex;
+	std::mutex mutex;
 	
 public:
 	Submarine();
